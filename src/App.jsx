@@ -1,3 +1,4 @@
+import * as React from 'react';
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PublicRouter from "./pages/PublicRouter";
@@ -10,7 +11,7 @@ import AuthGuard from "./_utils/AuthGuard";
 
 const queryClient = new QueryClient();
 
-function App() {
+export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
