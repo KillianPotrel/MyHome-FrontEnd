@@ -17,6 +17,8 @@ jobs:
       run: npm install
     - name: Run build task
       run: npm run build --if-present
+    - name: Run build tailwind CSS
+      run: npx tailwindcss -o ./public/build.css --minify
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
