@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { Family, ResponseInvitationArgs, useGetManyFamilyByUser, useGetManyInvitationByUser, usePostResponseInvitation } from '../../api/Family';
 import { accountService } from '../../services/account.service';
+import FamilyCreate from './FamilyCreate';
 
 const FamilyChoice = (): JSX.Element => {
     const navigate = useNavigate();
@@ -76,7 +77,7 @@ const FamilyChoice = (): JSX.Element => {
                                                 Accepter
                                         </button>
                                         <button 
-                                            className="rounded-md mt-5 bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                            className="rounded-md mt-5 ml-4 bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                                             onClick={() => handleSubmitInvitation({family_id: invitation.id, accepted: 0})}>
                                                 Refuser
                                         </button>
@@ -88,16 +89,7 @@ const FamilyChoice = (): JSX.Element => {
                 }
                 </div>
                 
-                <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
-                    <h2 className="text-xl font-bold  font-medium text-gray-500">Créer sa famille</h2>
-                    <button
-                        type="button"
-                        className="rounded-md mt-5 bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        onClick={() => navigate("/family/create")}
-                    >
-                        Je la créer !
-                    </button>
-                </div>
+                <FamilyCreate />
             </div>
         </main>
     );

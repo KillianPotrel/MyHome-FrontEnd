@@ -27,6 +27,8 @@ let saveFamily = (id) => {
 
 let isFamilyConnect = () => {
   let family_id = localStorage.getItem(FAMILY_KEY);
+  console.log(family_id);
+  console.log(FAMILY_KEY);
   return !!family_id;
 };
 
