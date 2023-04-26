@@ -56,11 +56,6 @@ export const usePostResponseInvitation = () => {
             args.token = accountService.getToken()
             return axios
                 .post(URL_API + "responseToInvitation", args)
-                .then((res) => {
-                    if(res.status === 200){
-                        console.log(res)
-                    } 
-                })
         },
         onSettled() {
             queryClient.invalidateQueries({queryKey : ['manyFamilyByUser','manyInvitationByUser']})
@@ -76,14 +71,8 @@ export const usePostCreateFamily = () => {
     return useMutation({
         mutationFn: (args : CreateFamilyArgs) => {
             args.token = accountService.getToken()
-            console.log(args)
             return axios
                 .post(URL_API + "createFamily", args)
-                .then((res) => {
-                    if(res.status === 200){
-                        console.log(res)
-                    } 
-                })
         },
         onSettled() {
             queryClient.invalidateQueries({queryKey : ['manyFamilyByUser','manyInvitationByUser']})

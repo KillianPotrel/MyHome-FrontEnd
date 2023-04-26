@@ -25,10 +25,12 @@ let saveFamily = (id) => {
   localStorage.setItem(FAMILY_KEY, id);
 };
 
+let disconnectFamily = () => {
+  localStorage.removeItem(FAMILY_KEY);
+};
+
 let isFamilyConnect = () => {
   let family_id = localStorage.getItem(FAMILY_KEY);
-  console.log(family_id);
-  console.log(FAMILY_KEY);
   return !!family_id;
 };
 
@@ -40,4 +42,5 @@ export const accountService = {
   getFamily,
   saveFamily,
   isFamilyConnect,
+  disconnectFamily,
 };

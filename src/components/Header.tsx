@@ -30,6 +30,11 @@ const Header = () => {
     userPostLogout.mutate({token : accountService.getToken()});
   };
 
+  const disconnectFamily = () => {
+    accountService.disconnectFamily();
+    navigate("/family/choice");
+  };
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -161,6 +166,19 @@ const Header = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
+                            onClick={disconnectFamily}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Changer de famille
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
                             href="#"
                             onClick={logout}
                             className={classNames(
@@ -172,6 +190,7 @@ const Header = () => {
                           </a>
                         )}
                       </Menu.Item>
+                      
                     </Menu.Items>
                   </Transition>
                 </Menu>
