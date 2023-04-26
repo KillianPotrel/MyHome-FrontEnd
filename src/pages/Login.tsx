@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import { usePostUserLogin } from "../api/User";
 import { errorToast, successToast } from "../services/toastify.service";
 
-const Login = () => {
+const Login = (): JSX.Element => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "kpotrel@gmail.com",
@@ -16,7 +16,7 @@ const Login = () => {
   useEffect(() => {
     if (userPostLogin.isSuccess) {
       successToast("Connexion réussi");
-      navigate("/familly/home");
+      navigate("/family/choice");
     } else if (userPostLogin.isError) {
       errorToast("Erreur lors de la connexion");
       if(userPostLogin.failureReason.response.status === 403)

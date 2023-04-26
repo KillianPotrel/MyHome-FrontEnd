@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
+import { URL_API } from "../services/key"
 
 export type User = {
     firstname: string 
@@ -14,7 +15,7 @@ export type User = {
 
 export const usePostUserRegister = () => {
     return useMutation({
-        mutationFn: (user: User) => axios.post("http://my-home.back.kpotrel.fr/api/user/create", user),  
+        mutationFn: (user: User) => axios.post(URL_API + "user/create", user),  
         onError(err: FetchError) {
             return err
         },
@@ -24,14 +25,13 @@ export const usePostUserRegister = () => {
 export const usePostUserLogin = () => {
     return useMutation({
         mutationFn: (args : { email : User['email'], password: User['password']}) => 
-        axios
-        .post("http://my-home.back.kpotrel.fr/api/user/login", args)
-        .then((res) => {
-            console.log(res) 
-            if(res.status === 200){
-                accountService.saveToken(res.data.data.token);
-            } 
-        }),
+            axios
+            .post(URL_API + "user/login", args)
+            .then((res) => {
+                if(res.status === 200){
+                    accountService.saveToken(res.data.data.token);
+                } 
+            }),
         onError(err: FetchError) {
             return err
         },
@@ -41,11 +41,9 @@ export const usePostUserLogin = () => {
 export const usePostUserLogout = () => {
     return useMutation({
          mutationFn: (args : { token : string | null }) => axios
-         .post("http://my-home.back.kpotrel.fr/api/disconect", args)
+         .post(URL_API + "disconect", args)
          .then((res) => { 
-            console.log(res)
             accountService.logout();
         }),
-         onSuccess:(result) => {console.log(result)}   
-         })
+    })
 }

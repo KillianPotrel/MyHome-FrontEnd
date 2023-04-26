@@ -1,4 +1,5 @@
 import { JWT_KEY } from "./key.js";
+import { FAMILY_KEY } from "./key.js";
 let getToken = () => {
   return localStorage.getItem(JWT_KEY);
 };
@@ -16,9 +17,25 @@ let isLogged = () => {
   return !!token;
 };
 
+let getFamily = () => {
+  return localStorage.getItem(FAMILY_KEY);
+};
+
+let saveFamily = (id) => {
+  localStorage.setItem(FAMILY_KEY, id);
+};
+
+let isFamilyConnect = () => {
+  let family_id = localStorage.getItem(FAMILY_KEY);
+  return !!family_id;
+};
+
 export const accountService = {
   getToken,
   saveToken,
   logout,
   isLogged,
+  getFamily,
+  saveFamily,
+  isFamilyConnect,
 };

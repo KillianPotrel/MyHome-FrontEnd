@@ -243,7 +243,7 @@ function classNames(...classes : any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Index() {
+export default function Index(): JSX.Element {
   return (
     <div className="bg-white">
       <header>
@@ -463,7 +463,7 @@ export default function Index() {
                 <img
                   className="h-full w-full object-cover"
                   src="images\famille.jpg"
-                  alt="Familly"
+                  alt="Family"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-800 to-orange-700 mix-blend-multiply" />
               </div>

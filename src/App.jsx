@@ -29,7 +29,7 @@ export function App() {
         <Routes>
           <Route path="/*" element={<GuestRouter />} />
           <Route
-            path="/familly/*"
+            path="/family/*"
             element={
               <AuthGuard>
                 <PublicRouter />
