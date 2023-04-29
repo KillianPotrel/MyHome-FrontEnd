@@ -5,15 +5,26 @@ import { errorToast, successToast } from "../services/toastify.service";
 import { usePostUserLogout } from "../api/User";
 
 import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Disclosure, Menu, Popover, Transition } from "@headlessui/react";
+import { ArrowPathIcon, Bars3Icon, BellIcon, ChartPieIcon, CursorArrowRaysIcon, EyeIcon, FingerPrintIcon, PhoneIcon, PlayCircleIcon, SquaresPlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
+const notifications = [
+  { id: 1, name: 'Budget', description: 'Le budget a été calculé', href: '#', icon: ChartPieIcon },
+  { id: 2, name: 'Ménage', description: 'On vous a attribué une tâche', href: '#', icon: CursorArrowRaysIcon },
+  { id: 3, name: 'Course', description: "Course clôturée", href: '#', icon: FingerPrintIcon },
+  { id: 4, name: 'Course', description: 'Course ajouter', href: '#', icon: SquaresPlusIcon },
+  { id: 5, name: 'Repas', description: 'Un nouveau repas a été programmé.', href: '#', icon: ArrowPathIcon },
+]
+const callsToAction = [
+  { name: 'Marqué comme vu', href: '#', icon: EyeIcon },
+  { name: 'Supprimé tout', href: '#', icon: TrashIcon },
+]
 
 function classNames(...classes : any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Header = () => {
+const Header = (): JSX.Element => {
   let navigate = useNavigate();
   const userPostLogout = usePostUserLogout();
 
@@ -70,13 +81,15 @@ const Header = () => {
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-amber-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <a
-                    href="#"
+                    href=""
+                    onClick={() => navigate('/family/dashboard')}
                     className="inline-flex items-center border-b-2 border-amber-500 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
                     Accueil
                   </a>
                   <a
-                    href="#"
+                    href=""
+                    onClick={() => navigate('/family/members')}
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     Famille
@@ -120,13 +133,67 @@ const Header = () => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
+                {/* <button
                   type="button"
                   className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+          
+                </button> */}
+
+
+
+
+                <Popover className="relative">
+                  <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </Popover.Button>
+
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-200"
+                    enterFrom="opacity-0 translate-y-1"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-1"
+                  >
+                    {/* */}
+                    <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4">
+                      <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                        <div className="p-4 overflow-y-scroll max-h-96">
+                          {notifications.map((notification) => (
+                            <div key={notification.id} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                              <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                <notification.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                              </div>
+                              <div>
+                                <a href={notification.href} className="font-semibold text-gray-900">
+                                  {notification.name}
+                                  <span className="absolute inset-0" />
+                                </a>
+                                <p className="mt-1 text-gray-600">{notification.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                          {callsToAction.map((item) => (
+                            <a
+                              key={item.name}
+                              href={item.href}
+                              className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+                            >
+                              <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                              {item.name}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </Popover.Panel>
+                  </Transition>
+                </Popover>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -153,7 +220,7 @@ const Header = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => navigate('/profile')}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

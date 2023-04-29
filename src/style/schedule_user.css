@@ -1,0 +1,13 @@
+.table-schedule {
+    max-width: 100vh;
+}
+
+.day-schedule {
+    @media (max-width: 500px) {
+        min-width: 100%;
+    }
+    
+    @media (max-width: 956px) {
+        min-width: 45%;
+    }
+}

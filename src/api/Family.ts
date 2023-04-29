@@ -21,8 +21,14 @@ export type Family = {
 }
 
 export type Member = {
-    email: string,
-    role: number,
+    id?: number,
+    name?: string,
+    avatar?: string,
+    birthday?: Date,
+    firstname?: string,
+    email?: string,
+    email_verified_at?: "2023-03-15T21:11:11.000000Z"
+    role?: number,
 }
 
 export type ResponseInvitationArgs = {
@@ -82,3 +88,14 @@ export const usePostCreateFamily = () => {
         },
     })
 }
+
+
+export const useGetManyMembersByFamily = () =>
+    useQuery({
+        queryFn: () =>
+        axios.get(URL_API + "getMembresFamily", { params: { 
+            token: accountService.getToken(),
+            family_id: accountService.getFamily(),
+        }}), 
+        queryKey: ["manyInvitationByUser"],
+    })
