@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
@@ -44,6 +44,14 @@ export const usePostUserLogout = () => {
          .post(URL_API + "disconect", args)
          .then((res) => { 
             accountService.logout();
+            accountService.disconnectFamily();
         }),
     })
 }
+
+export const useUserInfo = (user_id?: number) =>
+    useQuery({
+        queryFn: () => axios.get(URL_API + "getUserInfo", { params: { token: accountService.getToken(), user_id: user_id} }), 
+        queryKey: ["oneUserInfo"],
+        onSettled(res) {console.log(res)}
+    })

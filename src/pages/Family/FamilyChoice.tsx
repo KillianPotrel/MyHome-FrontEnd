@@ -24,7 +24,7 @@ const FamilyChoice = (): JSX.Element => {
 
     return (
         <main className="lg:flex lg:min-h-full lg:flex-row-reverse lg:overflow-hidden">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-2">
             <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
                 <h2 className="text-xl font-bold font-medium text-gray-500">Vos familles</h2>
                 { families === undefined || families?.length === 0 ? 

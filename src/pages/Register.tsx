@@ -22,9 +22,9 @@ const Register = () => {
       successToast("Inscription réussi");
       navigate("/login");
     } else if (userRegister.isError) {
-      errorToast("Erreur lors de l'inscription'");
+      errorToast("Erreur lors de l'inscription");
       if(userRegister.failureReason.response.status === 401)
-        errorToast("Merci de confirmer votre adresse email");
+        errorToast("Cet email est déjà pris");
     }
   })
 

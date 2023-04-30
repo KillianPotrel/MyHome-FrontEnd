@@ -49,12 +49,12 @@ const Schedule = ():JSX.Element => {
             </p>
           </div>
 
-          <div className="px-4  col-span-2 sm:px-6 lg:px-8">
+          <div className="col-span-2 sm:px-6 lg:px-8">
             <div className="mt-8 flow-root">
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="flex flex-wrap flex-row place-content-around table-schedule">
-                    {day_value.map((item) => (
-                      <div className='day-schedule  mb-5 mr-5'>
+                    {day_value.map((item, index) => (
+                      <div key={index} className='day-schedule  mb-5 mr-5'>
                         <div className='text-base font-semibold leading-7 text-center text-black '>
                           {item.day}
                         </div>
@@ -65,18 +65,20 @@ const Schedule = ():JSX.Element => {
                               type="time"
                               name="morning_hour_start"
                               id="morning_hour_start"
+                              value={"08:00"}
                               className="block rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                               />
                               <input
                                 type="time"
                                 name="morning_hour_end"
                                 id="morning_hour_end"
+                                value={"12:00"}
                                 className="block rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                                 />
                           </div>
                         </div>
                         <div>
-                          <label htmlFor="lunch_outside" className="block text-sm font-medium leading-6 text-black">Manger midi</label>
+                          <label htmlFor="lunch_outside" className="block text-sm font-medium leading-6 text-black">Déjeuner dehors</label>
                           <Switch />
                         </div>
                         <div>
@@ -86,36 +88,38 @@ const Schedule = ():JSX.Element => {
                               type="time"
                               name="afternoon_hour_start"
                               id="afternoon_hour_start"
-                              className="block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                              value={"14:00"}
+                              className="block rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                               />                           
                             <input
                                 type="time"
                                 name="afternoon_hour_end"
                                 id="afternoon_hour_end"
                                 autoComplete="family-name"
-                                className="block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                                value={"17:00"}
+                                className="block rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
                                 />
                           </div>
                         </div>
                         <div>
-                          <label htmlFor="evening_meal_outside" className="block text-sm font-medium leading-6 text-black">Manger soir</label>
+                          <label htmlFor="evening_meal_outside" className="block text-sm font-medium leading-6 text-black">Dîner dehors</label>
                           <Switch />
                         </div>
                       </div>
                     ))}
                   </div>
+                <form className="flex items-start col-start-2">
+                  
+                  <button 
+                      className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                      >
+                          Sauvegarder
+                  </button>
+                </form>
               </div>
             </div>
           </div>
 
-          <form className="flex items-start md:col-span-2">
-            
-            <button 
-                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                >
-                    Sauvegarder
-            </button>
-          </form>
         </div>
     );
 };

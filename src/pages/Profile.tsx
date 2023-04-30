@@ -6,7 +6,6 @@ import Schedule from '../components/Profile/Schedule';
 import Informations from '../components/Profile/Informations';
 
 const Profile = (): JSX.Element => {
-
   return (
     <>
       <div>
@@ -15,10 +14,10 @@ const Profile = (): JSX.Element => {
             <div className="divide-y divide-black/5">
 
               <Informations />
-              <Schedule />
+              <Password />
               <WarningArticle />
               <ExitRequest />
-              <Password />
+              <Schedule />
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>
