@@ -1,11 +1,15 @@
 import React from 'react';
-import Password from '../components/Profile/Password';
-import ExitRequest from '../components/Profile/ExitRequest';
-import WarningArticle from '../components/Profile/WarningArticle';
-import Schedule from '../components/Profile/Schedule';
-import Informations from '../components/Profile/Informations';
+import { useUserInfo } from '../api/User';
+import ProfileInformations from '../components/Profile/ProfileInformations';
+import ProfilePassword from '../components/Profile/ProfilePassword';
+import ProfileWarningArticle from '../components/Profile/ProfileWarningArticle';
+import ProfileExitRequest from '../components/Profile/ProfileExitRequest';
+import ProfileSchedule from '../components/Profile/ProfileSchedule';
+import { ErrorBoundary } from '../_utils/ErrorBoundary';
 
 const Profile = (): JSX.Element => {
+  const { data : dataInfo } = useUserInfo()
+
   return (
     <>
       <div>
@@ -13,11 +17,13 @@ const Profile = (): JSX.Element => {
           <main>
             <div className="divide-y divide-black/5">
 
-              <Informations />
-              <Password />
-              <WarningArticle />
-              <ExitRequest />
-              <Schedule />
+              <ProfileInformations user={dataInfo?.data} />
+              <ProfilePassword />
+              <ErrorBoundary>
+                <ProfileWarningArticle />
+              </ErrorBoundary>
+              <ProfileExitRequest />
+              <ProfileSchedule />
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>

@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { Family, ResponseInvitationArgs, useGetManyFamilyByUser, useGetManyInvitationByUser, usePostResponseInvitation } from '../../api/Family';
+import { Family, ResponseInvitationArgs, useManyFamilyByUser, useManyInvitationByUser, usePostResponseInvitation } from '../../api/Family';
 import { accountService } from '../../services/account.service';
 import FamilyCreate from './FamilyCreate';
 
 const FamilyChoice = (): JSX.Element => {
     const navigate = useNavigate();
-    const { data: dataFamilies } = useGetManyFamilyByUser()
-    const { data: dataInvitations } = useGetManyInvitationByUser()
+    const { data: dataFamilies } = useManyFamilyByUser()
+    const { data: dataInvitations } = useManyInvitationByUser()
     const usePostInvitation = usePostResponseInvitation()
     const families : Family[] | undefined = dataFamilies?.data
     const invitations : Family[] | undefined = dataInvitations?.data

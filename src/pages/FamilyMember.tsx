@@ -2,50 +2,20 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ModalAuthorization from '../components/ModalAuthorization';
-import { Permission, useGetManyPermission } from '../api/Permission';
-import { accountService } from '../services/account.service';
-import { Member, useGetManyMembersByFamily } from '../api/Family';
+import { Permission, useManyPermission } from '../api/Permission';
+import { Member, useManyMembersByFamily } from '../api/Family';
+import TableExitRequest from '../components/TableExitRequest';
+import { format } from '../_utils/FormatDate';
 
-const people = [
-    {
-        id:1,
-        name: 'Whitney',
-        birthday: '12/06/1998',
-        imageUrl:
-        'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        id:2,
-        name: 'Anna',
-        birthday: '01/09/1995',
-        imageUrl:
-        'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        id:3,
-        name: 'Joris',
-        birthday: '26/07/1993',
-        imageUrl:
-        'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-    {
-        id:4,
-        name: 'Pauline',
-        birthday: '24/12/2000',
-        imageUrl:
-        'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    },
-  ]
   
 const FamilyMember = (): JSX.Element => {
     let navigate = useNavigate();
-    const { data : dataPermissions } = useGetManyPermission()
-    const { data : dataMembers } = useGetManyMembersByFamily()
+    const { data : dataPermissions } = useManyPermission()
+    const { data : dataMembers } = useManyMembersByFamily()
+    
     const members : Member[] | undefined = dataMembers?.data
-
     const permissions : Permission[] | undefined = dataPermissions?.data
     
-
     return (
         <>
             <div className="bg-white py-12">
@@ -61,14 +31,14 @@ const FamilyMember = (): JSX.Element => {
                     className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
                 >
                     {(members !== undefined || members?.length > 0) && members.map((member) => (
-                    <li key={member.name}>
+                    <li key={member.id}>
                         <img className="mx-auto h-56 w-56 rounded-full" src={member.avatar ?? "../images/avatar_family.svg"} alt="" />
                         <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{member.name}</h3>
-                        <p className="text-sm leading-6 text-gray-600">{member.birthday?.toDateString()}</p>
+                        <p className="text-sm leading-6 text-gray-600">{format(member.birthday.toDateString)}</p>
                         
                         <ul role="list" className="mt-6 flex justify-center gap-x-6">
                         <li>
-                            <ModalAuthorization permissions={permissions} />
+                            <ModalAuthorization permissions={permissions} user_id={member.id} />
                         </li>
                         <li>
                             <button
@@ -85,6 +55,7 @@ const FamilyMember = (): JSX.Element => {
                 </ul>
                 </div>
             </div>
+            <TableExitRequest />
         </>
     )
   }

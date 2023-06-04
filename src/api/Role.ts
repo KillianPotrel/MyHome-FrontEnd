@@ -10,7 +10,7 @@ export type Role = {
 }
 
 
-export const useGetManyRole = () =>
+export const useManyRole = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getRoles"), 
         queryKey: ["manyRole"],

@@ -3,7 +3,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { UserGroupIcon } from '@heroicons/react/20/solid';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { Role, useGetManyRole } from '../../api/Role';
+import { Role, useManyRole } from '../../api/Role';
 import { Member, usePostCreateFamily } from '../../api/Family';
 import { useNavigate } from 'react-router';
 import { errorToast, successToast } from '../../services/toastify.service';
@@ -13,7 +13,7 @@ const FamilyCreate = (): JSX.Element => {
     const [open, setOpen] = useState(false)
     const [familyName, setFamilyName] = useState("")
     const [members, setMember] = useState<Member[]>([])
-    const { data: dataRoles } = useGetManyRole()
+    const { data: dataRoles } = useManyRole()
     const roles : Role[] | undefined = dataRoles?.data
     const usePostFamily = usePostCreateFamily()
     const navigate = useNavigate();
@@ -66,7 +66,7 @@ const FamilyCreate = (): JSX.Element => {
         let error_member = false;
 
         members.forEach(member => {
-            if(member.email === undefined || member.email=== ""){
+            if(member.email === undefined || member.email === "" || !member.email.includes("@")){
                 errorToast("L'un des membres n'est pas correctement renseigné");
                 error_member = true 
             }

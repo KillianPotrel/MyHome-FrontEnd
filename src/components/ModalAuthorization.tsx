@@ -1,16 +1,29 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { LockClosedIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import React, { Fragment, useRef, useState } from 'react';
-import { Permission } from '../api/Permission';
+import { MutationArgs, Permission, useManyPermissionUserFamily, usePutPermissionUser } from '../api/Permission';
+import Switch from './Switch';
 
 type PermissionsModalProps = {
-    permissions : Permission[]
+    permissions : Permission[],
+    user_id: number
 }
 
-const ModalAuthorization = ({permissions} : PermissionsModalProps):JSX.Element => {
+const ModalAuthorization = ({permissions, user_id} : PermissionsModalProps):JSX.Element => {
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
+    const { data: datePermissionUser } = useManyPermissionUserFamily(user_id)
+    const permissionUser : Permission[] = datePermissionUser?.data
     
+    const updatePermissionUser = usePutPermissionUser(user_id)
+    
+    const handleUpdate = (permission: Permission, activate : number) => {
+        const args : MutationArgs = {
+            permission,
+            activate
+        }
+        updatePermissionUser.mutate(args)
+      }
     return (
         <>
             <button
@@ -76,20 +89,23 @@ const ModalAuthorization = ({permissions} : PermissionsModalProps):JSX.Element =
                                     </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-white">
-                                        {(permissions !== undefined || permissions?.length > 0) && 
+                                        {(permissions !== undefined && permissions?.length > 0 
+                                            && permissionUser !== undefined && permissionUser?.length) &&
                                             permissions.map((permission, index) => (
                                                 <tr key={index}>
-                                                    
                                                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm  text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
                                                         {permission.label}
                                                     </td>
+                                                    
                                                     <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                        <input
-                                                            id="offers"
-                                                            name="offers"
-                                                            type="checkbox"
-                                                            className="h-4 w-4 rounded border-gray-300 text-amber-600 focus:ring-amber-600"
-                                                        />
+                                                        <Switch
+                                                            id={user_id}
+                                                            category={"permission_" + permission.key}
+                                                            isChecked={permissionUser.some(x => x.id === permission.id)}
+                                                            handleClick={() => {
+                                                                handleUpdate(permission, permissionUser.find(x => x.id === permission.id) ? 0 : 1)
+                                                              }}
+                                                            />
                                                     </td>
                                                 </tr>
                                             ))

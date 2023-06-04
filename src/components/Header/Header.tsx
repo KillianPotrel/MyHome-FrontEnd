@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { accountService } from "../services/account.service";
-import { errorToast, successToast } from "../services/toastify.service";
-import { usePostUserLogout } from "../api/User";
+import { accountService } from "../../services/account.service";
+import { errorToast, successToast } from "../../services/toastify.service";
+import { usePostUserLogout } from "../../api/User";
 
 import { Fragment } from "react";
 import { Disclosure, Menu, Popover, Transition } from "@headlessui/react";
 import { ArrowPathIcon, Bars3Icon, BellIcon, ChartPieIcon, CursorArrowRaysIcon, EyeIcon, FingerPrintIcon, PhoneIcon, PlayCircleIcon, SquaresPlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import NotificationModal from "./NotificationModal";
+import { useDeleteNotification } from "../../api/Notification";
 
 const notifications = [
   { id: 1, name: 'Budget', description: 'Le budget a été calculé', href: '#', icon: ChartPieIcon },
@@ -27,6 +29,12 @@ function classNames(...classes : any[]) {
 const Header = (): JSX.Element => {
   let navigate = useNavigate();
   const userPostLogout = usePostUserLogout();
+
+  const deleteNotification = useDeleteNotification()
+
+  const handleUpdate = () => {
+    deleteNotification.mutate(null)
+  }
 
   useEffect(() => {
     if (userPostLogout.isSuccess) {
@@ -65,7 +73,7 @@ const Header = (): JSX.Element => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <a href="family/home">                    
+                  <a onClick={() => navigate('/family/dashboard')}>                    
                     <img
                       className="block h-8 w-auto lg:hidden"
                       src="../images/logo.png"
@@ -144,7 +152,6 @@ const Header = (): JSX.Element => {
 
 
 
-
                 <Popover className="relative">
                   <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -159,41 +166,31 @@ const Header = (): JSX.Element => {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    {/* */}
                     <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4">
                       <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                         <div className="p-4 overflow-y-scroll max-h-96">
-                          {notifications.map((notification) => (
-                            <div key={notification.id} className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                              <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                <notification.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
-                              </div>
-                              <div>
-                                <a href={notification.href} className="font-semibold text-gray-900">
-                                  {notification.name}
-                                  <span className="absolute inset-0" />
-                                </a>
-                                <p className="mt-1 text-gray-600">{notification.description}</p>
-                              </div>
-                            </div>
-                          ))}
+                          <NotificationModal />
                         </div>
                         <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                          {callsToAction.map((item) => (
                             <a
-                              key={item.name}
-                              href={item.href}
-                              className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+                              className="cursor-pointer flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
                             >
-                              <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                              {item.name}
+                              <EyeIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                              Marqué comme vu
                             </a>
-                          ))}
+                            <a
+                              onClick={() => handleUpdate()}
+                              className="cursor-pointer flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+                            >
+                              <TrashIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                              Supprimé tout
+                            </a>
                         </div>
                       </div>
                     </Popover.Panel>
                   </Transition>
                 </Popover>
+
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

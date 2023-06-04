@@ -5,12 +5,19 @@ import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
 
 export type User = {
+    token?: string,
     firstname: string 
     lastname: string | null
     birthday: Date | null
     avatar: string | null
     email: string
     password: string
+}
+
+export type ChangePassword = {
+    token?: string,
+    oldpassword: string,
+    newpassword: string,
 }
 
 export const usePostUserRegister = () => {
@@ -53,5 +60,31 @@ export const useUserInfo = (user_id?: number) =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getUserInfo", { params: { token: accountService.getToken(), user_id: user_id} }), 
         queryKey: ["oneUserInfo"],
-        onSettled(res) {console.log(res)}
     })
+
+export const usePutUser = () => {
+    return useMutation({
+        mutationFn: (args : User) => {
+            args.token = accountService.getToken()
+            return axios
+                .post(URL_API + "editInfoUser", args)
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
+
+export const usePutPassword = () => {
+    return useMutation({
+        mutationFn: (args : ChangePassword) => {
+            args.token = accountService.getToken()
+            return axios
+                .post(URL_API + "changePassword", args)
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
+    

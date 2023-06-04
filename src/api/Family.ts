@@ -43,13 +43,13 @@ export type CreateFamilyArgs = {
     members: Member[],
 }
 
-export const useGetManyFamilyByUser = () =>
+export const useManyFamilyByUser = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getFamiliesByUser/" + accountService.getToken()), 
         queryKey: ["manyFamilyByUser"],
     })
 
-export const useGetManyInvitationByUser = () =>
+export const useManyInvitationByUser = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getInvitationByUser/" + accountService.getToken()), 
         queryKey: ["manyInvitationByUser"],
@@ -90,7 +90,7 @@ export const usePostCreateFamily = () => {
 }
 
 
-export const useGetManyMembersByFamily = () =>
+export const useManyMembersByFamily = () =>
     useQuery({
         queryFn: () =>
         axios.get(URL_API + "getMembresFamily", { params: { 

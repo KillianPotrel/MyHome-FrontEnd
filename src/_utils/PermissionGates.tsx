@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ModalNotification = ():JSX.Element => {
+const PermissionGates = ():JSX.Element => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const ModalNotification = ():JSX.Element => {
     );
 };
 
-export default ModalNotification;
+export default PermissionGates;

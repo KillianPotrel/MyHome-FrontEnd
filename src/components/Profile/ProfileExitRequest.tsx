@@ -1,7 +1,55 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ExitRequest, usePostExitRequest } from '../../api/ExitRequest';
+import { errorToast, successToast } from '../../services/toastify.service';
 
-const ExitRequest = ():JSX.Element => {
+const ProfileExitRequest = ():JSX.Element => {
+    const [exitRequest, setExitRequest] = useState<ExitRequest>({
+        date_debut: new Date(),
+        date_fin: new Date(),
+        motif: ""
+    })
+    
+    
+    const postExistRequest = usePostExitRequest()
+    const handleChange = (e : any) => {
+        if(e.target.name === "date_debut" || e.target.name === "date_fin"){
+            setExitRequest({
+                ...exitRequest,
+                    [e.target.name]: new Date(e.target.value),
+                });
+        } else {
+            setExitRequest({
+            ...exitRequest,
+                [e.target.name]: e.target.value,
+            });
+        }
+    }
+
+    const handleSubmit = () => {
+        console.log(exitRequest)
+        if(exitRequest.date_debut === exitRequest.date_fin || exitRequest.date_debut > exitRequest.date_fin){
+            errorToast("Erreur dans les dates saisies");
+            return
+        }
+        if(exitRequest.motif.length === 0){
+            errorToast("Renseigner une raison");
+            return
+        }
+        postExistRequest.mutate(exitRequest)
+    }
+
+    useEffect(() => {
+        if (postExistRequest.isSuccess) {
+          successToast("Demande effectué");
+          setExitRequest({
+            date_debut: new Date(),
+            date_fin: new Date(),
+            motif: ""})
+        } else if (postExistRequest.isError) {
+          errorToast("Erreur lors de la demande de sortie");
+        }
+      }, [postExistRequest]);
+
     return (              
         <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
             <div>
@@ -20,9 +68,10 @@ const ExitRequest = ():JSX.Element => {
                     <div className="mt-2">
                     <div className="flex rounded-md bg-black/5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amber-600 sm:max-w-md">
                         <input
-                        type="time"
-                        name="exit_time"
-                        id="exit_time"
+                        type="datetime-local"
+                        name="date_debut"
+                        onChange={handleChange}
+                        id="date_debut"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -35,9 +84,10 @@ const ExitRequest = ():JSX.Element => {
                     <div className="mt-2">
                     <div className="flex rounded-md bg-black/5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amber-600 sm:max-w-md">
                         <input
-                        type="time"
-                        name="return_time"
-                        id="return_time"
+                        type="datetime-local"
+                        name="date_fin"
+                        onChange={handleChange}
+                        id="date_fin"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -50,8 +100,9 @@ const ExitRequest = ():JSX.Element => {
                     </label>
                     <div className="mt-2">
                     <textarea
-                        id="about"
-                        name="about"
+                        id="motif"
+                        name="motif"
+                        onChange={handleChange}
                         rows={3}
                         className="block w-full bg-black/5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                         defaultValue={''}
@@ -63,9 +114,11 @@ const ExitRequest = ():JSX.Element => {
           <div className="flex items-center gap-x-6 px-4 py-4 sm:px-8">
             
             <button 
+                type='button'
+                onClick={handleSubmit}
                 className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                 >
-                    Sauvegarder
+                    Demander
             </button>
           </div>
         </form>
@@ -73,4 +126,4 @@ const ExitRequest = ():JSX.Element => {
     );
 };
 
-export default ExitRequest;
+export default ProfileExitRequest;
