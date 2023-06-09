@@ -1,5 +1,8 @@
 import { JWT_KEY } from "./key.js";
 import { FAMILY_KEY } from "./key.js";
+import { URL_API } from "./key.js";
+import axios from "axios";
+
 let getToken = () => {
   return localStorage.getItem(JWT_KEY);
 };
@@ -34,6 +37,27 @@ let isFamilyConnect = () => {
   return !!family_id;
 };
 
+let isMe = async (id_member) => {
+  let token = localStorage.getItem(JWT_KEY);
+
+  if (token) {
+    try {
+      const response = await axios.get(URL_API + "getUserInfo", {
+        params: { token: accountService.getToken(), user_id: null },
+      });
+
+      const userData = response.data;
+      const userId = userData.id;
+
+      return id_member === userId;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return false;
+};
+
 export const accountService = {
   getToken,
   saveToken,
@@ -43,4 +67,5 @@ export const accountService = {
   saveFamily,
   isFamilyConnect,
   disconnectFamily,
+  isMe,
 };

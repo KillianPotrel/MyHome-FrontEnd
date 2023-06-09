@@ -14,6 +14,7 @@ const Switch = ({id, category, isChecked, handleClick} : SwitchProps):JSX.Elemen
     return (
         <label className="switch">
           <input id={"switch_" + category + "_"+ id} 
+            name={"switch_" + category + "_"+ id} 
             type="checkbox" 
             checked={isChecked} 
             onChange={handleClick}

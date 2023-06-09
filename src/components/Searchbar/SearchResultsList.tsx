@@ -15,6 +15,7 @@ export const SearchResultsList = ({ results, setResults } : SearchResultsListPro
         const articl_warning : ArticleWarning = {
           article_id: result.id,
           label: result.product_name,
+          is_custom: result.is_custom,
         }
         return <SearchResult result={articl_warning} setResults={setResults} key={id} />;
       })}

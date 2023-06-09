@@ -26,7 +26,6 @@ const ProfileExitRequest = ():JSX.Element => {
     }
 
     const handleSubmit = () => {
-        console.log(exitRequest)
         if(exitRequest.date_debut === exitRequest.date_fin || exitRequest.date_debut > exitRequest.date_fin){
             errorToast("Erreur dans les dates saisies");
             return

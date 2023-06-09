@@ -22,11 +22,13 @@ const SearchBar = ({ setResults } :  SearchBarProps) => {
     if(value.length > 0){
       axios.get(URL_API + "getArticleBySearch", { params: { 
         token: accountService.getToken(),
+        family_id: accountService.getFamily(),
         search: value,
       }}).then((res) => {
         if(res.data.length === 0){
           const article : ArticleSearch = {
-            product_name: input
+            product_name: input,
+            is_custom: 1,
           }
           setResults([article])
         } else {
@@ -36,25 +38,10 @@ const SearchBar = ({ setResults } :  SearchBarProps) => {
     } else {
       setResults([])
     }
-
-    // fetch(URL_API + "getArticleBySearch", params : { })
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     const results = json.filter((user) => {
-    //       return (
-    //         value &&
-    //         user &&
-    //         user.name &&
-    //         user.name.toLowerCase().includes(value)
-    //       );
-    //     });
-    //     setResults(results);
-    //   });
   };
   
   const handleChange = (value : string) => {
     setInput(value);
-    //fetchData(value);
   };
 
   return (

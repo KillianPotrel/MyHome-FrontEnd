@@ -9,7 +9,6 @@ type SearchResultProps = {
 export const SearchResult = ({ result, setResults } : SearchResultProps) => {
   const postArticleWarning = usePostArticleWarning()
   const handleSubmit = () => {
-    console.log(result)
     postArticleWarning.mutate(result)
     setResults([])
   }

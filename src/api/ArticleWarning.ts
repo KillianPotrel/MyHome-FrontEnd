@@ -11,6 +11,7 @@ export type ArticleSearch = {
     code?: string,
     product_name: string,
     product_img?: string,
+    is_custom?: number,
     countries_fr?: string,
 }
 
@@ -24,6 +25,7 @@ export type ArticleWarning = {
     id?: number,
     token?: string,
     family_id?: number,
+    is_custom?: number,
     article_id?: number,
     label?: string,
     is_allergic?: number,
@@ -34,16 +36,18 @@ export const useManyArticleSearch = (args : string) =>
         queryFn: () =>
         axios.get(URL_API + "getArticleBySearch", { params: { 
             token: accountService.getToken(),
+            family_id: accountService.getFamily(),
             search: args,
         }}), 
         queryKey: ["manyArticleSearch"],
     })
 
-export const useManyArticleWarning = () =>
+export const useManyArticleWarning = (user_id ?: number) =>
     useQuery({
         queryFn: () =>
         axios.get(URL_API + "getArticleWarningUser", { params: { 
-            token: accountService.getToken()
+            token: accountService.getToken(),
+            user_id,
         }}), 
         queryKey: ["manyArticleWarning"],
     })
@@ -55,6 +59,7 @@ export const usePostArticleWarning = () => {
         mutationFn: (article: ArticleWarning) => axios.post(URL_API + "setArticleWarningUser", { 
             token: accountService.getToken(),
             family_id: accountService.getFamily(),
+            is_custom: article.is_custom,
             article_id: article.article_id,
             label: article.label,
         }), 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import 'flowbite';
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PublicRouter from "./pages/PublicRouter";

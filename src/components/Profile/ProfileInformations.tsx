@@ -40,10 +40,7 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
       }, [putUser]);
 
     const handleChange = (e : any) => {
-        console.log(e.target.name)
-        console.log(e.target.value)
         const date = new Date(e.target.value)
-        console.log(date)
         if(e.target.name === "birthday"){
             setUser({
                 ...userPost,
@@ -55,7 +52,6 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
                 [e.target.name]: e.target.value,
             });
         }
-        console.log(user.birthday)
     };
 
     const handleChangeImage = (e : any) => {

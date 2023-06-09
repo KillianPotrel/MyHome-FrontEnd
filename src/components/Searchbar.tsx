@@ -19,8 +19,6 @@ const Searchbar = ():JSX.Element => {
     const handleSearchbar = (e : any)  => {
         setCompteur(compteur+1)
         setTextInput(e.target.value)
-        console.log(e.target.value)
-        console.log(textInput)
         if(compteur >= 2){
             search()
             setStyleResult("block")
@@ -35,10 +33,7 @@ const Searchbar = ():JSX.Element => {
 
     
     const search = () => {
-        console.log("SEARCH")
         setResultSearch(dataSearch?.data)
-        console.log(dataSearch?.data)
-        console.log(textInput)
     }
 
     return (

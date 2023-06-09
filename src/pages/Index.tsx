@@ -266,7 +266,7 @@ export default function Index(): JSX.Element {
               </Popover.Button>
             </div>
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-              <Popover className="relative">
+              {/* <Popover className="relative">
                 {({ open }) => (
                   <>
                     <Popover.Button
@@ -325,22 +325,28 @@ export default function Index(): JSX.Element {
                     </Transition>
                   </>
                 )}
-              </Popover>
+              </Popover> */}
 
               <a
-                href="#"
+                href="#presentation"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Présentation
               </a>
               <a
-                href="#"
+                href="#product"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Produit
               </a>
               <a
-                href="#"
+                href="#pricing"
+                className="text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Prix
+              </a>
+              <a
+                href="#contact"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Contact
@@ -529,7 +535,7 @@ export default function Index(): JSX.Element {
         </div>
 
         {/* Pitch of team */}
-        <div id="compagny" className="relative overflow-hidden pt-16 pb-32">
+        <div id="presentation" className="relative overflow-hidden pt-16 pb-32">
           <div
             aria-hidden="true"
             className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-gray-100"
@@ -588,10 +594,7 @@ export default function Index(): JSX.Element {
         </div>
 
         {/* Gradient Feature Section */}
-        <div
-          id="product"
-          className="bg-gradient-to-r from-amber-300 to-orange-700"
-        >
+        <div id="product" className="bg-gradient-to-r from-amber-300 to-orange-700">
           <div className="mx-auto max-w-4xl py-16 px-6 sm:pt-20 sm:pb-24 lg:max-w-7xl lg:px-8 lg:pt-24">
             <h2 className="text-3xl font-bold tracking-tight text-white">
               Fonctionnalité de MyHome
@@ -626,7 +629,7 @@ export default function Index(): JSX.Element {
         </div>
 
         {/* Stats section */}
-        <div className="relative bg-gray-900">
+        <div id="pricing" className="relative bg-gray-900">
           <div className="absolute inset-x-0 bottom-0 h-80 xl:top-0 xl:h-full">
             <div className="h-full w-full xl:grid xl:grid-cols-2">
               <div className="h-full xl:relative xl:col-start-2">
@@ -673,7 +676,7 @@ export default function Index(): JSX.Element {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-white">
+        <div id="contact" className="bg-white">
           <div className="mx-auto max-w-4xl py-16 px-6 sm:py-24 lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:px-8">
             <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               <span className="block">

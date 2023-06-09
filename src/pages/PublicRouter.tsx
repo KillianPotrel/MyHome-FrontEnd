@@ -7,6 +7,7 @@ import Layout from "./Layout";
 import FamilyChoice from "./Family/FamilyChoice";
 import FamilyGuard from "../_utils/FamilyGuard";
 import FamilyMember from "./FamilyMember";
+import Member from "./Member";
 
 const PublicRouter = () => {
   return (
@@ -16,6 +17,7 @@ const PublicRouter = () => {
         <Route index element={<Index />} />
           <Route path="/dashboard" element={<FamilyGuard><Home /></FamilyGuard>} />
           <Route path="/members" element={<FamilyGuard><FamilyMember /></FamilyGuard>} />
+          <Route path="/member/:id" element={<FamilyGuard><Member /></FamilyGuard>} />
         </Route>
       <Route path="/*" element={<Error />} />
     </Routes>

@@ -6,7 +6,6 @@ import { format } from '../_utils/FormatDate';
 const TableExitRequest = () => {
     const { data: dataExitRequests } = useManyExitRequest()
     const exitRequests : ExitRequest[] = dataExitRequests?.data
-    console.log(exitRequests)
 
     const responseExitRequest = useResponseExitRequest()
 

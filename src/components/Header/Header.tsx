@@ -76,12 +76,12 @@ const Header = (): JSX.Element => {
                   <a onClick={() => navigate('/family/dashboard')}>                    
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src="../images/logo.png"
+                      src="images/logo.png"
                       alt="MyHome"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src="../images/logo.png"
+                      src="images/logo.png"
                       alt="MyHome"
                     />
                   </a>

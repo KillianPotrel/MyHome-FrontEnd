@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../../style/schedule_user.css'
-import Switch from '../Switch';
 import { Day, useManyDay } from '../../api/Day';
-import { Schedule, useManySchedule } from '../../api/Schedule';
+import { Schedule, useManySchedule, usePostSchedule } from '../../api/Schedule';
 import DaySchedule from './DaySchedule';
-
-const people = [
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  // More people...
-]
+import { errorToast, successToast } from '../../services/toastify.service';
 
 type DaySchedule = {
   day: string,
@@ -16,50 +11,54 @@ type DaySchedule = {
 
 const ProfileSchedule = ():JSX.Element => {
     const {data: dataDay } = useManyDay()
-    const [schedules, setSchedules] = useState<Schedule[]>([])
+    const { data: dataSchedules } = useManySchedule()
+    const schedulesData : Schedule[] = dataSchedules?.data
+    const [schedules, setSchedules] = useState<Schedule[]>(schedulesData || [])
     const days : Day[] = dataDay?.data
-    const { data: dataWarning } = useManySchedule()
-    const schedulesData : Schedule[] = dataWarning?.data
+
+    const postSchedules = usePostSchedule()
 
     useEffect(() => {
-      setSchedules(schedulesData)
-    }, [dataWarning])
+      if (schedulesData) {
+        setSchedules(schedulesData)
+      }
+    }, [dataSchedules])
 
-    const handleChange = (e : any) => {
-        console.log(e.target.name)
-        console.log(e.target.value)
-        const trouve = false 
-        const splited_target = (e.target.name).split('_')
-        const id_day_target : number = splited_target[splited_target.length - 1]
-        console.log(id_day_target)
-        // schedules.forEach(schedule => {
-        //   const splited_target = (e.target.name).split('_')
-        //   const id_day_target : number = splited_target[splited_target.length - 1]
-        //   console.log(id_day_target)
-        //   //if(schedule.day === e.target.name)
-        // });
-    };
+    useEffect(() => {
+        if (postSchedules.isSuccess) {
+          successToast("Changement des horaires réussi");
+        } else if (postSchedules.isError) {
+          errorToast("Erreur lors des modifications des horaires");
+        }
+      }, [postSchedules]);
 
     const handleChildStateChange = (newSchedule : Schedule) => {
-      console.log(newSchedule)
-      const tempSchedules = schedules
-      console.log(schedules.some(item => item.day === newSchedule.day))
-      if(!schedules.some(item => item.day === newSchedule.day)){
-        tempSchedules.push(newSchedule)
+      const updatedSchedules = [...schedules];
+      const existingSchedule = updatedSchedules.find(item => item?.day_id === newSchedule.day_id);
+  
+      if (existingSchedule) {
+        Object.assign(existingSchedule, newSchedule);
       } else {
-        tempSchedules.forEach(schedule => {
-          if(schedule.day === newSchedule.day){
-            schedule = newSchedule
-          }
-        });
+        updatedSchedules.push(newSchedule);
       }
-
-      console.log(tempSchedules)
-      setSchedules(tempSchedules);
+  
+      setSchedules(updatedSchedules);
     };
 
     const handleSubmit = () => {
+      let flagerror = false 
+      schedules.forEach(schedule => {
+        if(schedule.morning_hour_start > schedule.morning_hour_end || 
+          schedule.afternoon_hour_start > schedule.afternoon_hour_end ){
+            flagerror = true
+          }
+      });
 
+      if(flagerror){
+        errorToast("Les horaires renseignés ne sont pas valides");
+      } else {
+        postSchedules.mutate(schedules)
+      }
     }
 
     return (
@@ -78,19 +77,20 @@ const ProfileSchedule = ():JSX.Element => {
                     {(days !== undefined || days?.length > 0) && 
                       days.map((day : Day, index : any) => (
                         <div key={index}>
-                          <DaySchedule index={index} day={day} schedule={schedules?.find(x => x.day == day.id)} handleStateChange={handleChildStateChange} />
-                   
+                          <DaySchedule 
+                            index={index} 
+                            day={day} 
+                            schedule={schedules?.find(x => x?.day_id === day.id)} 
+                            handleStateChange={handleChildStateChange} />
                         </div> 
                       ))}
                   </div>
-                <form className="flex items-start col-start-2">
                   
-                  <button 
-                      className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                      >
-                          Sauvegarder
-                  </button>
-                </form>
+                <button 
+                    className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                    onClick={handleSubmit}>
+                        Sauvegarder
+                </button>
               </div>
             </div>
           </div>

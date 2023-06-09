@@ -6,6 +6,7 @@ import ProfileWarningArticle from '../components/Profile/ProfileWarningArticle';
 import ProfileExitRequest from '../components/Profile/ProfileExitRequest';
 import ProfileSchedule from '../components/Profile/ProfileSchedule';
 import { ErrorBoundary } from '../_utils/ErrorBoundary';
+import PermissionGates from '../_utils/PermissionGates';
 
 const Profile = (): JSX.Element => {
   const { data : dataInfo } = useUserInfo()
@@ -19,10 +20,11 @@ const Profile = (): JSX.Element => {
 
               <ProfileInformations user={dataInfo?.data} />
               <ProfilePassword />
-              <ErrorBoundary>
-                <ProfileWarningArticle />
-              </ErrorBoundary>
-              <ProfileExitRequest />
+              <ProfileWarningArticle />
+                
+              <PermissionGates permission_key='accepter_les_demandes_de_sorties' inversed={true}>
+                <ProfileExitRequest />
+              </PermissionGates>
               <ProfileSchedule />
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">

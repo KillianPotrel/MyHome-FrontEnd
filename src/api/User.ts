@@ -3,8 +3,10 @@ import axios from "axios"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
+import { Schedule } from "./Schedule"
 
 export type User = {
+    id?: number,
     token?: string,
     firstname: string 
     lastname: string | null
@@ -12,6 +14,7 @@ export type User = {
     avatar: string | null
     email: string
     password: string
+    schedules?: Schedule[]
 }
 
 export type ChangePassword = {

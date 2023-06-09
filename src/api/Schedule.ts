@@ -6,13 +6,13 @@ import { accountService } from "../services/account.service"
 
 export type Schedule = {
     id?: number,
-    day: number,
-    morning_hour_start?: Date,
-    morning_hour_end?: Date, 
-    afternoon_hour_start?: Date,
-    afternoon_hour_end?: Date,
-    lunch_outside?: boolean,
-    evening_meal_outside?: boolean,
+    day_id: number,
+    morning_hour_start?: string,
+    morning_hour_end?: string, 
+    afternoon_hour_start?: string,
+    afternoon_hour_end?: string,
+    lunch_outside?: number,
+    evening_meal_outside?: number,
   }
 
   
@@ -25,10 +25,12 @@ useQuery({
     queryKey: ["manySchedule"],
 })
 
- // http://myhomeback.test/api/getSchedules?token=65179465-2eb5-45e1-9f3e-a28cf660e098
-export const usePutSchedule = () => {
+export const usePostSchedule = () => {
     return useMutation({
-        mutationFn: (schedules: Schedule[]) => axios.post(URL_API + "user/create", schedules),  
+        mutationFn: (schedules: Schedule[]) => axios.post(URL_API + "postSchedules", { 
+            token: accountService.getToken(),
+            schedules
+        }),  
         onError(err: FetchError) {
             return err
         },

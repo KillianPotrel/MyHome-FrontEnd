@@ -98,6 +98,7 @@ const Register = () => {
             </form>
             <div className="text-sm mt-4">
               <a 
+                href=""
                 onClick={() => navigate("/login")}
                 className="font-medium text-amber-400 hover:text-amber-500 cursor-pointer">
                 Déjà un compte ? Connectez-vous
