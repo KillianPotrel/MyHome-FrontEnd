@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
-import { Recipe, useManyRecipeByFamily } from '../api/Recipe';
+import { Recipe, useManyRecipeByFamily, usePostRecipe } from '../api/Recipe';
 import { useNavigate } from 'react-router';
+import { errorToast, successToast } from '../services/toastify.service';
 
 const RecipeBook = () => {
     let navigate = useNavigate();
     const { data : dataRecipe } = useManyRecipeByFamily()
     const recipeData : Recipe[] = dataRecipe?.data
+    const postRecipe = usePostRecipe()
+
+    useEffect(() => {
+
+        if (postRecipe.isSuccess) {
+            console.log(postRecipe)
+            successToast("Recette créée avec succès");
+            navigate("/family/recipe/"+postRecipe.data.data);
+        } else if (postRecipe.isError) {
+            errorToast("Erreur lors de la création de la famille");
+          if(postRecipe.failureReason.response.status === 403)
+            errorToast("Erreur de saisie");
+        }
+      }, [postRecipe,navigate]);
 
     //TODO : Replace with API difficulty when available
     const difficulty = [
@@ -23,10 +38,24 @@ const RecipeBook = () => {
         "Plat",
         "Dessert"
     ]
-    
+
+    const handleSubmit = () => {
+        postRecipe.mutate()
+    }
+
     return (
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="bg-white py-12 flex justify-center flex-col">
+                
+                <div className="flex items-center gap-x-6 px-4 py-4 sm:px-8">
+                    <button 
+                        type='button'
+                        onClick={handleSubmit}
+                        className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                        >
+                            Nouvelle recette
+                    </button>
+                </div>
                 { recipeData !== undefined && recipeData.length > 0 
                     ?
                     <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-6">

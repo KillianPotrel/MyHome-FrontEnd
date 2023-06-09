@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { accountService } from "../services/account.service";
 import { URL_API } from "../services/key";
 import axios from "axios";
+import { FetchError } from "../type/fetchError";
 
 export type Recipe = {
     id: number,
@@ -25,3 +26,18 @@ export const useManyRecipeByFamily = () =>
         }}), 
         queryKey: ["manyRecipe"],
     })
+
+export const usePostRecipe = () => {
+    return useMutation({
+        mutationFn: () => {
+            return axios
+                .post(URL_API + "createRecipe", {
+                    token : accountService.getToken(),
+                    family_id : accountService.getFamily()
+                })
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
