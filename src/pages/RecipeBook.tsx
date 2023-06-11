@@ -25,11 +25,11 @@ const RecipeBook = () => {
 
     //TODO : Replace with API difficulty when available
     const difficulty = [
-        "Facile",
-        "Moyen",
-        "Difficile",
-        "Expert",
-        "Avancé",
+        "Facile",//green
+        "Moyen",//yellow
+        "Difficile",//red
+        "Expert",//blue
+        "Avancé",//purple
     ]
 
     //TODO : Replace with API difficulty when available

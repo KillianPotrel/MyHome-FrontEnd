@@ -3,6 +3,8 @@ import { accountService } from "../services/account.service";
 import { URL_API } from "../services/key";
 import axios from "axios";
 import { FetchError } from "../type/fetchError";
+import { RecipeStep } from "./RecipeStep";
+import { ArticleCustom, ArticleRecipe } from "./Article";
 
 export type Recipe = {
     id: number,
@@ -12,6 +14,8 @@ export type Recipe = {
     preparation_time: number,
     difficulty: number,
     image: string,
+    recipe_steps: RecipeStep[],
+    recipe_articles: ArticleRecipe[],
     family_id: number,
     created_at: Date,
     updated_at: Date
@@ -41,3 +45,13 @@ export const usePostRecipe = () => {
         },
     })
 }
+
+export const useOneRecipeById = (recipe_id : number) =>
+    useQuery({
+        queryFn: () =>
+        axios.get(URL_API + "getRecipeById", { params: { 
+            token: accountService.getToken(),
+            recipe_id
+        }}), 
+        queryKey: ["manyRecipe"],
+    })

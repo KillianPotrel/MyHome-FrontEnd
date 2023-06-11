@@ -1,6 +1,6 @@
 import React from "react";
 import "./SearchResult.css";
-import { ArticleSearch, ArticleWarning, usePostArticleWarning } from "../../api/ArticleWarning";
+import { ArticleSearch, ArticleWarning, usePostArticleWarning } from "../../api/Article";
 
 type SearchResultProps = {
   result : ArticleWarning,

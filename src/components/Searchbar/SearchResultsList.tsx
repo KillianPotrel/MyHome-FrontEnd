@@ -1,7 +1,7 @@
 import React from "react";
 import "./SearchResultsList.css";
 import { SearchResult } from "./SearchResult";
-import { ArticleSearch, ArticleWarning } from "../../api/ArticleWarning";
+import { ArticleSearch, ArticleWarning } from "../../api/Article";
 
 type SearchResultsListProps = {
   results : ArticleSearch[],

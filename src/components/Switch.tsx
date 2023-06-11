@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Switch.css'
-import { ArticleWarning } from '../api/ArticleWarning';
+import { ArticleWarning } from '../api/Article';
 
 type SwitchProps = {
   id?: number,

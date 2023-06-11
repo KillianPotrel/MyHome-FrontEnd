@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Switch from '../Switch';
 import SearchBar from '../Searchbar/SearchBar';
 import { SearchResultsList } from '../Searchbar/SearchResultsList';
-import { ArticleSearch, ArticleWarning, useDeleteArticleWarning, useManyArticleWarning, usePutArticleWarning } from '../../api/ArticleWarning';
+import { ArticleSearch, ArticleWarning, useDeleteArticleWarning, useManyArticleWarning, usePutArticleWarning } from '../../api/Article';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
 const ProfileWarningArticle = ():JSX.Element => {

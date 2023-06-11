@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./SearchBar.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { ArticleSearch, useManyArticleSearch } from "../../api/ArticleWarning";
+import { ArticleSearch, useManyArticleSearch } from "../../api/Article";
 import { URL_API } from "../../services/key";
 import axios from "axios";
 import { accountService } from "../../services/account.service";

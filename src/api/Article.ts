@@ -1,4 +1,4 @@
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { URL_API } from "../services/key"
 import { accountService } from "../services/account.service"
@@ -29,6 +29,15 @@ export type ArticleWarning = {
     article_id?: number,
     label?: string,
     is_allergic?: number,
+}
+
+export type ArticleRecipe = {
+    id: number,
+    recipe_id: number,
+    article_custom ?: number,
+    article_id ?: number,
+    product_name: string,
+    quantity: number,
 }
 
 export const useManyArticleSearch = (args : string) =>

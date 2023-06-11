@@ -6,7 +6,7 @@ import { format } from '../_utils/FormatDate';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { ArticleWarning, useManyArticleWarning } from '../api/ArticleWarning';
+import { ArticleWarning, useManyArticleWarning } from '../api/Article';
 import { CalendarEvent } from '../api/CalendarEvent';
 
 
