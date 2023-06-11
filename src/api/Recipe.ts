@@ -55,3 +55,17 @@ export const useOneRecipeById = (recipe_id : number) =>
         }}), 
         queryKey: ["manyRecipe"],
     })
+    
+export const useDeleteRecipe = () => {
+    return useMutation({
+        mutationFn: (recipe_id : number) => {
+            return axios.post(URL_API + "deleteRecipeById", { 
+            token: accountService.getToken(),
+            family_id: parseInt(accountService.getFamily()),
+            recipe_id
+        })}, 
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}

@@ -9,7 +9,8 @@ import FamilyGuard from "../_utils/FamilyGuard";
 import FamilyMember from "./FamilyMember";
 import Member from "./Member";
 import RecipeBook from "./RecipeBook";
-import Recipe from "./RecipeItem";
+import RecipeItem from "./RecipeItem";
+import RecipeitemEdit from "./RecipeitemEdit";
 
 const PublicRouter = () => {
   return (
@@ -21,7 +22,8 @@ const PublicRouter = () => {
           <Route path="/members" element={<FamilyGuard><FamilyMember /></FamilyGuard>} />
           <Route path="/member/:id" element={<FamilyGuard><Member /></FamilyGuard>} />
           <Route path="/recipes" element={<FamilyGuard><RecipeBook /></FamilyGuard>} />
-          <Route path="/recipe/:id" element={<FamilyGuard><Recipe /></FamilyGuard>} />
+          <Route path="/recipe/:id" element={<FamilyGuard><RecipeItem /></FamilyGuard>} />
+          <Route path="/recipe/edit/:id" element={<FamilyGuard><RecipeitemEdit /></FamilyGuard>} />
         </Route>
       <Route path="/*" element={<Error />} />
     </Routes>
