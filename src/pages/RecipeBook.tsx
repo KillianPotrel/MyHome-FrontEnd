@@ -3,6 +3,8 @@ import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 import { Recipe, useManyRecipeByFamily, usePostRecipe } from '../api/Recipe';
 import { useNavigate } from 'react-router';
 import { errorToast, successToast } from '../services/toastify.service';
+import { Difficulty, useManyDifficulty } from '../api/Difficulty';
+import { Category, useManyCategory } from '../api/Category';
 
 const RecipeBook = () => {
     let navigate = useNavigate();
@@ -10,12 +12,18 @@ const RecipeBook = () => {
     const recipeData : Recipe[] = dataRecipe?.data
     const postRecipe = usePostRecipe()
 
+    const { data : dataDifficulty } = useManyDifficulty()
+    const difficulty : Difficulty[] = dataDifficulty?.data
+    
+    const { data : dataCategory } = useManyCategory()
+    const category : Category[] = dataCategory?.data
+
     useEffect(() => {
 
         if (postRecipe.isSuccess) {
             console.log(postRecipe)
             successToast("Recette créée avec succès");
-            navigate("/family/recipe/"+postRecipe.data.data);
+            navigate("/family/recipe/edit/"+postRecipe.data.data);
         } else if (postRecipe.isError) {
             errorToast("Erreur lors de la création de la famille");
           if(postRecipe.failureReason.response.status === 403)
@@ -24,20 +32,20 @@ const RecipeBook = () => {
       }, [postRecipe,navigate]);
 
     //TODO : Replace with API difficulty when available
-    const difficulty = [
-        "Facile",//green
-        "Moyen",//yellow
-        "Difficile",//red
-        "Expert",//blue
-        "Avancé",//purple
-    ]
+    // const difficulty = [
+    //     "Facile",//green
+    //     "Moyen",//yellow
+    //     "Difficile",//red
+    //     "Expert",//blue
+    //     "Avancé",//purple
+    // ]
 
-    //TODO : Replace with API difficulty when available
-    const category = [
-        "Entrée",
-        "Plat",
-        "Dessert"
-    ]
+    // //TODO : Replace with API difficulty when available
+    // const category = [
+    //     "Entrée",
+    //     "Plat",
+    //     "Dessert"
+    // ]
 
     const handleSubmit = () => {
         postRecipe.mutate()
@@ -45,7 +53,7 @@ const RecipeBook = () => {
 
     return (
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div className="bg-white py-12 flex justify-center flex-col">
+            <div className="py-12 flex justify-center flex-col">
                 
                 <div className="flex items-center gap-x-6 px-4 py-4 sm:px-8">
                     <button 
@@ -66,13 +74,38 @@ const RecipeBook = () => {
                                         <h3 className="text-sm font-medium text-gray-900">{recipe.title}</h3>
                                         <div className="flex items-center space-x-1">
                                             <p className="mt-1 text-sm text-gray-500">{recipe.preparation_time} minutes</p>
-                                            <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                                {difficulty[recipe.difficulty - 1]}
-                                            </span>
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 1 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 2 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 3 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 4 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-blue-50 px-1.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 5 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-purple-50 px-1.5 py-0.5 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {/* <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-50 px-1.5 py-0.5 text-xs font-medium text-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-700 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-600/20`}>
+                                                {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                            </span> */}
                                         </div>
                                     </div>
                                     <div>
-                                        <h3 className="flex-shrink-0 text-sm font-medium text-gray-900">{category[recipe.category_id - 1]}</h3>
+                                        <h3 className="flex-shrink-0 text-sm font-medium text-gray-900">{category?.find(item => item.id === recipe.category_id)?.label}</h3>
                                     </div>
                                 </div>
                                 <div>

@@ -38,6 +38,13 @@ export type ArticleRecipe = {
     article_id ?: number,
     product_name: string,
     quantity: number,
+    unit: string,
+}
+
+export type ArticleParams = {
+    article_recipe?: ArticleRecipe
+    article_warning?: ArticleWarning, 
+    recipe_id?: number
 }
 
 export const useManyArticleSearch = (args : string) =>
@@ -107,6 +114,45 @@ export const usePutArticleWarning = () => {
         }), 
         onSettled() {
             queryClient.invalidateQueries(["manyArticleWarning"])
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
+
+export const usePostArticleRecipe = (params : ArticleParams) => {
+    const queryClient = useQueryClient()
+    console.log()
+    return useMutation({
+        mutationFn: () => axios.post(URL_API + "setIngredientRecipe", { 
+            token: accountService.getToken(),
+            family_id: parseInt(accountService.getFamily()),
+            is_custom: params.article_recipe.article_custom,
+            recipe_id: params.recipe_id,
+            article_id: params.article_recipe.article_id,
+            label: params.article_recipe.product_name,
+        }), 
+        onSettled() {
+            queryClient.invalidateQueries(["oneRecipe", params.recipe_id])
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
+
+export const useDeleteArticleRecipe = (params : ArticleParams) => {
+    const queryClient = useQueryClient()
+    // console.log(params)
+    return useMutation({
+        mutationFn: () => axios.post(URL_API + "deleteIngredientRecipe", { 
+            token: accountService.getToken(),
+            ingredient_recipe_id: params.article_recipe.id,
+        }), 
+        onSettled() {
+            console.log(params)
+            queryClient.invalidateQueries(["oneRecipe",params.recipe_id])
         },
         onError(err: FetchError) {
             return err

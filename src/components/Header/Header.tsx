@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { accountService } from "../../services/account.service";
 import { errorToast, successToast } from "../../services/toastify.service";
 import { usePostUserLogout } from "../../api/User";
@@ -10,24 +10,13 @@ import { ArrowPathIcon, Bars3Icon, BellIcon, ChartPieIcon, CursorArrowRaysIcon, 
 import NotificationModal from "./NotificationModal";
 import { useDeleteNotification } from "../../api/Notification";
 
-const notifications = [
-  { id: 1, name: 'Budget', description: 'Le budget a été calculé', href: '#', icon: ChartPieIcon },
-  { id: 2, name: 'Ménage', description: 'On vous a attribué une tâche', href: '#', icon: CursorArrowRaysIcon },
-  { id: 3, name: 'Course', description: "Course clôturée", href: '#', icon: FingerPrintIcon },
-  { id: 4, name: 'Course', description: 'Course ajouter', href: '#', icon: SquaresPlusIcon },
-  { id: 5, name: 'Repas', description: 'Un nouveau repas a été programmé.', href: '#', icon: ArrowPathIcon },
-]
-const callsToAction = [
-  { name: 'Marqué comme vu', href: '#', icon: EyeIcon },
-  { name: 'Supprimé tout', href: '#', icon: TrashIcon },
-]
-
 function classNames(...classes : any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Header = (): JSX.Element => {
   let navigate = useNavigate();
+  const location = useLocation();
   const userPostLogout = usePostUserLogout();
 
   const deleteNotification = useDeleteNotification()
@@ -76,12 +65,12 @@ const Header = (): JSX.Element => {
                   <a onClick={() => navigate('/family/dashboard')}>                    
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src="images/logo.png"
+                      src="/images/logo.png"
                       alt="MyHome"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src="images/logo.png"
+                      src="/images/logo.png"
                       alt="MyHome"
                     />
                   </a>
@@ -91,51 +80,51 @@ const Header = (): JSX.Element => {
                   <a
                     href=""
                     onClick={() => navigate('/family/dashboard')}
-                    className="inline-flex items-center border-b-2 border-amber-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/dashboard' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Accueil
                   </a>
                   <a
                     href=""
                     onClick={() => navigate('/family/members')}
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/members' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Famille
                   </a>
                   <a
                     href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/planning' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Planning
                   </a>
                   <a
                     href=""
                     onClick={() => navigate('/family/recipes')}
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname.includes('/family/recipe') ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Recette
                   </a>
                   <a
                     href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/budget' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Budget
                   </a>
                   <a
                     href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/shoppinglist' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Courses
                   </a>
                   <a
                     href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/meal' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Repas
                   </a>
                   <a
                     href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/cleaning' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Ménage
                   </a>

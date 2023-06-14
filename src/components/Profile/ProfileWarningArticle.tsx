@@ -34,7 +34,7 @@ const ProfileWarningArticle = ():JSX.Element => {
         <div className="col-start-2 col-span-2">          
           <div className="relative search-bar-container">
             <SearchBar setResults={setResults} />
-            {results && results.length > 0 && <SearchResultsList results={results} setResults={setResults} />}
+            {results && results.length > 0 && <SearchResultsList handleFrom='ArticleWarning' results={results} setResults={setResults} />}
           </div>
           <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

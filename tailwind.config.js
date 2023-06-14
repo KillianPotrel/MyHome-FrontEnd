@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        famille: "url('../public/images/famille.jpg')",
+        famille: "url('/public/images/famille.jpg')",
       },
     },
   },

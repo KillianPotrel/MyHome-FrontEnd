@@ -10,7 +10,7 @@ import FamilyMember from "./FamilyMember";
 import Member from "./Member";
 import RecipeBook from "./RecipeBook";
 import RecipeItem from "./RecipeItem";
-import RecipeitemEdit from "./RecipeitemEdit";
+import RecipeitemEdit from "./RecipeItemEdit";
 
 const PublicRouter = () => {
   return (

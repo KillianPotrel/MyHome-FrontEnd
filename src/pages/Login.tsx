@@ -47,7 +47,7 @@ const Login = (): JSX.Element => {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
             className="mx-auto h-12 w-auto"
-            src="images/logo.png"
+            src="/images/logo.png"
             alt="MyHome"
           />
         </div>

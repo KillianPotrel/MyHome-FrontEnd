@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Recipe, useDeleteRecipe, useOneRecipeById } from '../api/Recipe';
-import { CakeIcon, ClockIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { CakeIcon, ClockIcon, ExclamationTriangleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router';
 import { Dialog, Transition } from '@headlessui/react';
 import { errorToast, successToast } from '../services/toastify.service';
+import { Difficulty, useManyDifficulty } from '../api/Difficulty';
+import { Category, useManyCategory } from '../api/Category';
 
 
 const RecipeItem = () => {
@@ -17,10 +19,16 @@ const RecipeItem = () => {
     const { data : dataRecipe } = useOneRecipeById(parseInt(id))
     const recipeData : Recipe = dataRecipe?.data
 
-    const deleteReipe = useDeleteRecipe()
+    const { data : dataDifficulty } = useManyDifficulty()
+    const difficulty : Difficulty[] = dataDifficulty?.data
+    
+    const { data : dataCategory } = useManyCategory()
+    const category : Category[] = dataCategory?.data
+
+    const deleteRecipe = useDeleteRecipe()
 
     const handleDelete = () => {
-        deleteReipe.mutate(parseInt(id))
+        deleteRecipe.mutate(parseInt(id))
     }
 
     const handleModify = () => {
@@ -28,13 +36,13 @@ const RecipeItem = () => {
     }
 
     useEffect(() => {
-      if (deleteReipe.isSuccess) {
+      if (deleteRecipe.isSuccess) {
         successToast("Suppression de la recette réussi");
         navigate("/family/recipes");
-      } else if (deleteReipe.isError) {
+      } else if (deleteRecipe.isError) {
         errorToast("Erreur lors de la suppresion de la recette");
       }
-    }, [deleteReipe,navigate]);
+    }, [deleteRecipe,navigate]);
 
     return (
     <>
@@ -105,6 +113,26 @@ const RecipeItem = () => {
         </Transition.Root>
             
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            {recipeData?.warning_user?.length > 0 &&
+                <div className="rounded-md mb-5 bg-red-50 p-4">
+                    <div className="flex">
+                        <div className="flex-shrink-0">
+                        <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                        </div>
+                        <div className="ml-3">
+                            <h3 className="text-sm font-medium text-red-800">Il y a {recipeData?.warning_user?.length} articles a surveiller</h3>
+                            <div className="mt-2 text-sm text-red-700">
+                                <ul role="list" className="list-disc space-y-1 pl-5">
+                                    
+                                {recipeData?.warning_user.map((warning_user) => (
+                                    <li>{warning_user}</li>       
+                                ))}
+                                {/* <li>Léo n'aime pas : concoMbre</li> */}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
             <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {/* Invoice summary */}
                 <div className="lg:col-start-3 lg:row-end-1">
@@ -114,15 +142,41 @@ const RecipeItem = () => {
                                 <dt className="text-sm font-semibold leading-6 text-gray-900">
                                     {recipeData?.title}
                                 </dt>
-                                <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">{recipeData?.category_id}</dd>
+                                <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">{category?.find(item => item.id === recipeData?.category_id)?.label}</dd>
                             </div>
                             {recipeData?.difficulty &&
                                 <div className="flex-none self-end px-6 pt-4">
                                     <dt className="sr-only">Status</dt>
                                     
-                                    <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
-                                        {recipeData.difficulty}
-                                    </dd>
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 1 && 
+                                        <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 2 && 
+                                        <dd className="rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 3 && 
+                                        <dd className="rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 4 && 
+                                        <dd className="rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 5 && 
+                                        <dd className="rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-600 ring-1 ring-inset ring-purple-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {/* <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+                                        {recipeData?.difficulty}
+                                    </dd> */}
+                                    {/* {difficulty?.find(item => item.id === recipeData?.difficulty)?.label} */}
                                 </div>
                             }
                             {recipeData?.preparation_time &&
@@ -132,7 +186,7 @@ const RecipeItem = () => {
                                         <ClockIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
                                     </dt>
                                     <dd className="text-sm leading-6 text-gray-500">
-                                        {recipeData.preparation_time + " min de préparation"}
+                                        {recipeData?.preparation_time + " min de préparation"}
                                     </dd>
                                 </div>
                             }
@@ -143,7 +197,7 @@ const RecipeItem = () => {
                                         <CakeIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
                                     </dt>
                                     <dd className="text-sm leading-6 text-gray-500">
-                                        {recipeData.cooking_time + " min de cuisson"}
+                                        {recipeData?.cooking_time + " min de cuisson"}
                                     </dd>
                                 </div>
                             }
@@ -183,14 +237,14 @@ const RecipeItem = () => {
                         </div>
                         
                         {recipeData?.recipe_articles && recipeData?.recipe_articles.map((recipe_article) => (
-                            <div key={recipe_article.id} className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
-                                <dt className="font-semibold text-gray-500">{recipe_article?.article_id}</dt>
-                            </div>              
-                        ))}
-                        {recipeData?.recipe_articles && recipeData?.recipe_articles.map((recipe_article) => (
-                            <div key={recipe_article.id} className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
-                                <dt className="font-semibold text-gray-500">{recipe_article?.quantity} gr</dt>
-                            </div>                
+                            <>
+                                <div key={recipe_article.id + "_product_name"} className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
+                                    <dt className="font-semibold text-gray-500">{recipe_article?.product_name}</dt>
+                                </div>              
+                                <div key={recipe_article.id + "_unit"} className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
+                                    <dt className="font-semibold text-gray-500">{recipe_article?.quantity + " "} {recipe_article?.unit ?? recipe_article?.unit}</dt>
+                                </div> 
+                            </>               
                         ))}
                     </dl>
                     <table className="mt-16 w-full whitespace-nowrap text-left text-sm leading-6">

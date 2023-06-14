@@ -1,5 +1,5 @@
 export type RecipeStep = {
-    id: number,
+    id?: number,
     recipe_id: number,
     text: string, 
     order: number

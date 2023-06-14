@@ -1,15 +1,28 @@
 import React from "react";
 import "./SearchResult.css";
-import { ArticleSearch, ArticleWarning, usePostArticleWarning } from "../../api/Article";
+import { ArticleRecipe, ArticleParams, ArticleSearch, ArticleWarning, usePostArticleRecipe, usePostArticleWarning } from "../../api/Article";
 
 type SearchResultProps = {
-  result : ArticleWarning,
+  handleFrom : string,
+  result : any,
   setResults : React.Dispatch<React.SetStateAction<ArticleSearch[]>>
+  recipe_id?: number
 }
-export const SearchResult = ({ result, setResults } : SearchResultProps) => {
+export const SearchResult = ({ handleFrom, result, setResults, recipe_id } : SearchResultProps) => {
   const postArticleWarning = usePostArticleWarning()
+
+  const params : ArticleParams = {
+    recipe_id,
+    article_recipe: result
+  }
+  const postArticleRecipe = usePostArticleRecipe(params)
+
   const handleSubmit = () => {
-    postArticleWarning.mutate(result)
+    if(handleFrom === "ArticleWarning"){
+      postArticleWarning.mutate(result)
+    } else if (handleFrom === "ArticleRecipe") {
+      postArticleRecipe.mutate()
+    }
     setResults([])
   }
 
@@ -18,7 +31,7 @@ export const SearchResult = ({ result, setResults } : SearchResultProps) => {
       className="search-result"
       onClick={handleSubmit}
     >
-      {result.label}
+      {result.product_name || result.label}
     </div>
   );
 };
