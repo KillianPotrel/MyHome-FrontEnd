@@ -17,13 +17,11 @@ export type MutationArgs = {
     activate: number
 }
 
-
 export const useManyPermission = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getAllPermissions", { params: { token: accountService.getToken() } }), 
         queryKey: ["manyPermission"],
     })
-
 
 export const useManyPermissionUserFamily = (args_user_id : number) =>
     useQuery({

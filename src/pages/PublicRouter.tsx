@@ -11,6 +11,7 @@ import Member from "./Member";
 import RecipeBook from "./RecipeBook";
 import RecipeItem from "./RecipeItem";
 import RecipeitemEdit from "./RecipeItemEdit";
+import Meals from "./Meals";
 
 const PublicRouter = () => {
   return (
@@ -24,6 +25,7 @@ const PublicRouter = () => {
           <Route path="/recipes" element={<FamilyGuard><RecipeBook /></FamilyGuard>} />
           <Route path="/recipe/:id" element={<FamilyGuard><RecipeItem /></FamilyGuard>} />
           <Route path="/recipe/edit/:id" element={<FamilyGuard><RecipeitemEdit /></FamilyGuard>} />
+          <Route path="/meals" element={<FamilyGuard><Meals /></FamilyGuard>} />
         </Route>
       <Route path="/*" element={<Error />} />
     </Routes>

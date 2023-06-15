@@ -15,7 +15,6 @@ export type Notification = {
     updated_at: Date,
   }
 
-  
 export const useManyNotification = () =>
     useQuery({
         queryFn: () =>
@@ -26,7 +25,6 @@ export const useManyNotification = () =>
         queryKey: ["manyNotification"],
     })
 
-    
 export const useDeleteNotification = () => {
     const queryClient = useQueryClient()
     return useMutation({

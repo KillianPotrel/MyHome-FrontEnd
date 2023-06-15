@@ -17,9 +17,16 @@ export type Recipe = {
     recipe_steps?: RecipeStep[],
     recipe_articles?: ArticleRecipe[],
     warning_user?: string[],
+    pivot?: PivotMeal,
     family_id?: number,
     created_at?: Date,
     updated_at?: Date
+}
+
+export type PivotMeal = {
+    menu_id?: number,
+    recipe_custom_id?: number,
+    recipe_id?: number,
 }
 
 export const useManyRecipeByFamily = () =>

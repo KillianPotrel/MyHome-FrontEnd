@@ -9,7 +9,6 @@ export type Role = {
     updated_at: Date,
 }
 
-
 export const useManyRole = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getRoles"), 

@@ -82,7 +82,7 @@ const Member = () => {
 
     return (
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="bg-white py-12 flex justify-center flex-col">
+        <div className="py-12 flex justify-center flex-col">
           <div className='flex justify-between items-center flex-row'>
             <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
                 <div className="mx-auto max-w-2xl">

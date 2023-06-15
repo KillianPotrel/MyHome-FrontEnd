@@ -19,6 +19,7 @@ export type ResponseExitRequestParams = {
     exit_request_id: number,
     accepted: number
 }
+
 export const useManyExitRequest = () =>
     useQuery({
         queryFn: () =>
@@ -46,6 +47,7 @@ export const usePostExitRequest = () => {
         },
     })
 }
+
 export const useResponseExitRequest = () => {
     const queryClient = useQueryClient()
     return useMutation({

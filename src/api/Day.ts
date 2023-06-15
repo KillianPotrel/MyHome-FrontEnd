@@ -8,6 +8,7 @@ export type Day = {
     created_at: Date, 
     updated_at: Date
 }
+
 export const useManyDay = () =>
     useQuery({
         queryFn: () => axios.get(URL_API + "getDays"), 

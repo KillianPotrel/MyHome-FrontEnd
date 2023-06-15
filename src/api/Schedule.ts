@@ -15,15 +15,14 @@ export type Schedule = {
     evening_meal_outside?: number,
   }
 
-  
 export const useManySchedule = () =>
-useQuery({
-    queryFn: () =>
-    axios.get(URL_API + "getSchedules", { params: { 
-        token: accountService.getToken()
-    }}), 
-    queryKey: ["manySchedule"],
-})
+    useQuery({
+        queryFn: () =>
+        axios.get(URL_API + "getSchedules", { params: { 
+            token: accountService.getToken()
+        }}), 
+        queryKey: ["manySchedule"],
+    })
 
 export const usePostSchedule = () => {
     return useMutation({

@@ -10,7 +10,6 @@ export type Difficulty = {
     strong: number,
 }
 
-
 export const useManyDifficulty = () =>
     useQuery({
         queryFn: () =>
