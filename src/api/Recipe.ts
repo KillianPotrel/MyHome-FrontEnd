@@ -14,6 +14,7 @@ export type Recipe = {
     preparation_time?: number,
     difficulty?: number,
     image?: string,
+    is_custom?: number,
     recipe_steps?: RecipeStep[],
     recipe_articles?: ArticleRecipe[],
     warning_user?: string[],
