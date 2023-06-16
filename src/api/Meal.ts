@@ -21,6 +21,11 @@ export type RecipeMealParams = {
     label?: string,
 }
 
+export type MealParams = {
+    day: Date,
+    is_lunch: number,
+}
+
 export const useManyMeal = () =>
     useQuery({
         queryFn: () =>
@@ -99,6 +104,25 @@ export const usePostRecipeMeal = (meal_id : number) => {
         })}, 
         onSettled() {
             queryClient.invalidateQueries(["oneMeal", meal_id])
+        },
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}
+
+export const usePostMeal = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (params : MealParams) => {
+            return axios.post(URL_API + "postMenu", { 
+                token: accountService.getToken(),
+                family_id: accountService.getFamily(),
+                day: params.day,
+                is_lunch: params.is_lunch,
+        })}, 
+        onSettled() {
+            queryClient.invalidateQueries(["manyMeal"])
         },
         onError(err: FetchError) {
             return err
