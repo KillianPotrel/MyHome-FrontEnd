@@ -9,7 +9,7 @@ import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 
 
-const RecipeItem = () => {
+const RecipeItem = () : JSX.Element => {
     const { id } = useParams();
     let navigate = useNavigate();
     

@@ -15,7 +15,7 @@ import ShoppingLists from "./ShoppingLists";
 import ShoppingItem from "./ShoppingItem";
 import RecipeItemEdit from "./RecipeItemEdit";
 
-const PublicRouter = () => {
+const PublicRouter = () : JSX.Element => {
   return (
     <Routes>
       <Route path="/choice" element={<FamilyChoice />} />

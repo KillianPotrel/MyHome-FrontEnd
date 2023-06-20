@@ -11,7 +11,7 @@ import { Category, useManyCategory } from '../api/Category';
 import RecipeArticleEdit from '../components/RecipeArticleEdit';
 
 
-const RecipeItemEdit = () => {
+const RecipeItemEdit = () : JSX.Element => {
     const { id } = useParams();
     let navigate = useNavigate();
     const [recipeSteps, setRecipeSteps] = useState<RecipeStep[]>([])
