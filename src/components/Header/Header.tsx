@@ -106,13 +106,8 @@ const Header = (): JSX.Element => {
                   </a>
                   <a
                     href=""
-                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/budget' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
-                  >
-                    Budget
-                  </a>
-                  <a
-                    href=""
-                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/shoppinglist' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
+                    onClick={() => navigate('/family/shoppings')}
+                    className={`inline-flex items-center border-b-2 ${location.pathname.includes('/family/shopping') ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Courses
                   </a>

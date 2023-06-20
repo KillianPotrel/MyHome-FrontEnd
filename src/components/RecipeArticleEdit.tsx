@@ -18,18 +18,16 @@ const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : Rec
 
     useEffect(() => {    
         setArticlesRecipe(articles_recipe);
-        // setRecipe(recipeData)
     }, [articles_recipe])
     
     const params : ArticleParams = {
-        recipe_id: recipe_id,
+        entity_id: recipe_id,
         article_recipe: articleDelete
     }
 
     const deleteArticleRecipe = useDeleteArticleRecipe(params)
 
     const handleDeleteArticle = (article: ArticleRecipe) => {
-        // console.log(article)
         setArticleDelete(article)
         deleteArticleRecipe.mutate()
         setArticlesRecipe(prevArticles => prevArticles.filter((r) => r.id !== article.id));
@@ -64,7 +62,7 @@ const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : Rec
                         
         <div className="relative search-bar-container mt-2">
             <SearchBar setResults={setResults} />
-            {results && results.length > 0 && <SearchResultsList handleFrom='ArticleRecipe' results={results} setResults={setResults} recipe_id={recipe_id} />}
+            {results && results.length > 0 && <SearchResultsList handleFrom='ArticleRecipe' results={results} setResults={setResults} entity_id={recipe_id} />}
         </div>
         <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-4">
             <div className="sm:pr-4 col-span-2">
@@ -78,8 +76,10 @@ const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : Rec
             
             {articlesRecipe && articlesRecipe.map((recipe_article : ArticleRecipe, index : number) => (
                 <>
+                    {/* {recipe_article.product_name}
+                    {recipe_article.label} */}
                     <div key={"label_" + recipe_article.id} className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4 col-span-2">
-                        <dt className="font-semibold text-gray-500">{recipe_article?.product_name}</dt>
+                        <dt className="font-semibold text-gray-500">{recipe_article?.product_name === null ? recipe_article?.label : recipe_article?.product_name}</dt>
                     </div>      
                     <div key={"quantity_" + recipe_article.id} className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
                         <div className='flex direction-row'>

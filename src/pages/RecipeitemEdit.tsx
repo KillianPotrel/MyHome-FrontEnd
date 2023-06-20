@@ -104,12 +104,18 @@ const RecipeItemEdit = () => {
       };
 
     const handleSubmit = () => {
+        console.log(recipe)
         const tempRecipe = {...recipe, ["id"]: parseInt(id)}
-        if(!tempRecipe.title || !tempRecipe.category_id || !tempRecipe.difficulty || !tempRecipe.preparation_time || 
-            !tempRecipe.cooking_time){
+        if(tempRecipe.title === undefined || tempRecipe.category_id === undefined || tempRecipe.difficulty === undefined || tempRecipe.preparation_time === undefined || tempRecipe.cooking_time === undefined){
                 errorToast("Un des champs n'est pas correctement renseigné")
+                console.log(tempRecipe.title)
+                console.log(tempRecipe.category_id)
+                console.log(tempRecipe.difficulty)
+                console.log(tempRecipe.preparation_time)
+                console.log(tempRecipe.cooking_time)
                 return
             }
+            console.log(tempRecipe)
         putRecipe.mutate(tempRecipe)
     }
 

@@ -4,6 +4,7 @@ import axios from "axios"
 import { URL_API } from "../services/key"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
+import { errorToast, successToast } from "../services/toastify.service"
 
 export type Meal = {
     id: number,
@@ -65,6 +66,9 @@ export const usePutRegenerateRecipeMeal = (meal_id : number) => {
             queryClient.invalidateQueries(["oneMeal", meal_id])
         },
         onError(err: FetchError) {
+            if(err.response.status === 403){
+                errorToast("Vous n'avez pas d'autres recettes de la même catégorie pour pouvoir en générer une nouvelle.");
+            }
             return err
         },
     })
@@ -74,7 +78,6 @@ export const useDeleteRecipeMeal = (meal_id: number) => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (params : RecipeMealParams) => {
-            console.log(params)
             return axios.post(URL_API + "deleteMenuRecipeId", { 
                 token: accountService.getToken(),
                 recipe_id: params.recipe_id,

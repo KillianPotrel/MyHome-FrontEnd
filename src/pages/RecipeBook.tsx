@@ -6,7 +6,7 @@ import { errorToast, successToast } from '../services/toastify.service';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 
-const RecipeBook = () => {
+const RecipeBook = () : JSX.Element => {
     let navigate = useNavigate();
     const { data : dataRecipe } = useManyRecipeByFamily()
     const recipeData : Recipe[] = dataRecipe?.data
@@ -19,7 +19,6 @@ const RecipeBook = () => {
     const category : Category[] = dataCategory?.data
 
     useEffect(() => {
-
         if (postRecipe.isSuccess) {
             console.log(postRecipe)
             successToast("Recette créée avec succès");
@@ -30,22 +29,6 @@ const RecipeBook = () => {
             errorToast("Erreur de saisie");
         }
       }, [postRecipe,navigate]);
-
-    //TODO : Replace with API difficulty when available
-    // const difficulty = [
-    //     "Facile",//green
-    //     "Moyen",//yellow
-    //     "Difficile",//red
-    //     "Expert",//blue
-    //     "Avancé",//purple
-    // ]
-
-    // //TODO : Replace with API difficulty when available
-    // const category = [
-    //     "Entrée",
-    //     "Plat",
-    //     "Dessert"
-    // ]
 
     const handleSubmit = () => {
         postRecipe.mutate()

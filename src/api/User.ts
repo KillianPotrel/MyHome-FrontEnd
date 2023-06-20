@@ -4,6 +4,7 @@ import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
 import { Schedule } from "./Schedule"
+import { errorToast, successToast } from "../services/toastify.service"
 
 export type User = {
     id?: number,
@@ -42,7 +43,16 @@ export const usePostUserLogin = () => {
                     accountService.saveToken(res.data.data.token);
                 } 
             }),
+        onSuccess() {
+            successToast("Connexion réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la connexion");
+            if(err.response.status === 403)
+                errorToast("Merci de confirmer votre adresse email");
+            if(err.response.status === 405)
+                errorToast("Email ou mot de passe incorrect");
+              
             return err
         },
     })

@@ -19,6 +19,7 @@ const RecipeItem = () => {
     const { data : dataRecipe } = useOneRecipeById(parseInt(id))
     const recipeData : Recipe = dataRecipe?.data
 
+    console.log(recipeData)
     const { data : dataDifficulty } = useManyDifficulty()
     const difficulty : Difficulty[] = dataDifficulty?.data
     
@@ -179,7 +180,8 @@ const RecipeItem = () => {
                                     {/* {difficulty?.find(item => item.id === recipeData?.difficulty)?.label} */}
                                 </div>
                             }
-                            {recipeData?.preparation_time &&
+
+                            {recipeData?.preparation_time !== null || recipeData?.preparation_time !== undefined &&
                                 <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                                     <dt className="flex-none">
                                         <span className="sr-only">Preparation time</span>
@@ -190,7 +192,8 @@ const RecipeItem = () => {
                                     </dd>
                                 </div>
                             }
-                            {recipeData?.cooking_time &&
+
+                            {recipeData?.cooking_time !== null || recipeData?.cooking_time !== undefined &&
                                 <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                                     <dt className="flex-none">
                                         <span className="sr-only">Cooking time</span>
@@ -200,8 +203,8 @@ const RecipeItem = () => {
                                         {recipeData?.cooking_time + " min de cuisson"}
                                     </dd>
                                 </div>
-                            }
-                            <div className="col-span-full items-center">
+                            } 
+                            <div className="col-span-full items-center mt-5">
                                 <img
                                     className="mx-auto flex-none rounded-lg object-cover w-4/5"
                                     src="../../images/avatar_family.svg"
@@ -239,7 +242,7 @@ const RecipeItem = () => {
                         {recipeData?.recipe_articles && recipeData?.recipe_articles.map((recipe_article) => (
                             <>
                                 <div key={recipe_article.id + "_product_name"} className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
-                                    <dt className="font-semibold text-gray-500">{recipe_article?.product_name}</dt>
+                                    <dt className="font-semibold text-gray-500">{recipe_article?.product_name === null ? recipe_article?.label : recipe_article?.product_name}</dt>
                                 </div>              
                                 <div key={recipe_article.id + "_unit"} className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
                                     <dt className="font-semibold text-gray-500">{recipe_article?.quantity + " "} {recipe_article?.unit ?? recipe_article?.unit}</dt>

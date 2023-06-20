@@ -15,14 +15,7 @@ const Login = (): JSX.Element => {
 
   useEffect(() => {
     if (userPostLogin.isSuccess) {
-      successToast("Connexion réussi");
       navigate("/family/choice");
-    } else if (userPostLogin.isError) {
-      errorToast("Erreur lors de la connexion");
-      if(userPostLogin.failureReason.response.status === 403)
-        errorToast("Merci de confirmer votre adresse email");
-      if(userPostLogin.failureReason.response.status === 405)
-        errorToast("Email ou mot de passe incorrect");
     }
   }, [userPostLogin,navigate]);
 

@@ -17,3 +17,9 @@ export function infoToast(message) {
     position: toast.POSITION.TOP_CENTER,
   });
 }
+
+export function warningToast(message) {
+  toast.warning(message, {
+    position: toast.POSITION.TOP_CENTER,
+  });
+}

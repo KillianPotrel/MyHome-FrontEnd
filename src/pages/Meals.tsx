@@ -178,19 +178,20 @@ const Meals = () => {
             </Dialog>
         </Transition.Root>
 
-        <div className="py-12 flex justify-center flex-col">
+        <div className="flex justify-center flex-col">
     
           {/* Horaires de travail */}
           <div className="mt-8 max-h-lg">
-            <h3 className="text-xl font-bold mb-4">Repas de la semaine</h3> 
-            
-            <button 
-                type='button'
-                onClick={() => setOpen(true)}
-                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                >
-                    Nouveau menu
-            </button>
+            <div className='flex justify-between'>
+                <h3 className="text-xl font-bold mb-4">Repas de la semaine</h3> 
+                <button 
+                    type='button'
+                    onClick={() => setOpen(true)}
+                    className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                    >
+                        Nouveau menu
+                </button>
+            </div>
             <ModalMeal meal_id={mealId} />
             {event && 
               <FullCalendar
