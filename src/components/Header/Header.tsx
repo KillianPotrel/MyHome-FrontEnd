@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { accountService } from "../../services/account.service";
 import { errorToast, successToast } from "../../services/toastify.service";
 import { usePostUserLogout } from "../../api/User";
@@ -77,53 +77,43 @@ const Header = (): JSX.Element => {
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-amber-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                  <a
-                    href=""
-                    onClick={() => navigate('/family/dashboard')}
-                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/dashboard' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
-                  >
-                    Accueil
-                  </a>
-                  <a
-                    href=""
-                    onClick={() => navigate('/family/members')}
-                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/members' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
-                  >
+                  <Link className={`inline-flex items-center border-b-2 ${location.pathname === '/family/dashboard' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
+                    to={'/family/dashboard'}>
+                      Accueil
+                  </Link>
+                  <Link className={`inline-flex items-center border-b-2 ${location.pathname === '/family/members' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
+                   to={'/family/members'}>
                     Famille
-                  </a>
-                  <a
-                    href="#"
+                  </Link>
+                  <Link to={'/family/planning'}
                     className={`inline-flex items-center border-b-2 ${location.pathname === '/family/planning' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Planning
-                  </a>
-                  <a
-                    href=""
-                    onClick={() => navigate('/family/recipes')}
+                  </Link>
+                  <Link
+                    to={'/family/recipes'}
                     className={`inline-flex items-center border-b-2 ${location.pathname.includes('/family/recipe') ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Recette
-                  </a>
-                  <a
-                    href=""
-                    onClick={() => navigate('/family/shoppings')}
+                  </Link>
+                  <Link
+                    to={'/family/shoppings'}
                     className={`inline-flex items-center border-b-2 ${location.pathname.includes('/family/shopping') ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Courses
-                  </a>
-                  <a
-                    href=""
-                    onClick={() => navigate('/family/meals')}
+                  </Link>
+                  <Link
+                    to={'/family/meals'}
                     className={`inline-flex items-center border-b-2 ${location.pathname === '/family/meals' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Repas
-                  </a>
-                  <a
-                    href=""
-                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/cleaning' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
+                  </Link>
+                  <Link
+                    to={'/family/housework'}
+                    className={`inline-flex items-center border-b-2 ${location.pathname === '/family/housework' ? 'border-amber-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} px-1 pt-1 text-sm font-medium`}
                   >
                     Ménage
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
