@@ -1,7 +1,13 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   entry: "./src/index",
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.PUBLIC_URL": JSON.stringify("http://my-home.kpotrel.fr"),
+    }),
+  ],
   module: {
     rules: [
       {
