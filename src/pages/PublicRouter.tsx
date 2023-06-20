@@ -13,7 +13,7 @@ import RecipeItem from "./RecipeItem";
 import Meals from "./Meals";
 import ShoppingLists from "./ShoppingLists";
 import ShoppingItem from "./ShoppingItem";
-import RecipeItemEdit from "./RecipeItemEdit";
+import RecipeItemEdit from "./RecipeitemEdit";
 
 const PublicRouter = () : JSX.Element => {
   return (
