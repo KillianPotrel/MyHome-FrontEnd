@@ -194,7 +194,6 @@ export const usePostArticleShopping = (article: ArticleParams) => {
             label: article.article_shopping.label,
         })}, 
         onSettled() {
-            console.log(article.entity_id)
             queryClient.invalidateQueries(["oneListById", article.entity_id])
         },
         onError(err: FetchError) {

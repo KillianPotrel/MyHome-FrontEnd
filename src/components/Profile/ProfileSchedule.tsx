@@ -3,7 +3,7 @@ import '../../style/schedule_user.css'
 import { Day, useManyDay } from '../../api/Day';
 import { Schedule, useManySchedule, usePostSchedule } from '../../api/Schedule';
 import DaySchedule from './DaySchedule';
-import { errorToast, successToast } from '../../services/toastify.service';
+import { errorToast } from '../../services/toastify.service';
 
 type DaySchedule = {
   day: string,
@@ -23,14 +23,6 @@ const ProfileSchedule = ():JSX.Element => {
         setSchedules(schedulesData)
       }
     }, [dataSchedules])
-
-    useEffect(() => {
-        if (postSchedules.isSuccess) {
-          successToast("Changement des horaires réussi");
-        } else if (postSchedules.isError) {
-          errorToast("Erreur lors des modifications des horaires");
-        }
-      }, [postSchedules]);
 
     const handleChildStateChange = (newSchedule : Schedule) => {
       const updatedSchedules = [...schedules];

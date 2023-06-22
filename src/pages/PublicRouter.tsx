@@ -13,6 +13,7 @@ import Meals from "./Meals";
 import ShoppingLists from "./ShoppingLists";
 import ShoppingItem from "./ShoppingItem";
 import RecipeItemEdit from "./RecipeitemEdit";
+import HouseworkList from "./HouseworkList";
 
 const PublicRouter = () : JSX.Element => {
   return (
@@ -29,6 +30,7 @@ const PublicRouter = () : JSX.Element => {
           <Route path="/meals" element={<FamilyGuard><Meals /></FamilyGuard>} />
           <Route path="/shoppings" element={<FamilyGuard><ShoppingLists /></FamilyGuard>} />
           <Route path="/shopping/:id" element={<FamilyGuard><ShoppingItem /></FamilyGuard>} />
+          <Route path="/housework" element={<FamilyGuard><HouseworkList /></FamilyGuard>} />
           <Route path="/*" element={<Error />} />
       </Route>
       <Route path="/*" element={<Error />} />

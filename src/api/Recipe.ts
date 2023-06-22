@@ -5,6 +5,7 @@ import axios from "axios";
 import { FetchError } from "../type/fetchError";
 import { RecipeStep } from "./RecipeStep";
 import { ArticleRecipe } from "./Article";
+import { errorToast, successToast, warningToast } from "../services/toastify.service";
 
 export type Recipe = {
     id?: number,
@@ -49,7 +50,14 @@ export const usePostRecipe = () => {
                     family_id : accountService.getFamily()
                 })
         },
+        onSuccess() {
+            successToast("Recette créée avec succès");
+            warningToast("Pensez à sauvegarder avant de quitter la page")
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la création de la famille");
+            if(err.response.status === 403)
+                errorToast("Erreur de saisie");
             return err
         },
     })
@@ -73,7 +81,11 @@ export const useDeleteRecipe = () => {
             family_id: parseInt(accountService.getFamily()),
             recipe_id
         })}, 
+        onSuccess() {
+            successToast("Suppression de la recette réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la suppresion de la recette");
             return err
         },
     })
@@ -97,7 +109,11 @@ export const usePutRecipe = () => {
                     recipe_articles : recipe.recipe_articles,
                 })
         },
+        onSuccess() {
+            successToast("Modification de la recette réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la modification de la recette");
             return err
         },
     })

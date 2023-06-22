@@ -4,7 +4,6 @@ import { Recipe, useDeleteRecipe, useOneRecipeById } from '../api/Recipe';
 import { CakeIcon, ClockIcon, ExclamationTriangleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router';
 import { Dialog, Transition } from '@headlessui/react';
-import { errorToast, successToast } from '../services/toastify.service';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 
@@ -19,7 +18,6 @@ const RecipeItem = () : JSX.Element => {
     const { data : dataRecipe } = useOneRecipeById(parseInt(id))
     const recipeData : Recipe = dataRecipe?.data
 
-    console.log(recipeData)
     const { data : dataDifficulty } = useManyDifficulty()
     const difficulty : Difficulty[] = dataDifficulty?.data
     
@@ -38,10 +36,8 @@ const RecipeItem = () : JSX.Element => {
 
     useEffect(() => {
       if (deleteRecipe.isSuccess) {
-        successToast("Suppression de la recette réussi");
         navigate("/family/recipes");
       } else if (deleteRecipe.isError) {
-        errorToast("Erreur lors de la suppresion de la recette");
       }
     }, [deleteRecipe,navigate]);
 
@@ -125,8 +121,8 @@ const RecipeItem = () : JSX.Element => {
                             <div className="mt-2 text-sm text-red-700">
                                 <ul role="list" className="list-disc space-y-1 pl-5">
                                     
-                                {recipeData?.warning_user.map((warning_user) => (
-                                    <li>{warning_user}</li>       
+                                {recipeData?.warning_user.map((warning_user,index) => (
+                                    <li key={index}>{warning_user}</li>       
                                 ))}
                                 {/* <li>Léo n'aime pas : concoMbre</li> */}
                                 </ul>
@@ -148,40 +144,13 @@ const RecipeItem = () : JSX.Element => {
                             {recipeData?.difficulty &&
                                 <div className="flex-none self-end px-6 pt-4">
                                     <dt className="sr-only">Status</dt>
-                                    
-                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 1 && 
-                                        <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
-                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
-                                        </dd>
-                                    }
-                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 2 && 
-                                        <dd className="rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20">
-                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
-                                        </dd>
-                                    }
-                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 3 && 
-                                        <dd className="rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-600/20">
-                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
-                                        </dd>
-                                    }
-                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 4 && 
-                                        <dd className="rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-600/20">
-                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
-                                        </dd>
-                                    }
-                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 5 && 
-                                        <dd className="rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-600 ring-1 ring-inset ring-purple-600/20">
-                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
-                                        </dd>
-                                    }
-                                    {/* <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
-                                        {recipeData?.difficulty}
-                                    </dd> */}
-                                    {/* {difficulty?.find(item => item.id === recipeData?.difficulty)?.label} */}
+                                    <dd className={`rounded-md bg-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-50 px-2 py-1 text-xs font-medium text-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600/20`}>
+                                        {difficulty?.find(item => item.id === recipeData.difficulty)?.label}
+                                    </dd>
                                 </div>
                             }
 
-                            {recipeData?.preparation_time !== null || recipeData?.preparation_time !== undefined &&
+                            {recipeData?.preparation_time !== undefined &&
                                 <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                                     <dt className="flex-none">
                                         <span className="sr-only">Preparation time</span>
@@ -193,7 +162,7 @@ const RecipeItem = () : JSX.Element => {
                                 </div>
                             }
 
-                            {recipeData?.cooking_time !== null || recipeData?.cooking_time !== undefined &&
+                            {recipeData?.cooking_time !== undefined &&
                                 <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                                     <dt className="flex-none">
                                         <span className="sr-only">Cooking time</span>

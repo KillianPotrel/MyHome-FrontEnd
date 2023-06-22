@@ -6,7 +6,7 @@ import { Category, useManyCategory } from '../api/Category';
 import SearchBar from './SearchbarRecipe/SearchBar';
 import { SearchResultsList } from './SearchbarRecipe/SearchResultsList';
 import { Recipe } from '../api/Recipe';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGenerateArticleByMeal, useGenerateArticleByRecipe } from '../api/ShoppingList';
 
 type ModalMealProps = {
@@ -14,7 +14,6 @@ type ModalMealProps = {
 }
 
 const ModalMeal = ({meal_id} : ModalMealProps) => {
-    let navigate = useNavigate();
     const [results, setResults] = useState<Recipe[]>([]);
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
@@ -23,7 +22,7 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
     const category : Category[] = dataCategory?.data
 
     useEffect(() => {
-        if(meal_id !== undefined) setOpen(true)
+        if(open === false) setOpen(true)
     },[meal_id])
 
     const { data: dateMeal } = useOneMeal(meal_id)
@@ -58,16 +57,14 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
     const handleGenerateMeal = () => {
         generateArticleByMeal.mutate(meal_id)
     }
-
+    
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog 
                 as="div" 
                 className="relative z-10" 
                 initialFocus={cancelButtonRef} 
-                onClose={() => {
-                    setOpen(false)
-                }}>
+                onClose={() => setOpen(false)}>
                 <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -173,13 +170,10 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                                         >
                                                             Ajouter à la liste de course
                                                     </button>
-                                                    <button 
-                                                        type='button'
-                                                        onClick={() => navigate('/family/recipe/'+recipe.id)}
-                                                        className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                        >
-                                                            Recette
-                                                    </button>
+                                                    <Link to={'/family/recipe/'+recipe.id}
+                                                        className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
+                                                        Recette
+                                                    </Link>
                                                     {!regenerateRecipeMeal.isLoading ?
                                                         <button 
                                                             type='button'

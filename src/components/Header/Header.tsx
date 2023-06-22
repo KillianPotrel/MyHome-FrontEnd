@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { accountService } from "../../services/account.service";
-import { errorToast, successToast } from "../../services/toastify.service";
 import { usePostUserLogout } from "../../api/User";
 
 import { Fragment } from "react";
@@ -15,24 +14,21 @@ function classNames(...classes : any[]) {
 }
 
 const Header = (): JSX.Element => {
-  let navigate = useNavigate();
-  const location = useLocation();
-  const userPostLogout = usePostUserLogout();
+    let navigate = useNavigate();
+    const location = useLocation();
+    const userPostLogout = usePostUserLogout();
 
-  const deleteNotification = useDeleteNotification()
+    const deleteNotification = useDeleteNotification()
 
-  const handleUpdate = () => {
-    deleteNotification.mutate(null)
-  }
-
-  useEffect(() => {
-    if (userPostLogout.isSuccess) {
-      successToast("Déconnexion de l'utilisateur");
-      navigate("/");
-    } else if (userPostLogout.isError) {
-      errorToast("Erreur lors de la déconnexion");
+    const handleUpdate = () => {
+      deleteNotification.mutate(null)
     }
-  });
+
+    useEffect(() => {
+        if (userPostLogout.isSuccess) {
+          navigate("/");
+        } 
+    });
 
   const logout = () => {
     userPostLogout.mutate({token : accountService.getToken()});
@@ -62,7 +58,7 @@ const Header = (): JSX.Element => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <a onClick={() => navigate('/family/dashboard')}>                    
+                  <Link to={'/family/dashboard'}>                 
                     <img
                       className="block h-8 w-auto lg:hidden"
                       src="/images/logo.png"
@@ -73,7 +69,7 @@ const Header = (): JSX.Element => {
                       src="/images/logo.png"
                       alt="MyHome"
                     />
-                  </a>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-amber-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
@@ -192,15 +188,13 @@ const Header = (): JSX.Element => {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            onClick={() => navigate('/profile')}
+                          <Link to={'/profile'}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
+                            )}>
                             Profil
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
@@ -218,8 +212,7 @@ const Header = (): JSX.Element => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <button
                             onClick={logout}
                             className={classNames(
                               active ? "bg-gray-100" : "",
@@ -227,7 +220,7 @@ const Header = (): JSX.Element => {
                             )}
                           >
                             Déconnexion
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       

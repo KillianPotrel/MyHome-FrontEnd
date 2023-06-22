@@ -14,8 +14,7 @@ const ShoppingQuantityInput = ({shopping_id, article_shopping} :ShoppingQuantity
         const updatedArticle: ArticleShopping = { ...article, quantity: quantity };
         putArticleShopping.mutate(updatedArticle);
       };
-    const handlChange = (e : any) => {
-        console.log(e.target.value)
+    const handleChange = (e : any) => {
         setQuantity(parseFloat(e.target.value))
     };
     return (
@@ -25,7 +24,7 @@ const ShoppingQuantityInput = ({shopping_id, article_shopping} :ShoppingQuantity
             id={"quantity_" + article_shopping.article_id}
             value={quantity.toString()}
             onBlur={(event) => handleQuantityBlur(event, article_shopping)}
-            onChange={handlChange}
+            onChange={handleChange}
             className="block text-center w-32 mr-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
             />
     );

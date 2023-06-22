@@ -39,14 +39,11 @@ const ProfileExitRequest = ():JSX.Element => {
 
     useEffect(() => {
         if (postExistRequest.isSuccess) {
-          successToast("Demande effectué");
           setExitRequest({
             date_debut: new Date(),
             date_fin: new Date(),
             motif: ""})
-        } else if (postExistRequest.isError) {
-          errorToast("Erreur lors de la demande de sortie");
-        }
+        } 
       }, [postExistRequest]);
 
     return (              

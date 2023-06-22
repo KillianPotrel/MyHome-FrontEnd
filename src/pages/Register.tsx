@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { usePostUserRegister } from "../api/User"
-import { errorToast, successToast } from "../services/toastify.service"
 import Input from "../components/Input";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,12 +19,7 @@ const Register = () => {
 
   useEffect(() => {
     if (userRegister.isSuccess) {
-      successToast("Inscription réussi");
       navigate("/login");
-    } else if (userRegister.isError) {
-      errorToast("Erreur lors de l'inscription");
-      if(userRegister.failureReason.response.status === 401)
-        errorToast("Cet email est déjà pris");
     }
   })
 
@@ -51,7 +46,7 @@ const Register = () => {
           />
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-8 mx-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 opacity-95">
             <h2 className="text-center text-3xl font-bold tracking-tight text-amber-400">
               Inscription à MyHome
@@ -97,12 +92,10 @@ const Register = () => {
               </div>
             </form>
             <div className="text-sm mt-4">
-              <a 
-                href=""
-                onClick={() => navigate("/login")}
+              <Link to={"/login"}
                 className="font-medium text-amber-400 hover:text-amber-500 cursor-pointer">
                 Déjà un compte ? Connectez-vous
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import axios from "axios"
 import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
 import { User } from "./User"
+import { errorToast, successToast } from "../services/toastify.service"
 
 export type ExitRequest = {
     id?: number, 
@@ -42,7 +43,11 @@ export const usePostExitRequest = () => {
                     date_fin: existRequest.date_fin,
                 })
         },
+        onSuccess() {
+            successToast("Demande effectué");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la demande de sortie");
             return err
         },
     })

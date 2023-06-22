@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { errorToast, successToast } from '../../services/toastify.service';
+import { errorToast } from '../../services/toastify.service';
 import { ChangePassword, usePutPassword } from '../../api/User';
-import { accountService } from '../../services/account.service';
 
 const ProfilePassword = ():JSX.Element => {
     const [currentPassword, setCurrentPassword] = useState("")
@@ -11,16 +10,9 @@ const ProfilePassword = ():JSX.Element => {
 
     useEffect(() => {
       if (putPassword.isSuccess) {
-        successToast("Changement de mot de passe réussi");
         setCurrentPassword("")
         setNewPassword("")
         setConfirmPassword("")
-      } else if (putPassword.isError) {
-        errorToast("Erreur lors des modifications du profil");
-        if(putPassword.failureReason.response.status === 404)
-          errorToast("L'ancien mot de passe n'est pas correct");
-        if(putPassword.failureReason.response.status === 403)
-          errorToast("Le mot de passe doit faire au minimum 7 caractères");
       }
     }, [putPassword]);
 

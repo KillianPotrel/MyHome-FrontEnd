@@ -31,14 +31,6 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
         setUser(user)
     }, [user])
 
-    useEffect(() => {
-        if (putUser.isSuccess) {
-          successToast("Changement des informations réussi");
-        } else if (putUser.isError) {
-          errorToast("Erreur lors des modifications du profil");
-        }
-      }, [putUser]);
-
     const handleChange = (e : any) => {
         const date = new Date(e.target.value)
         if(e.target.name === "birthday"){

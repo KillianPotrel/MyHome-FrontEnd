@@ -92,6 +92,9 @@ export const useDuplicateArticleInCurrent = () => {
                 family_id: accountService.getFamily(),
                 shopping_list_id: shopping_id,
         })}, 
+        onSuccess() {
+            successToast("Articles ajoutés dans la liste actuelle");
+        },
         onSettled() {
             queryClient.invalidateQueries(["oneListCurrent"])
             queryClient.invalidateQueries(["manyListArchived"])

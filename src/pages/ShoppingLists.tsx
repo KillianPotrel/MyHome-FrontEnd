@@ -1,11 +1,8 @@
 import React, {useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingList, useArchiveCurrentList, useDeleteShoppingArchived, useDuplicateArticleInCurrent, useManyListArchived, useOneListCurrent } from '../api/ShoppingList';
-import { errorToast, successToast } from '../services/toastify.service';
 
 const ShoppingLists = () => {
-    let navigate = useNavigate();
-
     const { data : dataShoppingCurrent } = useOneListCurrent()
     const shoppingCurrent : ShoppingList = dataShoppingCurrent?.data
 
@@ -23,7 +20,6 @@ const ShoppingLists = () => {
     
     const handleDuplicate = (list_id : number) => {
         duplicateArchivedList.mutate(list_id)
-        successToast("Articles ajoutés dans la liste actuelle");
     }
 
     const handleDelete = (list_id : number) => {
@@ -37,13 +33,13 @@ const ShoppingLists = () => {
                 className="relative flex items-center justify-between space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-amber-500 focus-within:ring-offset-2 hover:border-gray-400"
             >
                 <div className="min-w-0 flex-1">
-                    <a href=""
-                        onClick={() => navigate(`/family/shopping/${shoppingCurrent.id}`)} 
+                    <Link to={`/family/shopping/${shoppingCurrent?.id}`}
                         className="focus:outline-none">
-                    <span className="absolute inset-0" aria-hidden="true" />
-                    <p className="text-sm font-medium text-gray-900">Liste actuelle</p>
-                    <p className="truncate text-sm text-gray-500">{shoppingCurrent?.nb_articles > 0 ? shoppingCurrent?.nb_articles + " articles" : "Pas d'articles dans la liste"}</p>
-                    </a>
+                        <span className="absolute inset-0" aria-hidden="true" />
+                        <p className="text-sm font-medium text-gray-900">Liste actuelle</p>
+                        <p className="truncate text-sm text-gray-500">{shoppingCurrent?.nb_articles > 0 ? shoppingCurrent?.nb_articles + " articles" : "Pas d'articles dans la liste"}</p>
+                    
+                    </Link>
                 </div>
                 <div className="min-w-0 flex-1 flex justify-end z-10">
                     <button 
@@ -65,13 +61,11 @@ const ShoppingLists = () => {
                             className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-amber-500 focus-within:ring-offset-2 hover:border-gray-400"
                         >
                             <div className="min-w-0 flex-1">
-                                <a href="" 
-                                    onClick={() => navigate(`/family/shopping/${listArchived.id}`)}
-                                    className="focus:outline-none">
+                                <Link to={`/family/shopping/${listArchived.id}`}>
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     <p className="text-sm font-medium text-gray-900">Archivée le {listArchived.archived_at}</p>
                                     <p className="truncate text-sm text-gray-500">{listArchived?.nb_articles > 0 ? listArchived?.nb_articles + " articles" : "Pas d'articles dans la liste"}</p>
-                                </a>
+                                </Link>
                             </div>
                             <div className="min-w-0 flex-1 flex justify-end z-10">
                                 <button 

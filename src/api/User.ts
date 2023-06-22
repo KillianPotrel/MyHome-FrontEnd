@@ -27,7 +27,13 @@ export type ChangePassword = {
 export const usePostUserRegister = () => {
     return useMutation({
         mutationFn: (user: User) => axios.post(URL_API + "user/create", user),  
+        onSuccess() {
+            successToast("Inscription réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de l'inscription");
+            if(err.response.status === 401)
+              errorToast("Cet email est déjà pris");
             return err
         },
     })
@@ -66,6 +72,12 @@ export const usePostUserLogout = () => {
             accountService.logout();
             accountService.disconnectFamily();
         }),
+        onSuccess() {
+            successToast("Déconnexion de l'utilisateur");
+        },
+        onError() {
+            errorToast("Erreur lors de la déconnexion");
+        }
     })
 }
 
@@ -82,7 +94,11 @@ export const usePutUser = () => {
             return axios
                 .post(URL_API + "editInfoUser", args)
         },
+        onSuccess() {
+            successToast("Changement des informations réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors des modifications du profil");
             return err
         },
     })
@@ -95,7 +111,15 @@ export const usePutPassword = () => {
             return axios
                 .post(URL_API + "changePassword", args)
         },
+        onSuccess() {
+            successToast("Changement de mot de passe réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la modification du mot de passe");
+            if(err.response.status === 404)
+            errorToast("L'ancien mot de passe n'est pas correct");
+            if(err.response.status === 403)
+                errorToast("Le mot de passe doit faire au minimum 7 caractères");
             return err
         },
     })

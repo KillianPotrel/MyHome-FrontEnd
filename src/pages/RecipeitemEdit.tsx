@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import { Recipe, useOneRecipeById, usePutRecipe } from '../api/Recipe';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router';
-import { errorToast, successToast } from '../services/toastify.service';
+import { errorToast } from '../services/toastify.service';
 import { ArticleRecipe, ArticleParams, ArticleSearch, useDeleteArticleRecipe } from '../api/Article';
 import { RecipeStep } from '../api/RecipeStep';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
@@ -45,10 +45,7 @@ const RecipeItemEdit = () : JSX.Element => {
 
     useEffect(() => {
         if (putRecipe.isSuccess) {
-          successToast("Modification de la recette réussi");
           navigate("/family/recipes");
-        } else if (putRecipe.isError) {
-          errorToast("Erreur lors de la modification de la recette");
         }
       }, [putRecipe, navigate]);
 
@@ -74,8 +71,8 @@ const RecipeItemEdit = () : JSX.Element => {
             const splited_target = (e.target.name).split('_')
             const id_recipe_target : number = splited_target[splited_target.length - 1]
             let property = e.target.name.replace("_"+id_recipe_target,"")
-            console.log(property)
-            console.log(id_recipe_target)
+            // console.log(property)
+            // console.log(id_recipe_target)
             tempRecipe = {...tempRecipe, [property]: e.target.value}
         } else {
             tempRecipe = { ...tempRecipe, [e.target.name]: e.target.value };
@@ -104,18 +101,18 @@ const RecipeItemEdit = () : JSX.Element => {
       };
 
     const handleSubmit = () => {
-        console.log(recipe)
+        // console.log(recipe)
         const tempRecipe = {...recipe, ["id"]: parseInt(id)}
         if(tempRecipe.title === undefined || tempRecipe.category_id === undefined || tempRecipe.difficulty === undefined || tempRecipe.preparation_time === undefined || tempRecipe.cooking_time === undefined){
                 errorToast("Un des champs n'est pas correctement renseigné")
-                console.log(tempRecipe.title)
-                console.log(tempRecipe.category_id)
-                console.log(tempRecipe.difficulty)
-                console.log(tempRecipe.preparation_time)
-                console.log(tempRecipe.cooking_time)
+                // console.log(tempRecipe.title)
+                // console.log(tempRecipe.category_id)
+                // console.log(tempRecipe.difficulty)
+                // console.log(tempRecipe.preparation_time)
+                // console.log(tempRecipe.cooking_time)
                 return
             }
-            console.log(tempRecipe)
+            // console.log(tempRecipe)
         putRecipe.mutate(tempRecipe)
     }
 

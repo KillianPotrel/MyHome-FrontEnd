@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Input from "../components/Input";
 import { usePostUserLogin } from "../api/User";
-import { errorToast, successToast } from "../services/toastify.service";
+import { Link } from "react-router-dom";
 
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Login = (): JSX.Element => {
           />
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-8 mx-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 opacity-95">
             <h2 className="text-center text-3xl font-bold tracking-tight text-amber-400">
               Connectez-vous
@@ -88,11 +88,10 @@ const Login = (): JSX.Element => {
               </a>
             </div>
             <div className="text-sm mt-4">
-              <a 
-                onClick={() => navigate("/register")}
+              <Link to={"/register"}
                 className="font-medium text-amber-400 hover:text-amber-500 cursor-pointer">
                 Pas encore de compte ? Inscrivez-vous
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Role, useManyRole } from '../../api/Role';
 import { Member, usePostCreateFamily } from '../../api/Family';
 import { useNavigate } from 'react-router';
-import { errorToast, successToast } from '../../services/toastify.service';
+import { errorToast } from '../../services/toastify.service';
 
 
 const FamilyCreate = (): JSX.Element => {
@@ -22,12 +22,7 @@ const FamilyCreate = (): JSX.Element => {
 
     useEffect(() => {
         if (usePostFamily.isSuccess) {
-          successToast("Famille créée avec succès");
           navigate("/family/dashboard");
-        } else if (usePostFamily.isError) {
-          errorToast("Erreur lors de la création de la famille");
-          if(usePostFamily.failureReason.response.status === 403)
-            errorToast("Erreur de saisie");
         }
       }, [usePostFamily,navigate]);
 

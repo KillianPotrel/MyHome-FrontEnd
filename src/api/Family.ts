@@ -3,6 +3,7 @@ import axios from "axios"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
+import { errorToast, successToast } from "../services/toastify.service"
 
 export type Pivot = {
     user_id: number,
@@ -80,10 +81,17 @@ export const usePostCreateFamily = () => {
             return axios
                 .post(URL_API + "createFamily", args)
         },
+        onSuccess() {
+            successToast("Famille créée avec succès");
+            
+        },
         onSettled() {
             queryClient.invalidateQueries({queryKey : ['manyFamilyByUser','manyInvitationByUser']})
         },
         onError(err: FetchError) {
+            errorToast("Erreur lors de la création de la famille");
+            if(err.response.status === 403)
+              errorToast("Erreur de saisie");
             return err
         },
     })

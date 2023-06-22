@@ -3,6 +3,7 @@ import axios from "axios"
 import { URL_API } from "../services/key"
 import { FetchError } from "../type/fetchError"
 import { accountService } from "../services/account.service"
+import { errorToast, successToast } from "../services/toastify.service"
 
 export type Schedule = {
     id?: number,
@@ -30,7 +31,11 @@ export const usePostSchedule = () => {
             token: accountService.getToken(),
             schedules
         }),  
+        onSuccess() {
+            successToast("Changement des horaires réussi");
+        },
         onError(err: FetchError) {
+            errorToast("Erreur lors des modifications des horaires");
             return err
         },
     })

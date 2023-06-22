@@ -22,31 +22,32 @@ import {
   BugAntIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Link } from 'react-router-dom';
 
 const solutions = [
   {
-    name: "Inbox",
+    name: "Présentation",
     description:
       "Get a better understanding of where your traffic is coming from.",
-    href: "#",
+    href: "#presentation",
     icon: InboxIcon,
   },
   {
-    name: "Messaging",
+    name: "Produit",
     description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
+    href: "#product",
     icon: ChatBubbleBottomCenterTextIcon,
   },
   {
-    name: "Live Chat",
+    name: "Prix",
     description: "Your customers' data will be safe and secure.",
-    href: "#",
+    href: "#pricing",
     icon: ChatBubbleLeftRightIcon,
   },
   {
-    name: "Knowledge Base",
+    name: "Contact",
     description: "Connect with third-party tools that you're already using.",
-    href: "#",
+    href: "#contact",
     icon: QuestionMarkCircleIcon,
   },
 ];
@@ -260,7 +261,7 @@ export default function Index(): JSX.Element {
               </a>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500">
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
@@ -272,7 +273,7 @@ export default function Index(): JSX.Element {
                     <Popover.Button
                       className={classNames(
                         open ? "text-gray-900" : "text-gray-500",
-                        "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                       )}
                     >
                       <span>Solutions</span>
@@ -303,7 +304,7 @@ export default function Index(): JSX.Element {
                                 href={item.href}
                                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                               >
-                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white sm:h-12 sm:w-12">
+                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-orange-600 to-amber-600 text-white sm:h-12 sm:w-12">
                                   <item.icon
                                     className="h-6 w-6"
                                     aria-hidden="true"
@@ -353,18 +354,19 @@ export default function Index(): JSX.Element {
               </a>
             </Popover.Group>
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-              <a
-                href="register"
+              
+              <Link
+                to={"/register"}
                 className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Inscription
-              </a>
-              <a
-                href="login"
+              </Link>
+              <Link
+                to={"/login"}
                 className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-gradient-to-r from-amber-300 to-orange-500 bg-origin-border px-4 py-2 text-base font-medium text-white shadow-sm hover:from-amber-500 hover:to-orange-700"
               >
                 Connexion
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -387,12 +389,12 @@ export default function Index(): JSX.Element {
                     <div>
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?from-color=purple&from-shade=600&to-color=indigo&to-shade=600&toShade=600"
-                        alt="Your Company"
+                        src="/images/logo.png"
+                        alt="MyHome"
                       />
                     </div>
                     <div className="-mr-2">
-                      <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                      <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500">
                         <span className="sr-only">Close menu</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                       </Popover.Button>
@@ -406,7 +408,7 @@ export default function Index(): JSX.Element {
                           href={item.href}
                           className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                         >
-                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-r from-orange-600 to-amber-600 text-white">
                             <item.icon className="h-6 w-6" aria-hidden="true" />
                           </div>
                           <div className="ml-4 text-base font-medium text-gray-900">
@@ -418,39 +420,20 @@ export default function Index(): JSX.Element {
                   </div>
                 </div>
                 <div className="py-6 px-5">
-                  <div className="grid grid-cols-2 gap-4">
-                    <a
-                      href="#"
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    >
-                      Pricing
-                    </a>
-                    <a
-                      href="#"
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    >
-                      Partners
-                    </a>
-                    <a
-                      href="#"
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    >
-                      Company
-                    </a>
-                  </div>
                   <div className="mt-6">
-                    <a
-                      href="#"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 text-base font-medium text-white shadow-sm hover:from-purple-700 hover:to-indigo-700"
+                    <Link
+                      to={"/login"}
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-orange-600 to-amber-600 bg-origin-border px-4 py-2 text-base font-medium text-white shadow-sm hover:from-orange-700 hover:to-amber-700"
                     >
-                      Sign up
-                    </a>
-                    <p className="mt-6 text-center text-base font-medium text-gray-500">
-                      Existing customer?
-                      <a href="#" className="text-gray-900">
-                        Sign in
-                      </a>
-                    </p>
+                      Connexion
+                    </Link>
+                    
+                    <Link
+                      to={"/register"}
+                      className="mt-3 flex w-full items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-orange-600 to-amber-600 bg-origin-border px-4 py-2 text-base font-medium text-white shadow-sm hover:from-orange-700 hover:to-amber-700"
+                    >
+                      Inscription
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -487,7 +470,7 @@ export default function Index(): JSX.Element {
                   <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                     <a
                       href="#compagny"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-indigo-50 sm:px-8"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-amber-500 shadow-sm hover:bg-amber-50 sm:px-8"
                     >
                       Qui sommes nous ?
                     </a>
@@ -599,7 +582,7 @@ export default function Index(): JSX.Element {
             <h2 className="text-3xl font-bold tracking-tight text-white">
               Fonctionnalité de MyHome
             </h2>
-            <p className="mt-4 max-w-3xl text-lg text-purple-200">
+            <p className="mt-4 max-w-3xl text-lg text-orange-200">
               Parmi la gamme de fonctionnalité qui vous est proposé, l'une
               d'entre-elle saura vous séduire.
             </p>
@@ -618,7 +601,7 @@ export default function Index(): JSX.Element {
                     <h3 className="text-lg font-medium text-white">
                       {feature.name}
                     </h3>
-                    <p className="mt-2 text-base text-purple-200">
+                    <p className="mt-2 text-base text-orange-200">
                       {feature.description}
                     </p>
                   </div>
@@ -800,7 +783,7 @@ export default function Index(): JSX.Element {
                   id="email-address"
                   autoComplete="email"
                   required
-                  className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white py-2 px-4 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:placeholder-gray-400 focus:outline-none focus:ring-indigo-500"
+                  className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white py-2 px-4 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-amber-500 focus:placeholder-gray-400 focus:outline-none focus:ring-amber-500"
                   placeholder="Entrez votre email"
                 />
                 <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
