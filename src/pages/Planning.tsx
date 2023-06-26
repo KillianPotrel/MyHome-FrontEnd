@@ -73,7 +73,7 @@ const Planning = () : JSX.Element => {
     const handleSearchFilter = () => {
         queryClient.refetchQueries(["manyEventCalendar"]);
     }
-    
+
     const handleEventClick = (info : EventClickArg) => {
         info.jsEvent.preventDefault();
         setEventCalendar(null)

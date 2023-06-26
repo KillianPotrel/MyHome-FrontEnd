@@ -44,6 +44,7 @@ export const usePostSchedule = () => {
     return useMutation({
         mutationFn: (schedules: Schedule[]) => axios.post(URL_API + "postSchedules", { 
             token: accountService.getToken(),
+            family_id: accountService.getFamily(),
             schedules
         }),  
         onSuccess() {

@@ -22,12 +22,13 @@ export type ResponseExitRequestParams = {
     accepted: number
 }
 
-export const useManyExitRequest = () =>
+export const useManyExitRequest = (status: string) =>
     useQuery({
         queryFn: () =>
         axios.get(URL_API + "getExitRequest", { params: { 
             token: accountService.getToken(),
             family_id: accountService.getFamily(),
+            status,
         }}), 
         queryKey: ["manyExitRequest"],
     })

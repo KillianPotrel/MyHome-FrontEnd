@@ -34,6 +34,16 @@ export const useManyEventCalendar = (params : ParamsFilter) =>
         queryKey: ["manyEventCalendar"],
     })
 
+export const useManyEventHousework = () =>
+    useQuery({
+        queryFn: () => {
+            return axios.get(URL_API + "getEventHouseWorkByUserId", { params: { 
+                token: accountService.getToken(),
+                family_id: accountService.getFamily(),
+            }})}, 
+        queryKey: ["manyEventHousework"],
+    })
+
 export const usePostEventCalendar = () => {
     const queryClient = useQueryClient()
     return useMutation({

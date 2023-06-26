@@ -36,7 +36,17 @@ export const useManyMeal = () =>
         }}), 
         queryKey: ["manyMeal"],
     })
-    
+
+export const useManyMealToday = () =>
+    useQuery({
+        queryFn: () =>
+        axios.get(URL_API + "getMenuTodayByFamily", { params: { 
+            token: accountService.getToken(),
+            family_id: accountService.getFamily(),
+        }}), 
+        queryKey: ["manyMealToday"],
+    })  
+
 export const useOneMeal = (meal_id : number) =>
     useQuery({
         queryFn: () =>{
