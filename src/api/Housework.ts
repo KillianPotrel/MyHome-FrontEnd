@@ -34,7 +34,21 @@ export const useManyHousework = () =>
         }}), 
         queryKey: ["manyHousework"],
     })
-    
+
+export const useOneHousework = (housework_id : number) =>
+    useQuery({
+        queryFn: () =>{
+            if(housework_id) {
+                return axios.get(URL_API + "getHouseWorkById", { params: { 
+                    token: accountService.getToken(),
+                    family_id: accountService.getFamily(),
+                    housework_id,
+                }})
+            }
+            return null 
+        },
+        queryKey: ["oneHousework", housework_id],
+    })
 
 export const usePostHousework = () => {
     const queryClient = useQueryClient()
@@ -81,5 +95,3 @@ export const useDeleteHousework = () => {
         },
     })
 }
-
-    

@@ -7,7 +7,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ArticleWarning, useManyArticleWarning } from '../api/Article';
-import { CalendarEvent } from '../api/CalendarEvent';
+import { EventCalendar } from '../api/EventCalendar';
 
 
 const Member = () => {
@@ -23,7 +23,7 @@ const Member = () => {
       const schedules = memberInfo?.schedules
 
       if(schedules) {
-        const events : CalendarEvent[] = []
+        const events : EventCalendar[] = []
         schedules.forEach(schedule => {
           const today = new Date();
           const currentDayId = today.getDay(); 
@@ -47,7 +47,7 @@ const Member = () => {
             const start_lunch = schedule.morning_hour_end ?  schedule.morning_hour_end : '12:00'
             const end_lunch = schedule.afternoon_hour_start ? schedule.afternoon_hour_start : '13:00'
 
-            const lunch : CalendarEvent = {
+            const lunch : EventCalendar = {
               title: 'Déjeuner ' + where_lunch,
               start: dateString + " " + start_lunch,
               end: dateString + " " + end_lunch,
@@ -56,7 +56,7 @@ const Member = () => {
           }
           
           if(schedule.afternoon_hour_start && schedule.afternoon_hour_end) {
-            const afternoon_work = {
+            const afternoon_work : EventCalendar = {
               title: 'Travail',
               start: dateString + " " + schedule?.afternoon_hour_start,
               end: dateString + " " +schedule?.afternoon_hour_end,
@@ -65,7 +65,7 @@ const Member = () => {
           }
           
           const where_evening_meal = (schedule.evening_meal_outside === 0) ? 'à la maison' : 'dehors'
-          const evening_meal = {
+          const evening_meal : EventCalendar = {
             title: 'Diner ' + where_evening_meal,
             start: dateString + ' 20:00',
             end:  dateString + ' 21:00',

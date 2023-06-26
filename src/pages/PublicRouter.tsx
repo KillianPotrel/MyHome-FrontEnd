@@ -14,6 +14,7 @@ import ShoppingLists from "./ShoppingLists";
 import ShoppingItem from "./ShoppingItem";
 import RecipeItemEdit from "./RecipeitemEdit";
 import HouseworkList from "./HouseworkList";
+import Planning from "./Planning";
 
 const PublicRouter = () : JSX.Element => {
   return (
@@ -31,6 +32,7 @@ const PublicRouter = () : JSX.Element => {
           <Route path="/shoppings" element={<FamilyGuard><ShoppingLists /></FamilyGuard>} />
           <Route path="/shopping/:id" element={<FamilyGuard><ShoppingItem /></FamilyGuard>} />
           <Route path="/housework" element={<FamilyGuard><HouseworkList /></FamilyGuard>} />
+          <Route path="/planning" element={<FamilyGuard><Planning /></FamilyGuard>} />
           <Route path="/*" element={<Error />} />
       </Route>
       <Route path="/*" element={<Error />} />

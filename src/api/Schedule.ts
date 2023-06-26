@@ -25,6 +25,21 @@ export const useManySchedule = () =>
         queryKey: ["manySchedule"],
     })
 
+export const useOneSchedule = (schedule_id : number) =>
+    useQuery({
+        queryFn: () =>{
+            if(schedule_id) {
+                return axios.get(URL_API + "getScheduleById", { params: { 
+                    token: accountService.getToken(),
+                    family_id: accountService.getFamily(),
+                    schedule_id,
+                }})
+            }
+            return null 
+        },
+        queryKey: ["oneSchedule", schedule_id],
+    })
+
 export const usePostSchedule = () => {
     return useMutation({
         mutationFn: (schedules: Schedule[]) => axios.post(URL_API + "postSchedules", { 

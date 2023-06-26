@@ -12,7 +12,8 @@ export type ExitRequest = {
     date_fin: Date, 
     motif: string,
     token?: string,
-    user?: User
+    user?: User,
+    userResponse?: string,
 }
 
 export type ResponseExitRequestParams = {
@@ -29,6 +30,21 @@ export const useManyExitRequest = () =>
             family_id: accountService.getFamily(),
         }}), 
         queryKey: ["manyExitRequest"],
+    })
+
+export const useOneExitRequest = (exit_request_id : number) =>
+    useQuery({
+        queryFn: () =>{
+            if(exit_request_id) {
+                return axios.get(URL_API + "getExitRequestById", { params: { 
+                    token: accountService.getToken(),
+                    family_id: accountService.getFamily(),
+                    exit_request_id,
+                }})
+            }
+            return null 
+        },
+        queryKey: ["oneExitRequest", exit_request_id],
     })
 
 export const usePostExitRequest = () => {

@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { CalendarEvent } from '../api/CalendarEvent';
+import { EventCalendar } from '../api/EventCalendar';
 import { Meal, MealParams, useManyMeal, usePostMeal } from '../api/Meal';
 import ModalMeal from '../components/ModalMeal';
 import { Dialog, Transition } from '@headlessui/react';
@@ -22,7 +22,7 @@ const Meals = () => {
 
     useEffect(() => {
         if(meals) {
-            const events : CalendarEvent[] = []
+            const events : EventCalendar[] = []
             meals.forEach(meal => {
                 const where_lunch = (meal.is_lunch === 0) ? 'du soir' : 'du midi' 
                 let start = ""
@@ -36,7 +36,7 @@ const Meals = () => {
                     end = "21:00"
                 }
     
-                const event : CalendarEvent = {
+                const event : EventCalendar = {
                     title: 'Repas ' + where_lunch,
                     start: meal.day + " " + start,
                     end: meal.day + " " + end,

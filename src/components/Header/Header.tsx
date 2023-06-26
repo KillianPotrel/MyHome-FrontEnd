@@ -191,7 +191,7 @@ const Header = (): JSX.Element => {
                           <Link to={'/profile'}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "w-full h-full text-left block px-4 py-2 text-sm text-gray-700"
                             )}>
                             Profil
                           </Link>
@@ -199,15 +199,15 @@ const Header = (): JSX.Element => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <button
                             onClick={disconnectFamily}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "w-full h-full text-left block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             Changer de famille
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
@@ -216,7 +216,7 @@ const Header = (): JSX.Element => {
                             onClick={logout}
                             className={classNames(
                               active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "w-full h-full text-left block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
                             Déconnexion
