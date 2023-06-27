@@ -14,7 +14,6 @@ const Profile = (): JSX.Element => {
 
   return (
     <div className="divide-y divide-black/5">
-
     {isLoadingUser ? (
       <div className='mt-10'>
         <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
@@ -26,7 +25,7 @@ const Profile = (): JSX.Element => {
         <ProfilePassword />
         <ProfileWarningArticle />
           
-        <PermissionGates permission_key='accepter_les_demandes_de_sorties' inversed={true}>
+        <PermissionGates permission_key='accept_exit_request' inversed={true}>
           <ProfileExitRequest />
         </PermissionGates>
         <ProfileSchedule />

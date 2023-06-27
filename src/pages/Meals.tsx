@@ -8,6 +8,7 @@ import { Meal, MealParams, useManyMeal, usePostMeal } from '../api/Meal';
 import ModalMeal from '../components/ModalMeal';
 import { Dialog, Transition } from '@headlessui/react';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const Meals = () => {
     const [open, setOpen] = useState(false)
@@ -192,13 +193,15 @@ const Meals = () => {
           <div className="mt-8 max-h-lg">
             <div className='flex justify-between'>
                 <h3 className="text-xl font-bold mb-4">Repas de la semaine</h3> 
-                <button 
-                    type='button'
-                    onClick={() => setOpen(true)}
-                    className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                    >
-                        Nouveau menu
-                </button>
+                <PermissionGates permission_key='modify_meal'>
+                    <button 
+                        type='button'
+                        onClick={() => setOpen(true)}
+                        className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                        >
+                            Nouveau menu
+                    </button>
+                </PermissionGates>
             </div>
             {mealId && 
                 <ModalMeal meal_id={mealId} />

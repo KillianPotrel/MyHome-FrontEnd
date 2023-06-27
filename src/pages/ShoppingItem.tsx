@@ -6,6 +6,7 @@ import SearchBar from '../components/Searchbar/SearchBar';
 import { SearchResultsList } from '../components/Searchbar/SearchResultsList';
 import ShoppingQuantityInput from '../components/ShoppingQuantityInput';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const ShoppingItem = () : JSX.Element => {
     const { id } = useParams();
@@ -40,24 +41,34 @@ const ShoppingItem = () : JSX.Element => {
                 <>
                     <h3 className='my-5'>{shopping?.archived_at === null ? "Liste courante" : "Liste archivée du " + shopping?.archived_at}</h3>
                     
-                    <div className="relative search-bar-container mb-7">
-                        <SearchBar setResults={setResults} />
-                        {results && results.length > 0 && <SearchResultsList handleFrom='ArticleShopping' results={results} setResults={setResults} entity_id={shopping.id} />}
-                    </div>
+                    <PermissionGates permission_key='modify_shopping'>
+                        <div className="relative search-bar-container mb-7">
+                            <SearchBar setResults={setResults} />
+                            {results && results.length > 0 && <SearchResultsList handleFrom='ArticleShopping' results={results} setResults={setResults} entity_id={shopping.id} />}
+                        </div>
+                    </PermissionGates>
                     <ul>
                         {shopping?.shopping_articles.length > 0 ? 
                             shopping?.shopping_articles.map((article_shopping, index) => (
                                 <li key={article_shopping.id} className="flex flex-col mb-2">
                                     <div className={shopping.archived_at === null ? `w-full flex flex-row justify-around items-center` : `w-full flex justify-start` }> 
-                                        {shopping.archived_at === null &&
-                                            <input 
-                                                type="checkbox" 
-                                                className="mr-2 form-checkbox text-amber-600  focus-within:ring-2 focus-within:ring-amber-500 focus-within:ring-offset-2 hover:border-gray-400"
-                                                checked={ article_shopping.checked_at === null ? false : true }
-                                                onChange={() => handleChange(article_shopping)}
-                                                />
-                                        }     
-                                        <ShoppingQuantityInput shopping_id={parseInt(id)} article_shopping={article_shopping} />
+                                        <PermissionGates permission_key='modify_shopping'>
+                                            {shopping.archived_at === null &&
+                                                <input 
+                                                    type="checkbox" 
+                                                    className="mr-2 form-checkbox text-amber-600  focus-within:ring-2 focus-within:ring-amber-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                                    checked={ article_shopping.checked_at === null ? false : true }
+                                                    onChange={() => handleChange(article_shopping)}
+                                                    />
+                                            }     
+                                        </PermissionGates>
+
+                                        <PermissionGates permission_key='modify_shopping'>
+                                            <ShoppingQuantityInput shopping_id={parseInt(id)} article_shopping={article_shopping} />
+                                        </PermissionGates>
+                                        <PermissionGates permission_key='modify_shopping' inversed={true}>
+                                            <p>{article_shopping.quantity}</p>
+                                        </PermissionGates>
                                         <span className={`text-gray-800 ${article_shopping.checked_at !== null ? "line-through" : ""}`}>{article_shopping?.label}</span>
                                         {article_shopping.is_generate === 1 &&
                                             <span className="mx-5 inline-flex items-center rounded-md bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
@@ -65,10 +76,13 @@ const ShoppingItem = () : JSX.Element => {
                                             </span>
                                         }
                                         {shopping.archived_at === null &&
-                                            <button 
-                                                className="ml-auto text-red-500 hover:text-red-600"
-                                                onClick={() => handleDelete(article_shopping)}
-                                                >Supprimer</button>
+                                        
+                                            <PermissionGates permission_key='modify_shopping'>
+                                                <button 
+                                                    className="ml-auto text-red-500 hover:text-red-600"
+                                                    onClick={() => handleDelete(article_shopping)}
+                                                    >Supprimer</button>
+                                            </PermissionGates>
                                         }
                                     </div>
                                     <div className="w-full border-t border-gray-300 my-3" />

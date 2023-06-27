@@ -100,13 +100,13 @@ const ModalNewEvent = ():JSX.Element => {
                                                             <select
                                                                 id="responsable_id"
                                                                 name="responsable_id"
-                                                                value={newEvent?.responsable_id}
+                                                                value={newEvent?.responsable_id ?? 0}
                                                                 onChange={handleChange}
                                                                 className="relative block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                                             >
                                                                 <option value={undefined}></option>
                                                                 {members && members.map(member => (
-                                                                    <option key={member.id} value={member.id}>{member.name}</option>
+                                                                    <option key={member.id} value={member.id}>{member.firstname}</option>
                                                                 ))}
                                                             </select>
                                                         </div>

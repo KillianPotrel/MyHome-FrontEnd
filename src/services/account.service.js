@@ -20,6 +20,28 @@ let isLogged = () => {
   return !!token;
 };
 
+let tokenExpired = () => {
+  axios
+    .get(URL_API + "getUserInfo", {
+      params: { token: accountService.getToken(), user_id: null },
+    })
+    .then(() => {
+      return false;
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log(error.response.status);
+        if (error.response.status === 406) {
+          localStorage.removeItem(JWT_KEY);
+          localStorage.removeItem(FAMILY_KEY);
+          return true;
+        }
+      }
+    });
+
+  return false;
+};
+
 let getFamily = () => {
   return localStorage.getItem(FAMILY_KEY);
 };
@@ -68,4 +90,5 @@ export const accountService = {
   isFamilyConnect,
   disconnectFamily,
   isMe,
+  tokenExpired,
 };

@@ -31,7 +31,7 @@ const FamilyMember = (): JSX.Element => {
     }
 
     return (
-            <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
+            <div className="mx-auto max-w-7xl px-6 text-center lg:px-8 mt-5">
             {isLoadingMember || isLoadingPermission ? (
               <div className='mt-10'>
                 <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
@@ -39,9 +39,11 @@ const FamilyMember = (): JSX.Element => {
               </div>
             ) : (
                 <>
-                    <div className='mt-5 flex justify-end'>
-                        <ModalInviteUser />
-                    </div>
+                    <PermissionGates permission_key='invite_user'>
+                        <div className='mt-5 flex justify-end'>
+                            <ModalInviteUser />
+                        </div>
+                    </PermissionGates>
                     <div className="mx-auto max-w-2xl">
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Membres de votre famille</h2>
                         <p className="mt-4 text-lg leading-8 text-gray-600">
@@ -56,11 +58,11 @@ const FamilyMember = (): JSX.Element => {
                         <li key={member.id}>
                             <img className="mx-auto h-56 w-56 rounded-full object-cover" 
                                 src={member?.avatar ?? "../images/avatar_family.svg" /*member.avatar*/} alt="" />
-                            <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{member.name}</h3>
+                            <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{member?.firstname}</h3>
                             <p className="text-sm leading-6 text-gray-600">{member?.birthday !== undefined && format(member?.birthday)}</p>
                             
                             <ul role="list" className="mt-6 flex justify-center gap-x-6">
-                                <PermissionGates permission_key='gerer_les_permissions'>
+                                <PermissionGates permission_key='modify_permission'>
                                     <li>
                                         <ModalAuthorization permissions={permissions} user_id={member.id} />
                                     </li>
@@ -79,7 +81,7 @@ const FamilyMember = (): JSX.Element => {
                         </li>
                         ))}
                     </ul>
-                <PermissionGates permission_key='accepter_les_demandes_de_sorties'>
+                <PermissionGates permission_key='accept_exit_request'>
                     <TableExitRequest />
                 </PermissionGates>
             </>

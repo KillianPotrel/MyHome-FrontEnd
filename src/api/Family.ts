@@ -65,7 +65,8 @@ export const usePostResponseInvitation = () => {
                 .post(URL_API + "responseToInvitation", args)
         },
         onSettled() {
-            queryClient.invalidateQueries({queryKey : ['manyFamilyByUser','manyInvitationByUser']})
+            queryClient.invalidateQueries({queryKey : ['manyFamilyByUser']})
+            queryClient.invalidateQueries({queryKey : ['manyInvitationByUser']})
         },
         onError(err: FetchError) {
             return err
@@ -86,7 +87,8 @@ export const usePostCreateFamily = () => {
             
         },
         onSettled() {
-            queryClient.invalidateQueries({queryKey : ['manyFamilyByUser','manyInvitationByUser']})
+            queryClient.invalidateQueries({queryKey : ['manyFamilyByUser']})
+            queryClient.invalidateQueries({queryKey : ['manyInvitationByUser']})
         },
         onError(err: FetchError) {
             errorToast("Erreur lors de la création de la famille");

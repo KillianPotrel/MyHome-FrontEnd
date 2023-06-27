@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingList, useArchiveCurrentList, useDeleteShoppingArchived, useDuplicateArticleInCurrent, useManyListArchived, useOneListCurrent } from '../api/ShoppingList';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const ShoppingLists = () => {
     const { data : dataShoppingCurrent, isLoading : isLoadingCurrent } = useOneListCurrent()
@@ -50,13 +51,15 @@ const ShoppingLists = () => {
                     </Link>
                 </div>
                 <div className="min-w-0 flex-1 flex justify-end z-10">
-                    <button 
-                        type='button'
-                        onClick={handleArchived}
-                        className="rounded-md bg-amber-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        >
-                            Archiver
-                    </button>
+                    <PermissionGates permission_key='archive_shopping'>
+                        <button 
+                            type='button'
+                            onClick={handleArchived}
+                            className="rounded-md bg-amber-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                            >
+                                Archiver
+                        </button>
+                    </PermissionGates>
                 </div>
             </div>
             <h3 className='mt-7'>Liste archivées</h3>
@@ -76,20 +79,22 @@ const ShoppingLists = () => {
                                 </Link>
                             </div>
                             <div className="min-w-0 flex-1 flex justify-end z-10">
-                                <button 
-                                    type='button'
-                                    onClick={() => handleDuplicate(listArchived.id)}
-                                    className="rounded-md bg-amber-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                    >
-                                        Dupliquer
-                                </button>
-                                <button 
-                                    type='button'
-                                    onClick={() => handleDelete(listArchived.id)}
-                                    className="rounded-md bg-red-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                                    >
-                                        Supprimer
-                                </button>
+                                <PermissionGates permission_key='modify_shopping'>
+                                    <button 
+                                        type='button'
+                                        onClick={() => handleDuplicate(listArchived.id)}
+                                        className="rounded-md bg-amber-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                        >
+                                            Dupliquer
+                                    </button>
+                                    <button 
+                                        type='button'
+                                        onClick={() => handleDelete(listArchived.id)}
+                                        className="rounded-md bg-red-600 mx-1 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                                        >
+                                            Supprimer
+                                    </button>
+                                </PermissionGates>
                             </div>
                         </div>
                     ))

@@ -33,7 +33,6 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
     }, [user])
 
     const handleChange = (e : any) => {
-        const date = new Date(e.target.value)
         if(e.target.name === "birthday"){
             setUser({
                 ...userPost,
@@ -47,36 +46,32 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
         }
     };
 
-    const handleChangeImage = (e : any) => {
-        // const formData = new FormData();
-        // formData.append("files", e.target.files[0], 'image')
-        // setImage({files : formData})
-        console.log(e.target.files[0])
+    const handleChangeImage = (e : any)  => {
+        // console.log(e.target.files[0])
+        // const reader = new FileReader();
+        // reader.onloadend = function() {
+        //   const base64Data = reader.result;
+        //   console.log("here")
+        //   setUser({
+        //   ...userPost,
+        //       ["avatar"]: {file:base64Data},
+        //   });
+        //   console.log(userPost)
+        // };
+        const file = e.target.files[0];
         const reader = new FileReader();
       
-        // Définir la fonction de rappel lorsque la lecture du fichier est terminée
-        reader.onloadend = function() {
-          // Le contenu du fichier est disponible dans la propriété 'result'
-          const base64Data = reader.result;
+        reader.onloadend = function () {
+          const base64Data = reader.result as string;
           setUser({
-          ...userPost,
-              ["avatar"]: {file:base64Data}/*{files : formData}*/,
+            ...userPost,
+            avatar: { file: base64Data },
           });
-          // Envoyer le fichier à votre API en utilisant la représentation base64
         };
-
-
-
-        // setImageAvatar(e.target.value)
-        // setImageAvatar({
-        //     /* contains the preview, if you want to show the picture to the user
-        //        you can access it with this.state.currentPicture
-        //    */
-        //     picturePreview : URL.createObjectURL(e.target.files[0]),
-        //     /* this contains the file we want to send */
-        //     pictureAsFile : e.target.files[0]
-        // })
-
+      
+        if (file) {
+          reader.readAsDataURL(file);
+        }
     };
 
     const setImageAction = () => {
@@ -86,10 +81,10 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
             imageAvatar.pictureAsFile
         );
         // do your post request
-
     };
 
     const handleSubmit = () => {
+        console.log(userPost)
         if(user.email.length === 0 || !user.email.includes("@")){
             errorToast("Email incorrect");
             return
@@ -114,7 +109,7 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                     <div className="col-span-full flex items-center gap-x-8">
                         <img
-                            src={userPost?.avatar ?? "../../images/avatar_family.svg"}
+                            src={(userPost?.avatar || typeof user?.avatar !== 'string')  ? "../../images/avatar_family.svg" : userPost?.avatar}
                             onChange={handleChange}
                             alt="User avatar"
                             className="h-24 w-24 flex-none rounded-lg object-cover"
@@ -154,7 +149,6 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
                             <input
                             type="date"
                             name="birthday"
-                            // value={user?.birthday?.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')}
                             value={userPost?.birthday ? format(userPost?.birthday) : ""}
                             onChange={handleChange}
                             id="birthday"

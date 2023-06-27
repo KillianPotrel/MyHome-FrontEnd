@@ -8,6 +8,7 @@ import { SearchResultsList } from './SearchbarRecipe/SearchResultsList';
 import { Recipe } from '../api/Recipe';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGenerateArticleByMeal, useGenerateArticleByRecipe } from '../api/ShoppingList';
+import PermissionGates from '../_utils/PermissionGates';
 
 type ModalMealProps = {
     meal_id: number
@@ -97,13 +98,15 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                     <span className="sr-only">Close</span>
                                     <XMarkIcon  className="h-6 w-6" aria-hidden="true"/>
                                 </button>
-                                <button 
-                                    type='button'
-                                    onClick={() => handleGenerateMeal()}
-                                    className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                    >
-                                        Générer menu
-                                </button>
+                                <PermissionGates permission_key='generate_shopping'>
+                                    <button 
+                                        type='button'
+                                        onClick={() => handleGenerateMeal()}
+                                        className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                        >
+                                            Générer menu
+                                    </button>
+                                </PermissionGates>
                             </div>
                             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
                                 <PencilSquareIcon className="h-6 w-6 text-amber-600" aria-hidden="true"/>
@@ -120,19 +123,22 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                             </div>
                         </div>
                         
-                        <div className="relative search-bar-container">
-                            <SearchBar setResults={setResults} />
-                            {results && results.length > 0 && <SearchResultsList results={results} setResults={setResults} meal_id={meal_id} />}
-                        </div>
-
+                        <PermissionGates permission_key='modify_meal'>
+                            <div className="relative search-bar-container">
+                                <SearchBar setResults={setResults} />
+                                {results && results.length > 0 && <SearchResultsList results={results} setResults={setResults} meal_id={meal_id} />}
+                            </div>
+                        </PermissionGates>
                         <div className="px-4 sm:px-6 lg:px-8">
                             <div className="-mx-4 mt-8 sm:-mx-0">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead>
                                     <tr>
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                            
-                                        </th>
+                                        <PermissionGates permission_key='modify_meal'>
+                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                                                
+                                            </th>
+                                        </PermissionGates>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                                             Recette
                                         </th>
@@ -148,13 +154,15 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                     {(meal?.recipes !== undefined && meal?.recipes?.length > 0) &&
                                         meal?.recipes.map((recipe, index) => (
                                             <tr key={index}>
-                                                <td>
-                                                    <span className='cursor-pointer' 
-                                                        onClick={() => handleDelete(recipe.id, 0)}
-                                                        >
-                                                        <TrashIcon className='text-gray-500  w-6 h-6 mr-2'/>
-                                                    </span>
-                                                </td>
+                                                <PermissionGates permission_key='modify_meal'>
+                                                    <td>
+                                                        <span className='cursor-pointer' 
+                                                            onClick={() => handleDelete(recipe.id, 0)}
+                                                            >
+                                                            <TrashIcon className='text-gray-500  w-6 h-6 mr-2'/>
+                                                        </span>
+                                                    </td>
+                                                </PermissionGates>
                                                 <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm  text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
                                                     {recipe.title}
                                                 </td>
@@ -163,33 +171,37 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                                 </td>
                                                 
                                                 <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                    <button 
-                                                        type='button'
-                                                        onClick={() => handleGenerateRecipe(recipe.id)}
-                                                        className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                        >
-                                                            Ajouter à la liste de course
-                                                    </button>
+                                                    <PermissionGates permission_key='generate_shopping'>
+                                                        <button 
+                                                            type='button'
+                                                            onClick={() => handleGenerateRecipe(recipe.id)}
+                                                            className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                                            >
+                                                                Ajouter à la liste de course
+                                                        </button>
+                                                    </PermissionGates>
                                                     <Link to={'/family/recipe/'+recipe.id}
                                                         className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
                                                         Recette
                                                     </Link>
-                                                    {!regenerateRecipeMeal.isLoading ?
-                                                        <button 
-                                                            type='button'
-                                                            onClick={() => handleRegenerate(recipe.id, 0)}
-                                                            className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                            >
-                                                                Regénérer aléatoirement
-                                                        </button>
-                                                    : 
-                                                        <button 
-                                                            type='button'
-                                                            className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                            disabled>
-                                                                Regénérer aléatoirement
-                                                        </button>
-                                                    }
+                                                    <PermissionGates permission_key='modify_meal'>
+                                                        {!regenerateRecipeMeal.isLoading ?
+                                                            <button 
+                                                                type='button'
+                                                                onClick={() => handleRegenerate(recipe.id, 0)}
+                                                                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                                                >
+                                                                    Regénérer aléatoirement
+                                                            </button>
+                                                        : 
+                                                            <button 
+                                                                type='button'
+                                                                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                                                disabled>
+                                                                    Regénérer aléatoirement
+                                                            </button>
+                                                        }
+                                                    </PermissionGates>
                                                 </td>
                                             </tr>
                                         ))
@@ -197,13 +209,15 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                     {(meal?.recipes_custom !== undefined && meal?.recipes_custom?.length > 0) &&
                                         meal?.recipes_custom.map((recipe, index) => (
                                             <tr key={index}>
-                                                <td>
-                                                    <span className='cursor-pointer' 
-                                                        onClick={() => handleDelete(recipe.id, 1)}
-                                                        >
-                                                        <TrashIcon className='text-gray-500  w-6 h-6 mr-2'/>
-                                                    </span>
-                                                </td>
+                                                <PermissionGates permission_key='modify_meal'>
+                                                    <td>
+                                                        <span className='cursor-pointer' 
+                                                            onClick={() => handleDelete(recipe.id, 1)}
+                                                            >
+                                                            <TrashIcon className='text-gray-500  w-6 h-6 mr-2'/>
+                                                        </span>
+                                                    </td>
+                                                </PermissionGates>
                                                 <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm  text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
                                                     {recipe.title}
                                                 </td>
@@ -211,22 +225,24 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                                 </td>
                                                 
                                                 <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                                    {!regenerateRecipeMeal.isLoading ?
-                                                        <button 
-                                                            type='button'
-                                                            onClick={() => handleRegenerate(recipe.id, 1)}
-                                                            className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                            >
-                                                                Regénérer aléatoirement
-                                                        </button>
-                                                    : 
-                                                        <button 
-                                                            type='button'
-                                                            className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                                                            disabled>
-                                                                Regénérer aléatoirement
-                                                        </button>
-                                                    }
+                                                    <PermissionGates permission_key='modify_meal'>
+                                                        {!regenerateRecipeMeal.isLoading ?
+                                                            <button 
+                                                                type='button'
+                                                                onClick={() => handleRegenerate(recipe.id, 1)}
+                                                                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                                                >
+                                                                    Regénérer aléatoirement
+                                                            </button>
+                                                        : 
+                                                            <button 
+                                                                type='button'
+                                                                className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                                                                disabled>
+                                                                    Regénérer aléatoirement
+                                                            </button>
+                                                        }
+                                                    </PermissionGates>
                                                 </td>
                                             </tr>
                                         ))

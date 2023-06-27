@@ -7,6 +7,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 
 const RecipeItem = () : JSX.Element => {
@@ -190,19 +191,20 @@ const RecipeItem = () : JSX.Element => {
                             </div>
                         </dl>
                     </div>
-
-                    <button  
-                        className="rounded-md mt-5 mr-5 bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        onClick={handleModify}
-                    >
-                        Modifier
-                    </button>
-                    <button
-                        className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
-                        onClick={() => setOpen(true)}
-                    >
-                        Supprimer
-                    </button>
+                    <PermissionGates permission_key='modify_recipe'>
+                        <button  
+                            className="rounded-md mt-5 mr-5 bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                            onClick={handleModify}
+                        >
+                            Modifier
+                        </button>
+                        <button
+                            className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
+                            onClick={() => setOpen(true)}
+                        >
+                            Supprimer
+                        </button>
+                    </PermissionGates>
                 </div>
 
                 {/* Invoice */}

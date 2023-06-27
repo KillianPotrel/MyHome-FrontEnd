@@ -4,6 +4,7 @@ import { RecipeStep } from '../api/RecipeStep';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import SearchBar from './Searchbar/SearchBar';
 import { SearchResultsList } from './Searchbar/SearchResultsList';
+import PermissionGates from '../_utils/PermissionGates';
 
 type RecipeArticleEditProps = {
     recipe_id: number,
@@ -60,10 +61,12 @@ const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : Rec
     <>
         <h2 className="text-base font-semibold leading-6 text-gray-900">Ingrédients</h2>
                         
-        <div className="relative search-bar-container mt-2">
-            <SearchBar setResults={setResults} />
-            {results && results.length > 0 && <SearchResultsList handleFrom='ArticleRecipe' results={results} setResults={setResults} entity_id={recipe_id} />}
-        </div>
+        <PermissionGates permission_key='modify_recipe'>
+            <div className="relative search-bar-container mt-2">
+                <SearchBar setResults={setResults} />
+                {results && results.length > 0 && <SearchResultsList handleFrom='ArticleRecipe' results={results} setResults={setResults} entity_id={recipe_id} />}
+            </div>
+        </PermissionGates>
         <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-4">
             <div className="sm:pr-4 col-span-2">
                 <dt className="inline text-gray-700">Nom</dt>

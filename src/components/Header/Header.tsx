@@ -22,7 +22,7 @@ const Header = (): JSX.Element => {
 
     const deleteNotification = useDeleteNotification()
 
-    const handleUpdate = () => {
+    const handleDeleteAll = () => {
       deleteNotification.mutate(null)
     }
 
@@ -115,7 +115,7 @@ const Header = (): JSX.Element => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <Popover className="relative">
+                <Popover className="relative mt-3">
                   <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -129,20 +129,15 @@ const Header = (): JSX.Element => {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4">
+                    <Popover.Panel className="absolute z-10 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4"
+                      style={visualViewport.width < 800 ? {left: "-275px"} : {left: "-170px"}}>
                       <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                         <div className="p-4 overflow-y-scroll max-h-96">
                           <NotificationModal />
                         </div>
-                        <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+                        <div className="divide-x divide-gray-900/5 bg-gray-50">
                             <a
-                              className="cursor-pointer flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-                            >
-                              <EyeIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                              Marqué comme vu
-                            </a>
-                            <a
-                              onClick={() => handleUpdate()}
+                              onClick={() => handleDeleteAll()}
                               className="cursor-pointer flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
                             >
                               <TrashIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
@@ -176,7 +171,8 @@ const Header = (): JSX.Element => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute Z-20 right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white 
+                    py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link to={'/profile'}

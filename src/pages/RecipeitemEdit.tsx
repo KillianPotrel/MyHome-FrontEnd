@@ -10,6 +10,7 @@ import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 import RecipeArticleEdit from '../components/RecipeArticleEdit';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 
 const RecipeItemEdit = () : JSX.Element => {
@@ -119,8 +120,7 @@ const RecipeItemEdit = () : JSX.Element => {
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            
-                {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
+            {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
                 <div className='mt-10'>
                     <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
                     <Skeleton count={5} />
@@ -155,7 +155,7 @@ const RecipeItemEdit = () : JSX.Element => {
                                     <select
                                         id="category_id"
                                         name="category_id"
-                                        value={recipe?.category_id}
+                                        value={recipe?.category_id ?? 0}
                                         onChange={handleChange}
                                         autoComplete="category_id"
                                         className="relative mt-2 block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
@@ -175,7 +175,7 @@ const RecipeItemEdit = () : JSX.Element => {
                                     <select
                                         id="difficulty"
                                         name="difficulty"
-                                        value={recipe?.difficulty}
+                                        value={recipe?.difficulty ?? 0}
                                         onChange={handleChange}
                                         autoComplete="difficulty"
                                         className="relative mt-2 block rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
@@ -236,12 +236,14 @@ const RecipeItemEdit = () : JSX.Element => {
                         </dl>
                     </div>
 
-                    <button  
-                        className="rounded-md mt-5 mr-5 bg-amber-600 px-3 py-2 text-xl font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        onClick={handleSubmit}
-                    >
-                        Sauvegarder
-                    </button>
+                    <PermissionGates permission_key='modify_recipe'>
+                        <button  
+                            className="rounded-md mt-5 mr-5 bg-amber-600 px-3 py-2 text-xl font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                            onClick={handleSubmit}
+                        >
+                            Sauvegarder
+                        </button>
+                    </PermissionGates>
                 </div>
 
                 {/* Invoice */}

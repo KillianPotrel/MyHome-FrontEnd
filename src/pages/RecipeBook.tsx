@@ -6,6 +6,7 @@ import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const RecipeBook = () : JSX.Element => {
     let navigate = useNavigate();
@@ -31,8 +32,7 @@ const RecipeBook = () : JSX.Element => {
     }
 
     return (
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">            
             {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
               <div className='mt-10'>
                 <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
@@ -43,13 +43,15 @@ const RecipeBook = () : JSX.Element => {
             <div className="py-12 flex justify-center flex-col">
                 
                 <div className="flex items-center gap-x-6 px-4 py-4 sm:px-8">
-                    <button 
-                        type='button'
-                        onClick={handleSubmit}
-                        className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        >
-                            Nouvelle recette
-                    </button>
+                    <PermissionGates permission_key='modify_recipe'>
+                        <button 
+                            type='button'
+                            onClick={handleSubmit}
+                            className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                            >
+                                Nouvelle recette
+                        </button>
+                    </PermissionGates>
                 </div>
                 { recipeData !== undefined && recipeData.length > 0 
                     ?

@@ -11,6 +11,7 @@ import { errorToast } from '../services/toastify.service';
 import { EventClickArg } from '@fullcalendar/core';
 import EventSourceRender from '../components/EventSourceRender';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const input_type_event = [
     { id: 'event', name: 'event', description: 'Évènement ponctuel'},
@@ -189,13 +190,13 @@ const Planning = () : JSX.Element => {
                                                             <select
                                                                 id="responsable_id"
                                                                 name="responsable_id"
-                                                                value={eventCalendar?.responsable_id}
+                                                                value={eventCalendar?.responsable_id ?? 0}
                                                                 onChange={handleChange}
                                                                 className="relative block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                                             >
                                                                 <option value={undefined}></option>
                                                                 {members && members.map(member => (
-                                                                    <option key={member.id} value={member.id}>{member.name}</option>
+                                                                    <option key={member.id} value={member.id}>{member.firstname}</option>
                                                                 ))}
                                                             </select>
                                                         </div>
@@ -272,21 +273,25 @@ const Planning = () : JSX.Element => {
                                         >
                                             Annluer
                                         </button>
-                                        <button
-                                            type="button"
-                                            className="inline-flex w-full justify-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 sm:ml-3 sm:w-auto"
-                                            onClick={handleSubmit}
-                                        >
-                                            Modifier
-                                        </button>
+                                        <PermissionGates permission_key='modify_event'>
+                                          <button
+                                              type="button"
+                                              className="inline-flex w-full justify-center rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 sm:ml-3 sm:w-auto"
+                                              onClick={handleSubmit}
+                                          >
+                                              Modifier
+                                          </button>
+                                        </PermissionGates>
                                     </div>
-                                    <button
-                                        type="button"
-                                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                        onClick={handleDelete}
-                                    >
-                                        Supprimer
-                                    </button>
+                                    <PermissionGates permission_key='modify_event'>
+                                      <button
+                                          type="button"
+                                          className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                          onClick={handleDelete}
+                                      >
+                                          Supprimer
+                                      </button>
+                                    </PermissionGates>
                                 </div>
                             </Dialog.Panel>
                           </Transition.Child>
@@ -297,15 +302,17 @@ const Planning = () : JSX.Element => {
         <div className="flex justify-center flex-col">
           <div className="mt-8 max-h-lg">
             <div className='flex justify-between'>
-                <h3 className="text-xl font-bold mb-4">Calendrier</h3> 
-                <button 
-                    type='button'
-                    onClick={handleDisplayFilter}
-                    className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                    >
-                        Filtre de recherche
-                </button>
-                <ModalNewEvent />
+                <h3 className="text-xl font-bold mb-4">Calendrier</h3>
+                <PermissionGates permission_key='modify_event'>
+                  <button 
+                      type='button'
+                      onClick={handleDisplayFilter}
+                      className="rounded-md bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                      >
+                          Filtre de recherche
+                  </button>
+                  <ModalNewEvent />
+                </PermissionGates>
             </div>
             <div className={`${display} justify-center my-5`}>
               
@@ -329,7 +336,7 @@ const Planning = () : JSX.Element => {
                                 </div>
                                 <div className="text-sm leading-6">
                                   <label htmlFor="comments" className="font-medium text-gray-900">
-                                    {member.name}
+                                    {member?.firstname}
                                   </label>
                                 </div>
                               </div>

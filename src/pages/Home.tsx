@@ -33,7 +33,7 @@ const Home = () : JSX.Element=> {
         <div className="relative isolate overflow-hidden py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
-                    <h1 className="text-4xl sm:text-6xl font-semibold text-gray-900">Bonjour {user?.name}</h1>
+                    <h1 className="text-4xl sm:text-6xl font-semibold text-gray-900">Bonjour {user?.firstname}</h1>
                     <p className="mt-6 text-lg leading-8">
                       Voici un résumé de ce qui vous concerne pour aujourd'hui.
                     </p>

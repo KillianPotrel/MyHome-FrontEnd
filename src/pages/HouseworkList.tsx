@@ -6,6 +6,7 @@ import { Day, useManyDay } from '../api/Day';
 import { Member, useManyMembersByFamily } from '../api/Family';
 import { errorToast } from '../services/toastify.service';
 import Skeleton from 'react-loading-skeleton';
+import PermissionGates from '../_utils/PermissionGates';
 
 const HouseworkList = () : JSX.Element => {
     const [open, setOpen] = useState(false)
@@ -139,13 +140,13 @@ const HouseworkList = () : JSX.Element => {
                                                             <select
                                                                 id="responsable_id"
                                                                 name="responsable_id"
-                                                                value={newHousework?.responsable_id}
+                                                                value={newHousework?.responsable_id ?? 0}
                                                                 onChange={handleChange}
                                                                 className="relative block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                                             >
                                                                 <option value={undefined}></option>
                                                                 {members && members.map(member => (
-                                                                    <option key={member.id} value={member.id}>{member.name}</option>
+                                                                    <option key={member.id} value={member.id}>{member.firstname}</option>
                                                                 ))}
                                                             </select>
                                                         </div>
@@ -175,7 +176,7 @@ const HouseworkList = () : JSX.Element => {
                                                             <select
                                                                 id="day_id"
                                                                 name="day_id"
-                                                                value={newHousework?.day_id}
+                                                                value={newHousework?.day_id ?? 0}
                                                                 onChange={handleChange}
                                                                 className="relative block w-full rounded-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                                             >
@@ -265,15 +266,17 @@ const HouseworkList = () : JSX.Element => {
                             Vous pouvez retrouver toutes les tâches ménagères qui peuvent être soit périodique soit ponctuel.
                         </p>
                     </div>
-                    <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <button
-                            type="button"
-                            onClick={() => setOpen(true)}
-                            className="block rounded-md bg-amber-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-                        >
-                            Ajouter une tâche
-                        </button>
-                    </div>
+                    <PermissionGates permission_key='modify_housework'>
+                        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                            <button
+                                type="button"
+                                onClick={() => setOpen(true)}
+                                className="block rounded-md bg-amber-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                            >
+                                Ajouter une tâche
+                            </button>
+                        </div>
+                    </PermissionGates>
                 </div>
                 <div className="mt-8 flow-root">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -299,9 +302,12 @@ const HouseworkList = () : JSX.Element => {
                                                 <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     Responsable
                                                 </th>
-                                                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                    <span className="sr-only">Delete</span>
-                                                </th>
+                                                
+                                                <PermissionGates permission_key='modify_housework'>
+                                                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                                        <span className="sr-only">Delete</span>
+                                                    </th>
+                                                </PermissionGates>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 bg-white overflow-y-scroll max-h-96">
@@ -327,12 +333,14 @@ const HouseworkList = () : JSX.Element => {
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {housework.responsable_name}
                                                 </td>
-                                                <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <button className="text-red-600 hover:text-red-900"
-                                                        onClick={() => handleDelete(housework.id)}>
-                                                        Supprimer<span className="sr-only">, {housework.id}</span>
-                                                    </button>
-                                                </td>
+                                                <PermissionGates permission_key='modify_housework'>
+                                                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                        <button className="text-red-600 hover:text-red-900"
+                                                            onClick={() => handleDelete(housework.id)}>
+                                                            Supprimer<span className="sr-only">, {housework.id}</span>
+                                                        </button>
+                                                    </td>
+                                                </PermissionGates>
                                             </tr>
                                             ))}
                                         </tbody>

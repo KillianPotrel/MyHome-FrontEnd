@@ -12,7 +12,7 @@ export type User = {
     firstname: string 
     lastname: string | null
     birthday: Date | null
-    avatar: any
+    avatar:  any
     email: string
     password: string
     schedules?: Schedule[]
@@ -95,7 +95,6 @@ export const usePutUser = () => {
                 { headers: {
                     'Content-Type': 'application/json',
                     }},
-                
         )},
         onSuccess() {
             successToast("Changement des informations réussi");
