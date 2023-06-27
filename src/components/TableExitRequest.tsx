@@ -52,8 +52,8 @@ const TableExitRequest = () => {
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                        {(exitRequests !== undefined || exitRequests?.length > 0) && 
-                            exitRequests.map((exitRequest : ExitRequest) => (
+                        {exitRequests !== undefined || exitRequests?.length > 0 && 
+                            exitRequests?.map((exitRequest : ExitRequest) => (
                             <tr key={exitRequest.id}>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                     {exitRequest.user.firstname}

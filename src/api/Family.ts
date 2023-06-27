@@ -112,7 +112,9 @@ export const usePostInviteUser = () => {
             successToast("Un mail d'invitation a été transmis aux personnes invités");
         },
         onError(err: FetchError) {
-            errorToast("Erreur lors de l'invitation de l'utilisateur'");
+            errorToast("Erreur lors de l'invitation de l'utilisateur");
+            if(err.response.status === 405)
+                errorToast("Un membre actuel possède déjà cet email");
             return err
         },
     })

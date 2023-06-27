@@ -153,9 +153,35 @@ const RecipeItem = () : JSX.Element => {
                             {recipeData?.difficulty &&
                                 <div className="flex-none self-end px-6 pt-4">
                                     <dt className="sr-only">Status</dt>
-                                    <dd className={`rounded-md bg-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-50 px-2 py-1 text-xs font-medium text-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600/20`}>
+                                    
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 1 && 
+                                        <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 2 && 
+                                        <dd className="rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 3 && 
+                                        <dd className="rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 4 && 
+                                        <dd className="rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {difficulty?.find(item => item.id === recipeData?.difficulty)?.id === 5 && 
+                                        <dd className="rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-600 ring-1 ring-inset ring-purple-600/20">
+                                            {difficulty?.find(item => item.id === recipeData?.difficulty)?.label}
+                                        </dd>
+                                    }
+                                    {/* <dd className={`rounded-md bg-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-50 px-2 py-1 text-xs font-medium text-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipeData.difficulty)?.color}-600/20`}>
                                         {difficulty?.find(item => item.id === recipeData.difficulty)?.label}
-                                    </dd>
+                                    </dd> */}
                                 </div>
                             }
 

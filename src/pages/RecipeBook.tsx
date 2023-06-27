@@ -63,9 +63,34 @@ const RecipeBook = () : JSX.Element => {
                                         <h3 className="text-sm font-medium text-gray-900">{recipe.title}</h3>
                                         <div className="flex items-center space-x-1">
                                             <p className="mt-1 text-sm text-gray-500">{recipe.preparation_time} minutes</p>
-                                            <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-50 px-1.5 py-0.5 text-xs font-medium text-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-700 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-600/20`}>
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 1 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 2 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 3 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 4 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-blue-50 px-1.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {difficulty?.find(item => item.id === recipe.difficulty)?.id === 5 && 
+                                                <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-purple-50 px-1.5 py-0.5 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-600/20`}>
+                                                    {difficulty?.find(item => item.id === recipe.difficulty)?.label}
+                                                </span>
+                                            }
+                                            {/* <span className={`inline-flex flex-shrink-0 items-center rounded-full bg-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-50 px-1.5 py-0.5 text-xs font-medium text-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-700 ring-1 ring-inset ring-${difficulty?.find(item => item.id === recipe.difficulty)?.color}-600/20`}>
                                                 {difficulty?.find(item => item.id === recipe.difficulty)?.label}
-                                            </span>
+                                            </span> */}
                                         </div>
                                     </div>
                                     <div>

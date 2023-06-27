@@ -46,7 +46,7 @@ const Login = (): JSX.Element => {
         </div>
 
         <div className="mt-8 mx-4 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 opacity-95">
+          <div className="bg-white rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10 opacity-95">
             <h2 className="text-center text-3xl font-bold tracking-tight text-amber-400">
               Connectez-vous
             </h2>

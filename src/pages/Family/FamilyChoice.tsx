@@ -31,7 +31,7 @@ const FamilyChoice = (): JSX.Element => {
 
     return (
             <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-2">
-            <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
+            <div className="bg-white mx-2 mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
                 <h2 className="text-xl font-bold font-medium text-gray-500">Vos familles</h2>
                 
                 {isLoadingFamily ? (
@@ -72,7 +72,7 @@ const FamilyChoice = (): JSX.Element => {
                     </>)}
                 </div>
 
-                <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
+                <div className="bg-white mx-2 mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
                 <h2 className="text-xl font-bold  font-medium text-gray-500">Vos invitations</h2>
                 
                 {isLoadingInvitations ? (

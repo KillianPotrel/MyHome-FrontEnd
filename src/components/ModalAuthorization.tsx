@@ -12,9 +12,10 @@ type PermissionsModalProps = {
 const ModalAuthorization = ({permissions, user_id} : PermissionsModalProps):JSX.Element => {
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
+
     const { data: datePermissionUser } = useManyPermissionUserFamily(user_id)
     const permissionUser : Permission[] = datePermissionUser?.data
-    
+
     const updatePermissionUser = usePutPermissionUser(user_id)
     
     const handleUpdate = (permission: Permission, activate : number) => {
@@ -66,7 +67,7 @@ const ModalAuthorization = ({permissions, user_id} : PermissionsModalProps):JSX.
                                 </div>
                             <div className="mt-3 text-center sm:mt-5">
                                 <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                    Gérer les permissions de Emma
+                                    Gérer les permissions
                                 </Dialog.Title>
                                 <div className="mt-2">
                                 <p className="text-sm text-gray-500">

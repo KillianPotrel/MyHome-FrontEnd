@@ -79,7 +79,7 @@ const FamilyCreate = (): JSX.Element => {
 
   return (
     <>
-    <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
+    <div className="bg-white mx-2 mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
         <h2 className="text-xl font-bold  font-medium text-gray-500">Créer sa famille</h2>
         <div className="flex justify-center mt-5">
             <button
