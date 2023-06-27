@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { Dialog, Transition } from '@headlessui/react';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
+import Skeleton from 'react-loading-skeleton';
 
 
 const RecipeItem = () : JSX.Element => {
@@ -15,13 +16,13 @@ const RecipeItem = () : JSX.Element => {
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
     
-    const { data : dataRecipe } = useOneRecipeById(parseInt(id))
+    const { data : dataRecipe, isLoading : isLoadingRecipe } = useOneRecipeById(parseInt(id))
     const recipeData : Recipe = dataRecipe?.data
 
-    const { data : dataDifficulty } = useManyDifficulty()
+    const { data : dataDifficulty, isLoading : isLaodingDifficulty } = useManyDifficulty()
     const difficulty : Difficulty[] = dataDifficulty?.data
     
-    const { data : dataCategory } = useManyCategory()
+    const { data : dataCategory, isLoading : isLoadingCategory } = useManyCategory()
     const category : Category[] = dataCategory?.data
 
     const deleteRecipe = useDeleteRecipe()
@@ -42,7 +43,14 @@ const RecipeItem = () : JSX.Element => {
     }, [deleteRecipe,navigate]);
 
     return (
-    <>
+    <>   
+    {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
+      <div className='mt-10'>
+        <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+        <Skeleton count={5} />
+      </div>
+    ) : (
+        <>
         <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
             <Transition.Child
@@ -243,6 +251,8 @@ const RecipeItem = () : JSX.Element => {
                 </div>
             </div>
         </div>
+        </>
+    )}
     </>
     );
 };

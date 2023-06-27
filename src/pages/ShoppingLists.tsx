@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingList, useArchiveCurrentList, useDeleteShoppingArchived, useDuplicateArticleInCurrent, useManyListArchived, useOneListCurrent } from '../api/ShoppingList';
+import Skeleton from 'react-loading-skeleton';
 
 const ShoppingLists = () => {
-    const { data : dataShoppingCurrent } = useOneListCurrent()
+    const { data : dataShoppingCurrent, isLoading : isLoadingCurrent } = useOneListCurrent()
     const shoppingCurrent : ShoppingList = dataShoppingCurrent?.data
 
-    const { data : dataShoppingArchived } = useManyListArchived()
+    const { data : dataShoppingArchived, isLoading : isLoadingArchived } = useManyListArchived()
     const shoppingArchived : ShoppingList[] = dataShoppingArchived?.data
 
     const archiveCurrentList = useArchiveCurrentList()
@@ -28,6 +29,13 @@ const ShoppingLists = () => {
 
     return (
         <div className="mx-auto mt-5 max-w-7xl sm:px-6 lg:px-8">
+        {isLoadingCurrent || isLoadingArchived ? (
+            <div className='mt-10'>
+                <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+                <Skeleton count={5} />
+            </div>
+        ) : (
+            <>
             <h3>Liste courante</h3>
             <div
                 className="relative flex items-center justify-between space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-amber-500 focus-within:ring-offset-2 hover:border-gray-400"
@@ -90,6 +98,7 @@ const ShoppingLists = () => {
                     }
             
             </div>
+            </>)}
         </div>
     );
 };

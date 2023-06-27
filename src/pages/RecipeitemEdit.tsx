@@ -9,6 +9,7 @@ import { RecipeStep } from '../api/RecipeStep';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 import RecipeArticleEdit from '../components/RecipeArticleEdit';
+import Skeleton from 'react-loading-skeleton';
 
 
 const RecipeItemEdit = () : JSX.Element => {
@@ -20,14 +21,14 @@ const RecipeItemEdit = () : JSX.Element => {
     
     const [recipe, setRecipe] = useState<Recipe>()
     
-    const { data : dataRecipe } = useOneRecipeById(parseInt(id))
+    const { data : dataRecipe, isLoading : isLoadingRecipe } = useOneRecipeById(parseInt(id))
     const recipeData : Recipe = dataRecipe?.data
     // console.log(recipeData)
 
-    const { data : dataDifficulty } = useManyDifficulty()
+    const { data : dataDifficulty, isLoading : isLaodingDifficulty } = useManyDifficulty()
     const difficultyData : Difficulty[] = dataDifficulty?.data
     
-    const { data : dataCategory } = useManyCategory()
+    const { data : dataCategory, isLoading : isLoadingCategory } = useManyCategory()
     const categoryData : Category[] = dataCategory?.data
 
 
@@ -118,6 +119,14 @@ const RecipeItemEdit = () : JSX.Element => {
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            
+                {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
+                <div className='mt-10'>
+                    <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+                    <Skeleton count={5} />
+                </div>
+            ) : (
+                <>
             <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {/* Invoice summary */}
                 <div className="lg:col-start-3 lg:row-end-1">
@@ -291,6 +300,8 @@ const RecipeItemEdit = () : JSX.Element => {
                     </div>
                 </div>
             </div>
+            </>
+            )}
         </div>
     );
 };

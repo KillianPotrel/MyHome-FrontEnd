@@ -12,7 +12,7 @@ export type User = {
     firstname: string 
     lastname: string | null
     birthday: Date | null
-    avatar: string | null
+    avatar: any
     email: string
     password: string
     schedules?: Schedule[]
@@ -91,9 +91,12 @@ export const usePutUser = () => {
     return useMutation({
         mutationFn: (args : User) => {
             args.token = accountService.getToken()
-            return axios
-                .post(URL_API + "editInfoUser", args)
-        },
+            return axios.post(URL_API + "editInfoUser", args,
+                { headers: {
+                    'Content-Type': 'application/json',
+                    }},
+                
+        )},
         onSuccess() {
             successToast("Changement des informations réussi");
         },

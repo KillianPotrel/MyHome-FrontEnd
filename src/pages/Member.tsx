@@ -8,15 +8,16 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ArticleWarning, useManyArticleWarning } from '../api/Article';
 import { EventCalendar } from '../api/EventCalendar';
+import Skeleton from 'react-loading-skeleton';
 
 
 const Member = () => {
     const { id } = useParams();
-    const { data : dataInfo } = useUserInfo(Number(id))
+    const { data : dataInfo, isLoading : isLoadingUser } = useUserInfo(Number(id))
     const [event, setEvent] = useState([])
     const memberInfo : User = dataInfo?.data
 
-    const { data: dataWarning } = useManyArticleWarning(Number(id))
+    const { data: dataWarning, isLoading : isLoadingWarning } = useManyArticleWarning(Number(id))
     const articlesWarning : ArticleWarning[] = dataWarning?.data
 
     useEffect(() => {
@@ -82,6 +83,13 @@ const Member = () => {
 
     return (
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        {isLoadingUser || isLoadingWarning? (
+          <div className='mt-10'>
+            <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+            <Skeleton count={5} />
+          </div>
+        ) : (
+          <>
         <div className="py-12 flex justify-center flex-col">
           <div className='flex justify-between items-center flex-row'>
             <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
@@ -147,6 +155,7 @@ const Member = () => {
           </div>
     
         </div>
+        </>)}
       </div>
     );
 };

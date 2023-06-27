@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { errorToast } from '../services/toastify.service';
 import { EventClickArg } from '@fullcalendar/core';
 import EventSourceRender from '../components/EventSourceRender';
+import Skeleton from 'react-loading-skeleton';
 
 const input_type_event = [
     { id: 'event', name: 'event', description: 'Évènement ponctuel'},
@@ -28,21 +29,21 @@ const Planning = () : JSX.Element => {
         type_event: []
     })
     const cancelButtonRef = useRef(null)
-    const { data : dataEventCalendar } = useManyEventCalendar(paramsFilter)
+    const { data : dataEventCalendar, isLoading : isLoadingCalendar } = useManyEventCalendar(paramsFilter)
     const eventCalendars : any[] = dataEventCalendar?.data
 
-    const { data : dataMembers } = useManyMembersByFamily()
+    const { data : dataMembers, isLoading : isLoadingMember } = useManyMembersByFamily()
     const members : Member[] | undefined = dataMembers?.data
     
     const putEventCalendar = usePutEventCalendar()
     const deleteEventCalendar = useDeleteEventCalendar()
 
     const handleDisplayFilter = () => {
-        if(display=== "hidden"){
-          setDisplay("flex")
-        } else {
-          setDisplay("hidden")
-        }
+      if(display=== "hidden"){
+        setDisplay("flex")
+      } else {
+        setDisplay("hidden")
+      }
     } 
 
     const handleCheckboxFilter = (e : any) => {
@@ -87,7 +88,6 @@ const Planning = () : JSX.Element => {
         const end_date = new Date(convert_end).toLocaleDateString().split('/')
         const end_time = new Date(convert_end).toLocaleTimeString()
     
-        console.log(info.event._def.url)
         setEventCalendar({
             id: parseInt(info.event._def.publicId),
             title: info.event._def.title,
@@ -99,7 +99,6 @@ const Planning = () : JSX.Element => {
             family_id: info.event._def.extendedProps.family_id,
             responsable_id: info.event._def.extendedProps.responsable_id,
         })
-        console.log(eventCalendar)
         setOpen(true)
     }
 
@@ -113,7 +112,7 @@ const Planning = () : JSX.Element => {
     }
 
     const handleSubmit = () => {
-        if(!eventCalendar?.title || !eventCalendar?.responsable_id || !eventCalendar?.start || !eventCalendar?.end) {
+        if(!eventCalendar?.title || !eventCalendar?.start || !eventCalendar?.end) {
             errorToast("Un des champs est mal renseigné")
             return
         }
@@ -129,6 +128,13 @@ const Planning = () : JSX.Element => {
   }
     return (
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+      {isLoadingCalendar || isLoadingMember ? (
+        <div className='mt-10'>
+          <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+          <Skeleton count={5} />
+        </div>
+      ) : (
+        <>
           <Transition.Root show={open} as={Fragment}>
               <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                   <Transition.Child
@@ -391,6 +397,8 @@ const Planning = () : JSX.Element => {
           </div>
     
         </div>
+        </>
+      )}
       </div>
     );
 };

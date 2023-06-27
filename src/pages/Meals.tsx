@@ -7,17 +7,18 @@ import { EventCalendar } from '../api/EventCalendar';
 import { Meal, MealParams, useManyMeal, usePostMeal } from '../api/Meal';
 import ModalMeal from '../components/ModalMeal';
 import { Dialog, Transition } from '@headlessui/react';
+import Skeleton from 'react-loading-skeleton';
 
 const Meals = () => {
     const [open, setOpen] = useState(false)
-  
-    const cancelButtonRef = useRef(null)
-    const [event, setEvent] = useState([])
-    const { data : dataMeal } = useManyMeal()
-    const meals : Meal[] = dataMeal?.data
     const [mealId, setMealId] = useState<number>()
     const [mealPost, setMealPost] = useState<MealParams>()
+    const [event, setEvent] = useState([])
+    const cancelButtonRef = useRef(null)
 
+    const { data : dataMeal, isLoading : isLoadingMeal } = useManyMeal()
+    const meals : Meal[] = dataMeal?.data
+    
     const postMeal = usePostMeal()
 
     useEffect(() => {
@@ -74,6 +75,13 @@ const Meals = () => {
 
     return (
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        {isLoadingMeal ? (
+            <div className='mt-10'>
+                <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+                <Skeleton count={5} />
+            </div>
+        ) : (
+            <>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                 <Transition.Child
@@ -215,6 +223,7 @@ const Meals = () => {
           </div>
     
         </div>
+        </>)}
       </div>
     );
 };

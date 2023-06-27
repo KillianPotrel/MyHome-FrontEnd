@@ -121,3 +121,17 @@ export const useDeleteEventCalendar = () => {
         },
     })
 }
+
+
+export const usePostGenerateEventCalendar = () => {
+    return useMutation({
+        mutationFn: () => {
+            return axios.post(URL_API + "generateEventCalendar", { 
+                token: accountService.getToken(),
+                family_id: accountService.getFamily(),
+        })}, 
+        onError(err: FetchError) {
+            return err
+        },
+    })
+}

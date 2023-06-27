@@ -23,6 +23,7 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
     const [imageAvatar, setImageAvatar] = useState<Image>({
         picturePreview: null, 
         pictureAsFile: null})
+    const [image, setImage] = useState({ files: null});
 
     const putUser = usePutUser()
     //const InfoUser : User | undefined = dataInfo?.data
@@ -47,15 +48,35 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
     };
 
     const handleChangeImage = (e : any) => {
-        setImageAvatar(e.target.value)
-        setImageAvatar({
-            /* contains the preview, if you want to show the picture to the user
-               you can access it with this.state.currentPicture
-           */
-            picturePreview : URL.createObjectURL(e.target.files[0]),
-            /* this contains the file we want to send */
-            pictureAsFile : e.target.files[0]
-        })
+        // const formData = new FormData();
+        // formData.append("files", e.target.files[0], 'image')
+        // setImage({files : formData})
+        console.log(e.target.files[0])
+        const reader = new FileReader();
+      
+        // Définir la fonction de rappel lorsque la lecture du fichier est terminée
+        reader.onloadend = function() {
+          // Le contenu du fichier est disponible dans la propriété 'result'
+          const base64Data = reader.result;
+          setUser({
+          ...userPost,
+              ["avatar"]: {file:base64Data}/*{files : formData}*/,
+          });
+          // Envoyer le fichier à votre API en utilisant la représentation base64
+        };
+
+
+
+        // setImageAvatar(e.target.value)
+        // setImageAvatar({
+        //     /* contains the preview, if you want to show the picture to the user
+        //        you can access it with this.state.currentPicture
+        //    */
+        //     picturePreview : URL.createObjectURL(e.target.files[0]),
+        //     /* this contains the file we want to send */
+        //     pictureAsFile : e.target.files[0]
+        // })
+
     };
 
     const setImageAction = () => {
@@ -100,6 +121,7 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
                         />
                         <div>
                             <input type='file' 
+                                accept="image/*"
                                 name='avatar' 
                                 className='file:cursor-pointer file:rounded-md file:border-none file:mt-5 file:bg-amber-600 file:px-3.5 file:py-2.5 file:text-sm file:font-semibold file:text-white file:shadow-sm file:hover:bg-amber-500 file:focus-visible:outline file:focus-visible:outline-2 file:focus-visible:outline-offset-2 file:focus-visible:outline-amber-600' 
                                 onChange={handleChangeImage}/>

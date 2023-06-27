@@ -5,18 +5,20 @@ import { useNavigate } from 'react-router';
 import { Difficulty, useManyDifficulty } from '../api/Difficulty';
 import { Category, useManyCategory } from '../api/Category';
 import { Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 
 const RecipeBook = () : JSX.Element => {
     let navigate = useNavigate();
-    const { data : dataRecipe } = useManyRecipeByFamily()
+    const { data : dataRecipe, isLoading : isLoadingRecipe } = useManyRecipeByFamily()
     const recipeData : Recipe[] = dataRecipe?.data
-    const postRecipe = usePostRecipe()
 
-    const { data : dataDifficulty } = useManyDifficulty()
+    const { data : dataDifficulty, isLoading : isLaodingDifficulty } = useManyDifficulty()
     const difficulty : Difficulty[] = dataDifficulty?.data
     
-    const { data : dataCategory } = useManyCategory()
+    const { data : dataCategory, isLoading : isLoadingCategory } = useManyCategory()
     const category : Category[] = dataCategory?.data
+
+    const postRecipe = usePostRecipe()
 
     useEffect(() => {
         if (postRecipe.isSuccess) {
@@ -30,6 +32,14 @@ const RecipeBook = () : JSX.Element => {
 
     return (
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            
+            {isLoadingRecipe || isLaodingDifficulty || isLoadingCategory ? (
+              <div className='mt-10'>
+                <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+                <Skeleton count={5} />
+              </div>
+            ) : (
+                <>
             <div className="py-12 flex justify-center flex-col">
                 
                 <div className="flex items-center gap-x-6 px-4 py-4 sm:px-8">
@@ -79,6 +89,7 @@ const RecipeBook = () : JSX.Element => {
                     }
                     
             </div>
+            </>)}
         </div>
     );
 };

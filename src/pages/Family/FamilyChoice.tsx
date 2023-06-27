@@ -4,17 +4,24 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { Family, ResponseInvitationArgs, useManyFamilyByUser, useManyInvitationByUser, usePostResponseInvitation } from '../../api/Family';
 import { accountService } from '../../services/account.service';
 import FamilyCreate from './FamilyCreate';
+import { usePostGenerateEventCalendar } from '../../api/EventCalendar';
+import Skeleton from 'react-loading-skeleton';
 
 const FamilyChoice = (): JSX.Element => {
     const navigate = useNavigate();
-    const { data: dataFamilies } = useManyFamilyByUser()
-    const { data: dataInvitations } = useManyInvitationByUser()
-    const usePostInvitation = usePostResponseInvitation()
+    const { data: dataFamilies, isLoading : isLoadingFamily } = useManyFamilyByUser()
     const families : Family[] | undefined = dataFamilies?.data
+
+    const { data: dataInvitations, isLoading : isLoadingInvitations } = useManyInvitationByUser()
     const invitations : Family[] | undefined = dataInvitations?.data
+
+    const usePostInvitation = usePostResponseInvitation()
+
+    const generateEvent = usePostGenerateEventCalendar()
 
     const handleConnectFamily = (id : number) => {
         accountService.saveFamily(id)
+        generateEvent.mutate()
         navigate("/family/dashboard");
     }
 
@@ -23,10 +30,16 @@ const FamilyChoice = (): JSX.Element => {
     }
 
     return (
-        <main className="lg:flex lg:min-h-full lg:flex-row-reverse lg:overflow-hidden">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-2">
+            <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-2">
             <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
                 <h2 className="text-xl font-bold font-medium text-gray-500">Vos familles</h2>
+                
+                {isLoadingFamily ? (
+                    <div className='w-full'>
+                        <Skeleton count={1} height={100}/>
+                    </div>
+                ) : (
+                    <>
                 { families === undefined || families?.length === 0 ? 
                     <h1>no family</h1> 
                 :
@@ -56,13 +69,21 @@ const FamilyChoice = (): JSX.Element => {
                         ))}
                     </ul>
                     }
+                    </>)}
                 </div>
 
                 <div className="bg-white mt-10 py-2 px-4 shadow sm:rounded-lg sm:px-10">
                 <h2 className="text-xl font-bold  font-medium text-gray-500">Vos invitations</h2>
-                { invitations === undefined || invitations?.length === 0 ? 
-                    <h1>Vous n'avez pas d'invitations</h1> 
-                :
+                
+                {isLoadingInvitations ? (
+                    <div>
+                        <Skeleton count={1} height={100}/>
+                    </div>
+                ) : (
+                    <>
+                    { invitations === undefined || invitations?.length === 0 ? 
+                        <h1>Vous n'avez pas d'invitations</h1> 
+                    :
                     <ul role="list" className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
                         {invitations.map((invitation : Family) => (
                             <li key={invitation.id} className="col-span-1 flex rounded-md shadow-sm">
@@ -87,11 +108,12 @@ const FamilyChoice = (): JSX.Element => {
                         ))}
                     </ul>
                 }
+                </>
+                )}
                 </div>
                 
                 <FamilyCreate />
             </div>
-        </main>
     );
 };
 

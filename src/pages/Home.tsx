@@ -5,39 +5,31 @@ import { Meal, useManyMealToday } from '../api/Meal';
 import { EventCalendar, useManyEventHousework } from '../api/EventCalendar';
 import { ExitRequest, useManyExitRequest } from '../api/ExitRequest';
 import { format } from '../_utils/FormatDate';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-const cards = [
-  {
-    name: 'Sales',
-    description: 'Consectetur vel non. Rerum ut consequatur nobis unde. Enim est quo corrupti consequatur.',
-    icon: PhoneIcon,
-  },
-  {
-    name: 'Technical Support',
-    description: 'Quod possimus sit modi rerum exercitationem quaerat atque tenetur ullam.',
-    icon: LifebuoyIcon,
-  },
-  {
-    name: 'Media Inquiries',
-    description: 'Ratione et porro eligendi est sed ratione rerum itaque. Placeat accusantium impedit eum odit.',
-    icon: NewspaperIcon,
-  },
-]
 const Home = () : JSX.Element=> {
   
-  const { data : dataInfo } = useUserInfo()
+  const { data : dataInfo, isLoading: isLoadingUser } = useUserInfo()
   const user = dataInfo?.data
 
-  const { data : dataHousework } = useManyEventHousework()
+  const { data : dataHousework, isLoading: isLoadingHousework } = useManyEventHousework()
   const houseworks : EventCalendar[] = dataHousework?.data
-  const { data : dataMeal } = useManyMealToday()
+
+  const { data : dataMeal, isLoading: isLoadingMeal } = useManyMealToday()
   const meals : Meal[] = dataMeal?.data
-  console.log(meals)
-  const { data : dataExitRequest } = useManyExitRequest("accepted")
+  
+  const { data : dataExitRequest, isLoading: isLoadingExitRequest } = useManyExitRequest("accepted")
   const exitRequests : ExitRequest[] = dataExitRequest?.data
 
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+      {isLoadingUser || isLoadingHousework || isLoadingMeal || isLoadingExitRequest ? (
+        <div className='mt-10'>
+          <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+          <Skeleton count={5} />
+        </div>
+      ) : (
         <div className="relative isolate overflow-hidden py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
@@ -118,6 +110,7 @@ const Home = () : JSX.Element=> {
                 </div>
             </div>
         </div>
+    )}
     </div>
   );
 };

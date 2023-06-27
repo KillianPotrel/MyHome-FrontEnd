@@ -5,6 +5,7 @@ import { format } from '../_utils/FormatDate';
 import { Day, useManyDay } from '../api/Day';
 import { Member, useManyMembersByFamily } from '../api/Family';
 import { errorToast } from '../services/toastify.service';
+import Skeleton from 'react-loading-skeleton';
 
 const HouseworkList = () : JSX.Element => {
     const [open, setOpen] = useState(false)
@@ -15,13 +16,13 @@ const HouseworkList = () : JSX.Element => {
     useEffect(() => {
         if(!newHousework) setIsPeriodical(true)
     },[newHousework])
-    const { data : dataHousework } = useManyHousework()
+    const { data : dataHousework, isLoading : isLoadingHousework } = useManyHousework()
     const houseworks : Housework[] = dataHousework?.data
 
-    const { data : dataDay } = useManyDay()
+    const { data : dataDay, isLoading : isLoadingDay } = useManyDay()
     const days : Day[] = dataDay?.data
 
-    const { data : dataMember } = useManyMembersByFamily()
+    const { data : dataMember, isLoading : isLoadingMember } = useManyMembersByFamily()
     const members : Member[] = dataMember?.data
 
     const deleteHousework = useDeleteHousework()
@@ -42,7 +43,6 @@ const HouseworkList = () : JSX.Element => {
     }
 
     const handleSubmit = () => {
-        console.log(isPeriodical)
         if(isPeriodical) {
             if(!newHousework?.title || !newHousework?.responsable_id || !newHousework?.day_id || !newHousework?.periodicity) {
                 errorToast("Un des champs est mal renseigné")
@@ -77,6 +77,13 @@ const HouseworkList = () : JSX.Element => {
 
     return (
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            {isLoadingHousework || isLoadingDay || isLoadingMember ? (
+                <div className='mt-10'>
+                    <Skeleton count={1} height={100} style={{marginBottom: "15px"}} />
+                    <Skeleton count={5} />
+                </div>
+            ) : (
+                <>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <Transition.Child
@@ -339,6 +346,8 @@ const HouseworkList = () : JSX.Element => {
                     </div>
                 </div>
             </div>
+            </>
+        )}
         </div>
     );
 };

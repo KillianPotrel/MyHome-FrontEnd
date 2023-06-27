@@ -7,7 +7,6 @@ type EventSourceRenderProps = {
 const EventSourceExitRequest = ({ source_id } : EventSourceRenderProps) : JSX.Element => {
     const { data: dateExitRequest } = useOneExitRequest(source_id)
     const exitRequest : ExitRequest = dateExitRequest?.data
-    console.log(exitRequest)
 
     return (
         <div>

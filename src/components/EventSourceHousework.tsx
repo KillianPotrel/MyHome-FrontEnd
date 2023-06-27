@@ -10,7 +10,7 @@ const EventSourceHousework = ({ source_id } : EventSourceRenderProps) : JSX.Elem
     const housework : Housework = dataHousework?.data
     const { data: dataDay } = useManyDay()
     const days : Day[] = dataDay?.data
-    console.log(housework)
+
     return (
         <div>
             {housework?.periodicity &&
@@ -22,7 +22,6 @@ const EventSourceHousework = ({ source_id } : EventSourceRenderProps) : JSX.Elem
                         <div className='flex flex-row'>
                             <p className='underline underline-offset-2'>Jour</p>
                             <p> :  {days?.find(item => item.id === housework?.day_id)?.label}</p>
-                                                           
                         </div>
                     </li>
                     <li className="px-4 py-2 sm:px-0 text-sm">

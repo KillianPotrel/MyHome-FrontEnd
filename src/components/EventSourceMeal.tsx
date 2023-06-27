@@ -10,7 +10,6 @@ const EventSourceMeal = ({ source_id } : EventSourceRenderProps) : JSX.Element =
     
     const { data: dateMeal } = useOneMeal(source_id)
     const meal : Meal = dateMeal?.data
-    console.log(meal)
 
     return (
         <div>

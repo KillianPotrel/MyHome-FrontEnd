@@ -97,6 +97,25 @@ export const usePostCreateFamily = () => {
     })
 }
 
+export const usePostInviteUser = () => {
+    return useMutation({
+        mutationFn: (member : Member) => axios.post(URL_API + "inviteToFamily", { 
+                token: accountService.getToken(),
+                family_id: accountService.getFamily(),
+                email : member?.email,
+                role_id : member?.role
+            })
+        ,
+        onSuccess() {
+            successToast("Un mail d'invitation a été transmis aux personnes invités");
+        },
+        onError(err: FetchError) {
+            errorToast("Erreur lors de l'invitation de l'utilisateur'");
+            return err
+        },
+    })
+}
+
 export const useManyMembersByFamily = () =>
     useQuery({
         queryFn: () =>

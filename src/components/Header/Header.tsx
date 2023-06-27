@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { accountService } from "../../services/account.service";
-import { usePostUserLogout } from "../../api/User";
-
+import { User, usePostUserLogout, useUserInfo } from "../../api/User";
 import { Fragment } from "react";
 import { Disclosure, Menu, Popover, Transition } from "@headlessui/react";
-import { ArrowPathIcon, Bars3Icon, BellIcon, ChartPieIcon, CursorArrowRaysIcon, EyeIcon, FingerPrintIcon, PhoneIcon, PlayCircleIcon, SquaresPlusIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BellIcon, EyeIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import NotificationModal from "./NotificationModal";
 import { useDeleteNotification } from "../../api/Notification";
 
@@ -16,6 +15,9 @@ function classNames(...classes : any[]) {
 const Header = (): JSX.Element => {
     let navigate = useNavigate();
     const location = useLocation();
+
+    const { data : dataInfo } = useUserInfo()
+    const user : User = dataInfo?.data
     const userPostLogout = usePostUserLogout();
 
     const deleteNotification = useDeleteNotification()
@@ -113,17 +115,6 @@ const Header = (): JSX.Element => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <button
-                  type="button"
-                  className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-          
-                </button> */}
-
-
-
                 <Popover className="relative">
                   <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -170,8 +161,8 @@ const Header = (): JSX.Element => {
                     <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="h-8 w-8 rounded-full object-cover"
+                        src={user?.avatar ?? "../../images/avatar_family.svg"}
                         alt=""
                       />
                     </Menu.Button>
@@ -235,60 +226,53 @@ const Header = (): JSX.Element => {
             <div className="space-y-1 pt-2 pb-4">
               {/* Current: "bg-amber-50 border-amber-500 text-amber-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-amber-500 bg-amber-50 py-2 pl-3 pr-4 text-base font-medium text-amber-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname === '/family/dashboard' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Accueil
+                <Link to={'/family/dashboard'}>
+                  Accueil
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname === '/family/members' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Famille
+                <Link to={'/family/members'}>
+                  Famille
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname === '/family/planning' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Planning
+                <Link to={'/family/planning'}>
+                  Planning
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname.includes('/family/recipe') ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Recette
+                <Link to={'/family/recipes'}>
+                  Recette
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname.includes('/family/shopping') ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Budget
+                <Link to={'/family/shoppings'}>
+                  Course
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname === '/family/meals' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Course
+                <Link to={'/family/meals'}>
+                  Repas
+                </Link>
               </Disclosure.Button>
               <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                className={`w-full block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${location.pathname === '/family/housework' ? 'border-amber-500 bg-amber-50 text-amber-700' : 'border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}`}
               >
-                Repas
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-              >
-                Ménage
+                <Link to={'/family/housework'}>
+                  Ménage
+                </Link>
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>
