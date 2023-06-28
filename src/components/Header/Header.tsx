@@ -187,6 +187,7 @@ const Header = (): JSX.Element => {
                       <Menu.Item>
                         {({ active }) => (
                           <button
+                            type='button'
                             onClick={disconnectFamily}
                             className={classNames(
                               active ? "bg-gray-100" : "",
@@ -200,6 +201,7 @@ const Header = (): JSX.Element => {
                       <Menu.Item>
                         {({ active }) => (
                           <button
+                            type='button'
                             onClick={logout}
                             className={classNames(
                               active ? "bg-gray-100" : "",

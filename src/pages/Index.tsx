@@ -788,7 +788,7 @@ export default function Index(): JSX.Element {
                 />
                 <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                   <button
-                    type="submit"
+                    type='button'
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-gradient-to-r from-amber-500 to-orange-500 bg-origin-border px-4 py-3 text-base font-medium text-white shadow-sm hover:from-amber-700 hover:to-orange-700"
                   >
                     Souscription

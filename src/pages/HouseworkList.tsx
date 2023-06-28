@@ -335,7 +335,8 @@ const HouseworkList = () : JSX.Element => {
                                                 </td>
                                                 <PermissionGates permission_key='modify_housework'>
                                                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <button className="text-red-600 hover:text-red-900"
+                                                        <button 
+                                                            type='button' className="text-red-600 hover:text-red-900"
                                                             onClick={() => handleDelete(housework.id)}>
                                                             Supprimer<span className="sr-only">, {housework.id}</span>
                                                         </button>

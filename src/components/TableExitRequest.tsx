@@ -64,14 +64,14 @@ const TableExitRequest = () => {
                                     <p className="whitespace-normal break-words">{exitRequest.motif}</p></td>
                                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                     <button
-                                        type="submit"
+                                        type='button'
                                         onClick={() => handleSubmit(exitRequest.id, 1)}
                                         className="mx-2 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
                                     >
                                         Autoriser
                                     </button>
                                     <button
-                                        type="submit"
+                                        type='button'
                                         onClick={() => handleSubmit(exitRequest.id, 0)}
                                         className="mx-2 rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
                                     >

@@ -133,7 +133,9 @@ const FamilyChoice = (): JSX.Element => {
                                     <li key={family.id} className="col-span-1 flex rounded-md shadow-sm">
                                         <div className="flex flex-1 items-center justify-between rounded-md border border-gray-200 bg-white">
                                             <div className="flex-1 cursor-pointer truncate px-4 py-2 text-sm" onClick={() =>handleConnectFamily(family.id)}>
-                                                <button className="rounded-full">
+                                                <button 
+                                                    type='button' 
+                                                    className="rounded-full">
                                                     <p className="flex flex-row font-medium text-gray-900 hover:text-gray-600">
                                                         {family.name}
                                                     {/* <CursorArrowRaysIcon className='h-5 w-5' /> */}
@@ -162,6 +164,7 @@ const FamilyChoice = (): JSX.Element => {
                                                         py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <Menu.Item>
                                                             <button
+                                                                type='button'
                                                                 onClick={() => handleModalLeaveFamily(family?.id, family?.name)}
                                                                 className={"w-full font-semibold text-red-500 h-full text-left block px-4 py-2 text-sm text-gray-700"}>
                                                                 Quitter la famille
@@ -201,11 +204,13 @@ const FamilyChoice = (): JSX.Element => {
                                                     Famille {invitation.name}
                                                 </p>
                                                 <button 
+                                                    type='button'
                                                     className="rounded-md mt-5 bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                                                     onClick={() => handleSubmitInvitation({family_id: invitation.id, accepted: 1})}>
                                                         Accepter
                                                 </button>
                                                 <button 
+                                                    type='button'
                                                     className="rounded-md mt-5 ml-4 bg-amber-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                                                     onClick={() => handleSubmitInvitation({family_id: invitation.id, accepted: 0})}>
                                                         Refuser

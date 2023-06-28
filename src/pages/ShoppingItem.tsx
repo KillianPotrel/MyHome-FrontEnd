@@ -79,6 +79,7 @@ const ShoppingItem = () : JSX.Element => {
                                         
                                             <PermissionGates permission_key='modify_shopping'>
                                                 <button 
+                                                    type='button'
                                                     className="ml-auto text-red-500 hover:text-red-600"
                                                     onClick={() => handleDelete(article_shopping)}
                                                     >Supprimer</button>
