@@ -39,7 +39,6 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
     const handleChangeImage = (e : any)  => {
         const formData = new FormData();
         formData.append('avatar', e.target.files[0]);
-        console.log(e.target.files[0])
         setUser(() => ({
           ...userPost,
           avatar: e.target.files[0],

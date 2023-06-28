@@ -62,7 +62,7 @@ export const usePostExitRequest = () => {
                 })
         },
         onSuccess() {
-            successToast("Demande effectué");
+            successToast("Demande effectuée");
         },
         onSettled() {
             queryClient.invalidateQueries(["manyExitRequest"])

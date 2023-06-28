@@ -30,7 +30,6 @@ let tokenExpired = () => {
     })
     .catch((error) => {
       if (error.response) {
-        console.log(error.response.status);
         if (error.response.status === 406) {
           localStorage.removeItem(JWT_KEY);
           localStorage.removeItem(FAMILY_KEY);

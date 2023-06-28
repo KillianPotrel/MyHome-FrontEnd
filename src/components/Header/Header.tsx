@@ -129,7 +129,7 @@ const Header = (): JSX.Element => {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute z-10 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4"
+                    <Popover.Panel className="absolute z-30 mt-5 flex w-screen max-w-max  sm:-translate-x-72 md:-translate-x-1/2  px-4"
                       style={visualViewport.width < 800 ? {left: "-275px"} : {left: "-170px"}}>
                       <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                         <div className="p-4 overflow-y-scroll max-h-96">
@@ -141,7 +141,7 @@ const Header = (): JSX.Element => {
                               className="cursor-pointer flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
                             >
                               <TrashIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                              Supprimé tout
+                              Supprimer tout
                             </a>
                         </div>
                       </div>

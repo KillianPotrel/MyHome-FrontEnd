@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] =  useState({
-    email: "kpotrel@gmail.com",
-    password: "azerty",
-    firstname: "Killian",
+    email: "",
+    password: "",
+    firstname: "",
     birthday: null,
     lastname: null,
     avatar: null
@@ -31,7 +31,6 @@ const Register = () => {
   };
 
   const onSubmit = (e : any) => {
-    e.preventDefault()
     userRegister.mutate(credentials)
   };
 
@@ -51,7 +50,7 @@ const Register = () => {
             <h2 className="text-center text-3xl font-bold tracking-tight text-amber-400">
               Inscription à MyHome
             </h2>
-            <form className="space-y-6" onSubmit={onSubmit} method="POST">
+            <div className="space-y-6">
               <div>
                 <Input
                   id="firstname"
@@ -85,12 +84,13 @@ const Register = () => {
               <div>
                 <button
                   type='button'
+                  onClick={onSubmit}
                   className="flex w-full justify-center rounded-md border border-transparent bg-amber-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                 >
                   Inscription
                 </button>
               </div>
-            </form>
+            </div>
             <div className="text-sm mt-4">
               <Link to={"/login"}
                 className="font-medium text-amber-400 hover:text-amber-500 cursor-pointer">

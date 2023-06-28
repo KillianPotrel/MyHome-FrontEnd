@@ -46,10 +46,17 @@ const Home = () : JSX.Element=> {
                             <div className="overflow-hidden">
                               {houseworks?.length > 0 
                                 ?
-                                <ul role="list" className="divide-y divide-gray-200">
+                                <ul role="list" className="mt-5">
                                   {houseworks?.map((item) => (
                                       <li key={item.id}>
-                                        - {item.title}
+                                        <div
+                                          className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                        >
+                                          <div className="min-w-0 flex-1">
+                                              <span className="absolute inset-0" aria-hidden="true" />
+                                              <p className="text-sm font-medium text-gray-900">{item.title}</p>
+                                          </div>
+                                        </div>
                                       </li>
                                     ))}
                                 </ul>
@@ -65,25 +72,45 @@ const Home = () : JSX.Element=> {
                             <div className="overflow-hidden">
                               {meals?.length > 0 
                                 ?
-                                <ul role="list" className="divide-y divide-gray-200">
+                                <ul role="list" className="mt-5">
                                 {meals?.map((meal) => (
-                                  <div key={meal.id}>
-                                    {meal?.recipes.length + meal.recipes_custom.length > 0 &&
+                                  <li key={meal.id}>
+                                    {(meal?.recipes.length + meal?.recipes_custom.length) > 0 &&
                                       <>
-                                        <li className="mt-3 font-semibold">{meal.is_lunch === 0 ? "Dîner :" : "Déjeuner :"}</li>
-                                        {meal?.recipes?.map((recipe) => (
-                                          <li key={recipe.id}>
-                                            - {recipe.title}
-                                          </li>
-                                        ))}
-                                        {meal?.recipes_custom?.map((recipe) => (
-                                          <li key={recipe.id}>
-                                            - {recipe.title}
-                                          </li>
-                                        ))}
+                                        <div
+                                          className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                        >
+                                          <div className="min-w-0 flex-1">
+                                              <span className="absolute inset-0" aria-hidden="true" />
+                                              <p className="text-sm font-medium text-gray-900">{meal.is_lunch === 0 ? "Dîner :" : "Déjeuner :"}</p>
+                                              {meal?.recipes?.map((recipe) => (
+                                              <p key={recipe.id} className="truncate text-sm text-gray-500">{recipe.title}</p>
+                                                // <li key={recipe.id}>
+                                                //   - {recipe.title}
+                                                // </li>
+                                              ))}
+                                              {meal?.recipes_custom?.map((recipe) => (
+                                              <p key={recipe.id} className="truncate text-sm text-gray-500">{recipe.title}</p>
+                                                // <li key={recipe.id}>
+                                                //   - {recipe.title}
+                                                // </li>
+                                              ))}
+                                          </div>
+                                        </div>
+                                          {/* <li className="mt-3 font-semibold">{meal.is_lunch === 0 ? "Dîner :" : "Déjeuner :"}</li>
+                                          {meal?.recipes?.map((recipe) => (
+                                            <li key={recipe.id}>
+                                              - {recipe.title}
+                                            </li>
+                                          ))}
+                                          {meal?.recipes_custom?.map((recipe) => (
+                                            <li key={recipe.id}>
+                                              - {recipe.title}
+                                            </li>
+                                          ))} */}
                                       </>
                                     }
-                                  </div>
+                                  </li>
                                 ))}
                                 </ul>
                                 : <p>Aucuns repas</p>}
@@ -98,12 +125,19 @@ const Home = () : JSX.Element=> {
                             <div className="overflow-hidden">
                               {exitRequests?.length > 0 
                                 ?
-                                <ul role="list" className="divide-y divide-gray-200">
-                                  {exitRequests?.map((item) => (
-                                      <li key={item?.id} className=''>
-                                        <p>{item?.user.firstname}</p>
-                                        <p>De {format(item?.date_debut)}</p> 
-                                        <p>À {format(item?.date_fin)}</p>
+                                <ul role="list" className="mt-5">
+                                {exitRequests?.map((item) => (
+                                      <li key={item?.id} className='mb-2'>
+                                          <div
+                                            className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-3 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                          >
+                                            <div className="min-w-0 flex-1">
+                                                <span className="absolute inset-0" aria-hidden="true" />
+                                                <p className="text-sm font-medium text-gray-900">{item?.user.firstname}</p>
+                                                <p className="truncate text-sm text-gray-500">De {format(item?.date_debut)}</p>
+                                                <p className="truncate text-sm text-gray-500">À {format(item?.date_fin)}</p>
+                                            </div>
+                                          </div>
                                       </li>
                                     ))}
                                 </ul>

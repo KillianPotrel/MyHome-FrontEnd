@@ -21,7 +21,6 @@ import {
   BuildingLibraryIcon,
   BugAntIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from 'react-router-dom';
 
 const solutions = [
@@ -147,33 +146,32 @@ const metrics = [
     id: 4,
     stat: "12M+",
     emphasis: "Foyers",
-    rest: "utilisent l'application au quotidien.",
+    rest: "utilisant l'application au quotidien.",
   },
 ];
 const footerNavigation = {
   solutions: [
     { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
+    { name: "Analyse", href: "#" },
     { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+    { name: "Perspectives", href: "#" },
   ],
   support: [
-    { name: "Pricing", href: "#" },
+    { name: "Tarification", href: "#" },
     { name: "Documentation", href: "#" },
     { name: "Guides", href: "#" },
-    { name: "API Status", href: "#" },
   ],
   company: [
-    { name: "About", href: "#" },
+    { name: "À propos", href: "#" },
     { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Partners", href: "#" },
+    { name: "Emplois", href: "#" },
+    { name: "Presse", href: "#" },
+    { name: "Partenaires", href: "#" },
   ],
   legal: [
-    { name: "Claim", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+    { name: "Réclamation", href: "#" },
+    { name: "Vie privée", href: "#" },
+    { name: "Conditions", href: "#" },
   ],
   social: [
     {
@@ -239,10 +237,6 @@ const footerNavigation = {
     },
   ],
 };
-
-function classNames(...classes : any[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Index(): JSX.Element {
   return (
@@ -458,7 +452,7 @@ export default function Index(): JSX.Element {
               </div>
               <div className="relative py-16 px-6 sm:py-24 lg:py-32 lg:px-8">
                 <h1 className="text-center text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                  <span className="block text-white">Bienvenu dans votre</span>
+                  <span className="block text-white">Bienvenue dans votre</span>
                   <span className="block text-amber-300">FAMILLE</span>
                 </h1>
                 <p className="mx-auto mt-6 max-w-lg text-center text-xl text-amber-300 sm:max-w-3xl">
@@ -529,10 +523,10 @@ export default function Index(): JSX.Element {
                 <div>
                   <div className="mt-6">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-                      Présentation de nous
+                      Qui sommes-nous ?
                     </h2>
                     <p className="mt-4 text-lg text-gray-500">
-                      Jeune start-up composé de deux entrepreneurs, nous avons
+                      Jeune start-up composée de deux entrepreneurs, nous avons
                       la vocation de vous fournir un outil vous permettant de
                       considérablement améliorer vos journées.
                     </p>
@@ -542,7 +536,7 @@ export default function Index(): JSX.Element {
                   <blockquote>
                     <div>
                       <p className="text-base text-gray-500">
-                        &ldquo;Nous souhaitons améliorez le quotien des foyers.
+                        &ldquo;Nous souhaitons améliorez le quotidien des foyers.
                         À la reconquête de la gestion de votre temps !&rdquo;
                       </p>
                     </div>
@@ -663,7 +657,7 @@ export default function Index(): JSX.Element {
           <div className="mx-auto max-w-4xl py-16 px-6 sm:py-24 lg:flex lg:max-w-7xl lg:items-center lg:justify-between lg:px-8">
             <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               <span className="block">
-                Vous avez une question à nous posez ?
+                Vous avez une question à nous poser ?
               </span>
               <span className="-mb-1 block bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text pb-1 text-transparent">
                 Trouvez votre réponse sur la FAQ ou par mail.
@@ -733,7 +727,7 @@ export default function Index(): JSX.Element {
               <div className="md:grid md:grid-cols-2 md:gap-8">
                 <div>
                   <h3 className="text-base font-medium text-gray-900">
-                    Company
+                    Entreprise
                   </h3>
                   <ul role="list" className="mt-4 space-y-4">
                     {footerNavigation.company.map((item) => (
@@ -749,7 +743,7 @@ export default function Index(): JSX.Element {
                   </ul>
                 </div>
                 <div className="mt-12 md:mt-0">
-                  <h3 className="text-base font-medium text-gray-900">Legal</h3>
+                  <h3 className="text-base font-medium text-gray-900">Juridique</h3>
                   <ul role="list" className="mt-4 space-y-4">
                     {footerNavigation.legal.map((item) => (
                       <li key={item.name}>
@@ -770,8 +764,7 @@ export default function Index(): JSX.Element {
                 Souscription à la newsletter
               </h3>
               <p className="mt-4 text-base text-gray-500">
-                Les dernières news, mises à jours et promotions vous serons
-                envoyé.
+                Les dernières news, mises à jour et promotions vous seront envoyés
               </p>
               <form className="mt-4 sm:flex sm:max-w-md">
                 <label htmlFor="email-address" className="sr-only">

@@ -6,7 +6,6 @@ const NotificationModal = () :JSX.Element => {
     const { data: dataNotifications } = useManyNotification()
     const notifications : Notification[] = dataNotifications?.data
 
-    console.log(notifications)
     const deleteNotification = useDeleteNotification()
 
     const handleSubmit = (notification_id : number) => {

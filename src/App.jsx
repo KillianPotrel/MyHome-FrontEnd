@@ -38,7 +38,9 @@ export function App() {
           <Route
             path="/family/*"
             element={
+              <AuthGuard>
                 <PublicRouter />
+              </AuthGuard>
             }
           />
         </Routes>

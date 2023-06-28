@@ -4,7 +4,7 @@ import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
 import { URL_API } from "../services/key"
 import { Schedule } from "./Schedule"
-import { errorToast, successToast } from "../services/toastify.service"
+import { errorToast, successToast, warningToast } from "../services/toastify.service"
 
 export type User = {
     id?: number,
@@ -28,7 +28,8 @@ export const usePostUserRegister = () => {
     return useMutation({
         mutationFn: (user: User) => axios.post(URL_API + "user/create", user),  
         onSuccess() {
-            successToast("Inscription réussi");
+            successToast("Inscription réussie");
+            warningToast("Validez votre email avant de vous connecter")
         },
         onError(err: FetchError) {
             errorToast("Erreur lors de l'inscription");

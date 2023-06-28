@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 const Login = (): JSX.Element => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    email: "kpotrel@gmail.com",
-    password: "azerty",
+    email: "",
+    password: "",
   });
 
   const userPostLogin = usePostUserLogin();
