@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { ArticleParams, ArticleRecipe, ArticleSearch, useDeleteArticleRecipe } from '../api/Article';
-import { RecipeStep } from '../api/RecipeStep';
+import { ArticleRecipe, ArticleSearch, useDeleteArticleRecipe } from '../api/Article';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import SearchBar from './Searchbar/SearchBar';
 import { SearchResultsList } from './Searchbar/SearchResultsList';
@@ -15,27 +14,12 @@ type RecipeArticleEditProps = {
 const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : RecipeArticleEditProps) => {
     const [results, setResults] = useState<ArticleSearch[]>([]);
     const [articlesRecipe, setArticlesRecipe] = useState<ArticleRecipe[]>([])
-    const [articleDelete, setArticleDelete] = useState<ArticleRecipe>()
 
     useEffect(() => {    
         setArticlesRecipe(articles_recipe);
     }, [articles_recipe])
-    
-    const params : ArticleParams = {
-        entity_id: recipe_id,
-        article_recipe: articleDelete
-    }
 
-    const deleteArticleRecipe = useDeleteArticleRecipe(params)
-
-    const handleDeleteArticle = (article: ArticleRecipe) => {
-        setArticleDelete(article)
-        deleteArticleRecipe.mutate()
-        setArticlesRecipe(prevArticles => prevArticles.filter((r) => r.id !== article.id));
-      
-        handleStateChange(articlesRecipe)
-        // articles_recipe = articles_recipe.filter((r) => r.id !== article.id); // Update the state here
-    }
+    const deleteArticleRecipe = useDeleteArticleRecipe(recipe_id)
     
     const handleChange = (index : number, e : any) => {
         const splited_target = (e.target.name).split('_')
@@ -115,7 +99,7 @@ const RecipeArticleEdit = ({recipe_id, articles_recipe, handleStateChange} : Rec
                     </div>          
                     <div key={"delete_" + recipe_article.id} className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
                         <span className='cursor-pointer' 
-                        onClick={() => handleDeleteArticle(recipe_article)}
+                        onClick={() => deleteArticleRecipe.mutate(recipe_article)}
                         >
                             <TrashIcon className='text-gray-500  w-6 h-6 mr-2'/>
                         </span>

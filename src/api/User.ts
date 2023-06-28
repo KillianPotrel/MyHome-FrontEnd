@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
@@ -88,16 +88,17 @@ export const useUserInfo = (user_id?: number) =>
     })
 
 export const usePutUser = () => {
+    const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: (args : User) => {
-            args.token = accountService.getToken()
+        mutationFn: (args : FormData) => {
+            args.append('token',accountService.getToken())
             return axios.post(URL_API + "editInfoUser", args,
-                { headers: {
-                    'Content-Type': 'application/json',
-                    }},
         )},
         onSuccess() {
             successToast("Changement des informations réussi");
+        },
+        onSettled() {
+            queryClient.invalidateQueries(["oneUserInfo"])
         },
         onError(err: FetchError) {
             errorToast("Erreur lors des modifications du profil");
@@ -126,4 +127,21 @@ export const usePutPassword = () => {
         },
     })
 }
-    
+   
+export const useDeleteAccount = () => {
+    return useMutation({
+        mutationFn: (password_confirm : string) => {
+            return axios.post(URL_API + "deleteAccount", { 
+                token: accountService.getToken(),
+                password_confirm,
+        })}, 
+        onSuccess() {
+            accountService.logout()
+            successToast("Suppression du compte réussi");
+        },
+        onError(err: FetchError) {
+            errorToast("Erreur lors de la suppression du compte réussi");
+            return err
+        },
+    })
+}

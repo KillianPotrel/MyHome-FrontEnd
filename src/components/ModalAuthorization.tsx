@@ -13,8 +13,8 @@ const ModalAuthorization = ({permissions, user_id} : PermissionsModalProps):JSX.
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
 
-    const { data: datePermissionUser } = useManyPermissionUserFamily(user_id)
-    const permissionUser : Permission[] = datePermissionUser?.data
+    const { data: dataPermissionUser } = useManyPermissionUserFamily(user_id)
+    const permissionUser : Permission[] = dataPermissionUser?.data
 
     const updatePermissionUser = usePutPermissionUser(user_id)
     

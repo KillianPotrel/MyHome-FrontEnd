@@ -26,8 +26,8 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
         if(open === false) setOpen(true)
     },[meal_id])
 
-    const { data: dateMeal } = useOneMeal(meal_id)
-    const meal : Meal = dateMeal?.data
+    const { data: dataMeal } = useOneMeal(meal_id)
+    const meal : Meal = dataMeal?.data
 
     const regenerateRecipeMeal = usePutRegenerateRecipeMeal(meal_id)
     const generateArticleByRecipe = useGenerateArticleByRecipe()
@@ -104,7 +104,7 @@ const ModalMeal = ({meal_id} : ModalMealProps) => {
                                         onClick={() => handleGenerateMeal()}
                                         className="rounded-md bg-amber-600 mx-3 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                                         >
-                                            Générer menu
+                                            Ajouter menu à la liste de course
                                     </button>
                                 </PermissionGates>
                             </div>

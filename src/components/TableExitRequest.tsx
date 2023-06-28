@@ -52,7 +52,7 @@ const TableExitRequest = () => {
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                        {exitRequests !== undefined || exitRequests?.length > 0 && 
+                        {(exitRequests !== undefined && exitRequests?.length > 0) && 
                             exitRequests?.map((exitRequest : ExitRequest) => (
                             <tr key={exitRequest.id}>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
@@ -66,7 +66,7 @@ const TableExitRequest = () => {
                                     <button
                                         type="submit"
                                         onClick={() => handleSubmit(exitRequest.id, 1)}
-                                        className="mx-2 rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400"
+                                        className="mx-2 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
                                     >
                                         Autoriser
                                     </button>

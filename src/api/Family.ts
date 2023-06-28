@@ -129,3 +129,26 @@ export const useManyMembersByFamily = () =>
         }}), 
         queryKey: ["manyInvitationByUser"],
     })
+
+export const useLeaveFamily = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: (family_id : number) => axios.post(URL_API + "leaveFamily", { 
+                token: accountService.getToken(),
+                family_id: family_id,
+            })
+        ,
+        onSuccess() {
+            successToast("Famille quitté avec succès");
+        },
+        onSettled() {
+            queryClient.invalidateQueries({queryKey : ['manyFamilyByUser']})
+            queryClient.invalidateQueries({queryKey : ['manyInvitationByUser']})
+        },
+        onError(err: FetchError) {
+            errorToast("Vous n'avez pas pu quitter la famille");
+            return err
+        },
+    })
+}
+    

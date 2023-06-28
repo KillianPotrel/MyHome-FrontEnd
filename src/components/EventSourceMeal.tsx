@@ -8,8 +8,8 @@ type EventSourceRenderProps = {
 
 const EventSourceMeal = ({ source_id } : EventSourceRenderProps) : JSX.Element => {
     
-    const { data: dateMeal } = useOneMeal(source_id)
-    const meal : Meal = dateMeal?.data
+    const { data: dataMeal } = useOneMeal(source_id)
+    const meal : Meal = dataMeal?.data
 
     return (
         <div>

@@ -3,6 +3,7 @@ import axios from "axios"
 import { URL_API } from "../services/key"
 import { accountService } from "../services/account.service"
 import { FetchError } from "../type/fetchError"
+import { errorToast } from "../services/toastify.service"
 
 export type Permission = {
     id: number,
@@ -48,6 +49,9 @@ export const usePutPermissionUser = (user_id : number) => {
             queryClient.invalidateQueries(["manyPermissionUserFamily", user_id])
         },
         onError(err: FetchError) {
+            if(err.response.status === 405){
+                errorToast("Vous ne pouvez pas supprimer la permission pour gérer les accès car personne d'autre la détient")
+            }
             return err
         },
     })

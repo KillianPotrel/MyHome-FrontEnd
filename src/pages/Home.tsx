@@ -1,11 +1,11 @@
 import React from 'react';
 import { useUserInfo } from '../api/User';
-import { ArrowLeftOnRectangleIcon, LifebuoyIcon, ListBulletIcon, NewspaperIcon, PhoneIcon } from '@heroicons/react/20/solid'
+import { ArrowLeftOnRectangleIcon, ListBulletIcon, NewspaperIcon } from '@heroicons/react/20/solid'
 import { Meal, useManyMealToday } from '../api/Meal';
 import { EventCalendar, useManyEventHousework } from '../api/EventCalendar';
 import { ExitRequest, useManyExitRequest } from '../api/ExitRequest';
 import { format } from '../_utils/FormatDate';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 const Home = () : JSX.Element=> {
@@ -68,17 +68,21 @@ const Home = () : JSX.Element=> {
                                 <ul role="list" className="divide-y divide-gray-200">
                                 {meals?.map((meal) => (
                                   <div key={meal.id}>
-                                    <li className="mt-3 font-semibold">{meal.is_lunch === 0 ? "Dîner :" : "Déjeuner :"}</li>
-                                    {meal?.recipes?.map((recipe) => (
-                                      <li key={recipe.id}>
-                                        - {recipe.title}
-                                      </li>
-                                    ))}
-                                    {meal?.recipes_custom?.map((recipe) => (
-                                      <li key={recipe.id}>
-                                        - {recipe.title}
-                                      </li>
-                                    ))}
+                                    {meal?.recipes.length + meal.recipes_custom.length > 0 &&
+                                      <>
+                                        <li className="mt-3 font-semibold">{meal.is_lunch === 0 ? "Dîner :" : "Déjeuner :"}</li>
+                                        {meal?.recipes?.map((recipe) => (
+                                          <li key={recipe.id}>
+                                            - {recipe.title}
+                                          </li>
+                                        ))}
+                                        {meal?.recipes_custom?.map((recipe) => (
+                                          <li key={recipe.id}>
+                                            - {recipe.title}
+                                          </li>
+                                        ))}
+                                      </>
+                                    }
                                   </div>
                                 ))}
                                 </ul>
@@ -92,7 +96,7 @@ const Home = () : JSX.Element=> {
                         <div className="text-base leading-7">
                             <h3 className="font-semibold">Sortie d'enfant prévu</h3>
                             <div className="overflow-hidden">
-                              {houseworks?.length > 0 
+                              {exitRequests?.length > 0 
                                 ?
                                 <ul role="list" className="divide-y divide-gray-200">
                                   {exitRequests?.map((item) => (

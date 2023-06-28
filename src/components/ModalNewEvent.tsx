@@ -25,7 +25,7 @@ const ModalNewEvent = ():JSX.Element => {
     }
 
     const handleSubmit = () => {
-        if(!newEvent?.title || !newEvent?.responsable_id || !newEvent?.start || !newEvent?.end) {
+        if(!newEvent?.title || !newEvent?.responsable_id || !newEvent?.start || !newEvent?.end || newEvent.start >= newEvent.end) {
             errorToast("Un des champs est mal renseigné")
             return
         }

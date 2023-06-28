@@ -30,7 +30,7 @@ export const useManyExitRequest = (status: string) =>
             family_id: accountService.getFamily(),
             status,
         }}), 
-        queryKey: ["manyExitRequest"],
+        queryKey: ["manyExitRequest", status],
     })
 
 export const useOneExitRequest = (exit_request_id : number) =>
@@ -49,6 +49,7 @@ export const useOneExitRequest = (exit_request_id : number) =>
     })
 
 export const usePostExitRequest = () => {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (existRequest : ExitRequest) => {
             return axios
@@ -62,6 +63,9 @@ export const usePostExitRequest = () => {
         },
         onSuccess() {
             successToast("Demande effectué");
+        },
+        onSettled() {
+            queryClient.invalidateQueries(["manyExitRequest"])
         },
         onError(err: FetchError) {
             errorToast("Erreur lors de la demande de sortie");
@@ -77,12 +81,13 @@ export const useResponseExitRequest = () => {
             return axios
                 .post(URL_API + "responseExitRequest",  {
                     token: accountService.getToken(),
+                    family_id: accountService.getFamily(),
                     exit_request_id: params.exit_request_id,
                     accepted: params.accepted,
                 })
         },
         onSettled() {
-            queryClient.invalidateQueries(["manyExitRequest"])
+            queryClient.invalidateQueries(["manyExitRequest", "waiting"])
         },
         onError(err: FetchError) {
             return err

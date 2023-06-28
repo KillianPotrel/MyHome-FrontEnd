@@ -6,8 +6,8 @@ type EventSourceRenderProps = {
 }
 
 const EventSourceSchedule = ({ source_id } : EventSourceRenderProps) : JSX.Element => {
-    const { data: dateSchedule } = useOneSchedule(source_id)
-    const schedule : Schedule = dateSchedule?.data
+    const { data: dataSchedule } = useOneSchedule(source_id)
+    const schedule : Schedule = dataSchedule?.data
 
     return (
         <div>

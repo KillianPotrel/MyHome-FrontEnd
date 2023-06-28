@@ -13,8 +13,8 @@ const PermissionGates = ({permission_key, inversed = false, children} : Permissi
     const { data : dataInfo } = useUserInfo()
     const user : User = dataInfo?.data
 
-    const { data: datePermissionUser } = useManyPermissionUserFamily(user?.id)
-    const permissionUser : Permission[] = datePermissionUser?.data
+    const { data: dataPermissionUser } = useManyPermissionUserFamily(user?.id)
+    const permissionUser : Permission[] = dataPermissionUser?.data
 
     //Case when you want to display the content of a user who does not have the right to do so
     if(inversed) {

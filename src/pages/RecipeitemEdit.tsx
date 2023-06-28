@@ -62,8 +62,11 @@ const RecipeItemEdit = () : JSX.Element => {
     const handleRemoveRecipeStep = (index : number) => {
         let newRecipeSteps = [...recipeSteps];
         newRecipeSteps.splice(index, 1);
-
         setRecipeSteps(newRecipeSteps);
+
+        let tempRecipe : Recipe = recipe
+        tempRecipe = {...tempRecipe, ["recipe_steps"]: newRecipeSteps}
+        setRecipe(tempRecipe)
     };
     
     const handleChange = (e : any) => {

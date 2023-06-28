@@ -1,12 +1,7 @@
 import React, { useEffect, useState }from 'react';
 import { User, usePutUser } from '../../api/User';
-import { errorToast, successToast } from '../../services/toastify.service';
+import { errorToast } from '../../services/toastify.service';
 import { format } from '../../_utils/FormatDate';
-
-type Image = {
-    picturePreview : string,
-    pictureAsFile : any
-}
 
 type InformationsProps = {
     user : User
@@ -20,13 +15,8 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
         avatar: null,
         email: null,
         password: null})
-    const [imageAvatar, setImageAvatar] = useState<Image>({
-        picturePreview: null, 
-        pictureAsFile: null})
-    const [image, setImage] = useState({ files: null});
 
     const putUser = usePutUser()
-    //const InfoUser : User | undefined = dataInfo?.data
     
     useEffect(() => {
         setUser(user)
@@ -47,53 +37,31 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
     };
 
     const handleChangeImage = (e : any)  => {
-        // console.log(e.target.files[0])
-        // const reader = new FileReader();
-        // reader.onloadend = function() {
-        //   const base64Data = reader.result;
-        //   console.log("here")
-        //   setUser({
-        //   ...userPost,
-        //       ["avatar"]: {file:base64Data},
-        //   });
-        //   console.log(userPost)
-        // };
-        const file = e.target.files[0];
-        const reader = new FileReader();
-      
-        reader.onloadend = function () {
-          const base64Data = reader.result as string;
-          setUser({
-            ...userPost,
-            avatar: { file: base64Data },
-          });
-        };
-      
-        if (file) {
-          reader.readAsDataURL(file);
-        }
-    };
-
-    const setImageAction = () => {
         const formData = new FormData();
-        formData.append(
-            "file",
-            imageAvatar.pictureAsFile
-        );
-        // do your post request
+        formData.append('avatar', e.target.files[0]);
+        console.log(e.target.files[0])
+        setUser(() => ({
+          ...userPost,
+          avatar: e.target.files[0],
+        }));
     };
 
     const handleSubmit = () => {
-        console.log(userPost)
-        if(user.email.length === 0 || !user.email.includes("@")){
+        if(userPost.email.length === 0 || !userPost.email.includes("@")){
             errorToast("Email incorrect");
             return
         }
-        if(user.firstname.length === 0){
+        if(userPost.firstname.length === 0){
             errorToast("Prénom incorrect");
             return
         }
-        putUser.mutate(userPost)
+        
+        let formData = new FormData()
+        formData.append('email', userPost.email)
+        formData.append('firstname', userPost?.firstname)
+        formData.append('birthday', format(userPost?.birthday))
+        formData.append('avatar', userPost.avatar)
+        putUser.mutate(formData)
     }
 
     return (
@@ -109,7 +77,7 @@ const ProfileInformations = ({user} : InformationsProps):JSX.Element => {
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                     <div className="col-span-full flex items-center gap-x-8">
                         <img
-                            src={(userPost?.avatar || typeof user?.avatar !== 'string')  ? "../../images/avatar_family.svg" : userPost?.avatar}
+                            src={(!user?.avatar || typeof user?.avatar !== 'string')  ? "../../images/avatar_family.svg" : user?.avatar}
                             onChange={handleChange}
                             alt="User avatar"
                             className="h-24 w-24 flex-none rounded-lg object-cover"

@@ -154,15 +154,15 @@ export const usePostArticleRecipe = (params : ArticleParams) => {
     })
 }
 
-export const useDeleteArticleRecipe = (params : ArticleParams) => {
+export const useDeleteArticleRecipe = (recipe_id : number) => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: () => axios.post(URL_API + "deleteIngredientRecipe", { 
+        mutationFn: (article_recipe : ArticleRecipe) => axios.post(URL_API + "deleteIngredientRecipe", { 
             token: accountService.getToken(),
-            ingredient_recipe_id: params.article_recipe.id,
+            ingredient_recipe_id: article_recipe.id,
         }), 
         onSettled() {
-            queryClient.invalidateQueries(["oneRecipe",params.entity_id])
+            queryClient.invalidateQueries(["oneRecipe",recipe_id])
         },
         onError(err: FetchError) {
             return err
