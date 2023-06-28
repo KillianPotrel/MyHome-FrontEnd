@@ -208,13 +208,13 @@ const RecipeItem = () : JSX.Element => {
                                     </dd>
                                 </div>
                             } 
-                            <div className="col-span-full items-center mt-5">
+                            {/* <div className="col-span-full items-center mt-5">
                                 <img
                                     className="mx-auto flex-none rounded-lg object-cover w-4/5"
                                     src="../../images/avatar_family.svg"
                                     alt="MyHome"
                                 />
-                            </div>
+                            </div> */}
                         </dl>
                     </div>
                     <PermissionGates permission_key='modify_recipe'>

@@ -51,7 +51,6 @@ export const usePostRecipe = () => {
                 })
         },
         onSuccess() {
-            successToast("Recette créée avec succès");
             warningToast("Pensez à sauvegarder avant de quitter la page")
         },
         onError(err: FetchError) {

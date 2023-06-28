@@ -224,7 +224,7 @@ const RecipeItemEdit = () : JSX.Element => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-4 flex flex-none gap-x-4 px-6">
+                            {/* <div className="mt-4 flex flex-none gap-x-4 px-6">
                                 <div>
                                     <input type='file' 
                                         id='image'
@@ -235,7 +235,7 @@ const RecipeItemEdit = () : JSX.Element => {
                                     />
                                     <p className="mt-2 text-xs leading-5 text-gray-400">JPG, GIF or PNG. 1MB max.</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </dl>
                     </div>
 
