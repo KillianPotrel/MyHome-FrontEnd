@@ -54,13 +54,13 @@ const features = [
   {
     name: "Planning",
     description:
-      "Tous vos évènements en un seul calendrier. Gérer votre temps.",
+      "Tous vos évènements en un seul calendrier. Gérez votre temps.",
     icon: CalendarDaysIcon,
   },
   {
     name: "Ménage",
     description:
-      "Définissez des tâches, avec la duré du labeur pour ensuite l'attribuer à un menbre de la famille.",
+      "Définissez des tâches, avec la durée du labeur pour ensuite l'attribuer à un membre de la famille.",
     icon: SparklesIcon,
   },
   {
@@ -83,7 +83,7 @@ const features = [
   {
     name: "Profil",
     description:
-      "Chaque profil est indépant, mais les parents auront toujours un regard sur leurs enfants ;)",
+      "Chaque profil est indépendant, mais les parents auront toujours un regard sur leurs enfants ;)",
     icon: UsersIcon,
   },
   {
@@ -113,7 +113,7 @@ const features = [
   {
     name: "Social",
     description:
-      "À venir : Communiquez avec les autres familles sur des forum, organisez une sortie avec des amis proches ou fouillez dans leurs recettes public pour vous inspirez.",
+      "À venir : Communiquez avec les autres familles sur des forums, organisez une sortie avec des amis proches ou fouillez dans leurs recettes publiques pour vous inspirer.",
     icon: ChatBubbleLeftEllipsisIcon,
   },
   {
@@ -536,7 +536,7 @@ export default function Index(): JSX.Element {
                   <blockquote>
                     <div>
                       <p className="text-base text-gray-500">
-                        &ldquo;Nous souhaitons améliorez le quotidien des foyers.
+                        &ldquo;Nous souhaitons améliorer le quotidien des foyers.
                         À la reconquête de la gestion de votre temps !&rdquo;
                       </p>
                     </div>
@@ -574,10 +574,10 @@ export default function Index(): JSX.Element {
         <div id="product" className="bg-gradient-to-r from-amber-300 to-orange-700">
           <div className="mx-auto max-w-4xl py-16 px-6 sm:pt-20 sm:pb-24 lg:max-w-7xl lg:px-8 lg:pt-24">
             <h2 className="text-3xl font-bold tracking-tight text-white">
-              Fonctionnalité de MyHome
+              Fonctionnalités de MyHome
             </h2>
             <p className="mt-4 max-w-3xl text-lg text-orange-200">
-              Parmi la gamme de fonctionnalité qui vous est proposé, l'une
+              Parmi la gamme de fonctionnalité qui vous est proposée, l'une
               d'entre-elle saura vous séduire.
             </p>
             <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-16">
